@@ -1,5 +1,3 @@
-import DOMController from './DOMController';
-import todo from './todo';
+import firstLoad from "./functions/firstLoad";
 
-
-todo();
+firstLoad();

@@ -26,9 +26,6 @@ const createTodo = (title, description = "", dueDate = "", priority = null, proj
         project,
     }
 
-    const addToProject = () => ({
-        
-    })();
     return newTodo;
 }
 
