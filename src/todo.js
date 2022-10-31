@@ -15,8 +15,6 @@ const createProject = (title, description) => {
     return {getProject, getTodoList};
 }
 
-const inbox = createProject('inbox', 'the default');
-
 const createTodo = (title, description = "", dueDate = "", priority = null, project = inbox.getProject()) => {
     const newTodo = {
         title,
@@ -34,7 +32,9 @@ const createTodo = (title, description = "", dueDate = "", priority = null, proj
     return newTodo;
 }
 
-
+const projectList = [];
+const inbox = createProject('inbox', 'the default');
+projectList.push(inbox.getProject());
 const cleanRoom = createTodo('clean room');
 
 export default function todo() {
