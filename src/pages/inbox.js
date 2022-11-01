@@ -20,6 +20,21 @@ const inbox = () => {
     viewHeaderContainer.appendChild(viewHeaderContent);
   })();
 
+  const viewList = (() => {
+    const viewListContainer = document.createElement('div');
+    viewListContainer.id = 'view-list-container';
+
+    viewContainer.appendChild(viewListContainer);
+
+    const viewListContent = document.createElement('div');
+    viewListContent.id = 'view-list-content';
+    viewListContent.innerHTML = `
+    <p>Ya gotta do the stuff</p>
+    `;
+
+    viewListContainer.appendChild(viewListContent);
+  })();
+
   content.appendChild(viewContainer);
 }
 
