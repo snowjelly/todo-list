@@ -11,3 +11,8 @@ body{
   display: flex;
   justify-content: center;
 }
+
+#view-content{
+  display: flex;
+  flex-direction: column;
+}
