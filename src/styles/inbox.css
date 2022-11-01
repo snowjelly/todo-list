@@ -1,0 +1,13 @@
+html, body, #content{
+  height: 100%;
+}
+
+body{
+  padding: 0;
+  margin: 0;
+}
+
+#view-container{
+  display: flex;
+  justify-content: center;
+}
