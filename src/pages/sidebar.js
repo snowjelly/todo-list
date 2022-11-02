@@ -13,6 +13,16 @@ const sidebarDiv = () => {
     const inboxLi = document.createElement('li');
     inboxLi.id = 'filter-inbox';
 
+    const inboxImage = document.createElement('div');
+    inboxImage.classList.value = 'inbox-image';
+
+    inboxLi.appendChild(inboxImage);
+
+    const inboxTitle = document.createElement('p');
+    inboxTitle.textContent = 'Inbox';
+
+    inboxLi.appendChild(inboxTitle);
+
     topMenu.appendChild(inboxLi);
 
     sidebarContent.appendChild(topMenu);

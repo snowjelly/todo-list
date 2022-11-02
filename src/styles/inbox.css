@@ -11,9 +11,20 @@ body, ul, li, p{
   margin: 0;
 }
 
+#content{
+  display: grid;
+  grid-template-columns: 300px auto;
+  grid-template-rows: min-content;
+  grid-template-areas:
+  "header header"
+  "sidebar view"
+  ;
+}
+
 #view-container{
   display: flex;
   justify-content: center;
+  grid-area: view;
 }
 
 #view-content{
@@ -21,8 +32,27 @@ body, ul, li, p{
   flex-direction: column;
 }
 
+#sidebar-content{
+  padding-top: 2rem;
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+#sidebar-container{
+  grid-area: sidebar;
+}
+
+#filter-inbox{
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 5px;
+  background-color: #e11d48;
+}
+
 #header{
   background-color: #be123c;
+  grid-area: header;
 }
 
 .todo-list-item{
@@ -38,4 +68,11 @@ body, ul, li, p{
 
 .checkbox:hover{
   background-image: url(/src/assets/imgs/todo-checked.png);
+}
+
+.inbox-image{
+  background-image: url(/src/assets/imgs/inbox.png);
+  background-size: contain;
+  width: 24px;
+  height: 24px;
 }
