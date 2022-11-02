@@ -91,6 +91,21 @@ body, ul, li, p{
   gap: 0.5rem;
 }
 
+#add-task-content{
+  display: flex;
+}
+
+#add-task-content:hover{
+  cursor: pointer;
+}
+
+#add-task-image{
+  background-image: url(/src/assets/imgs/plus.png);
+  background-size: contain;
+  width: 24px;
+  height: 24px;
+}
+
 .project-list-item{
   border-radius: 5px;
   padding: 5px;
@@ -110,6 +125,7 @@ body, ul, li, p{
 
 .checkbox:hover{
   background-image: url(/src/assets/imgs/todo-checked.png);
+  cursor: pointer;
 }
 
 .inbox-image{

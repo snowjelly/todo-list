@@ -53,12 +53,32 @@ const inbox = () => {
   
       viewList.appendChild(todoListItem);
     })();
-
     
     viewListContent.appendChild(viewList);
 
     viewListContainer.appendChild(viewListContent);
   })();
+
+  const addTaskContainer = document.createElement('div');
+  addTaskContainer.id = 'add-task-container';
+
+  const addTaskContent = document.createElement('div');
+  addTaskContent.id = 'add-task-content';
+
+  addTaskContainer.appendChild(addTaskContent);
+  
+  const addTaskImage = document.createElement('div');
+  addTaskImage.id = 'add-task-image';
+
+  addTaskContent.appendChild(addTaskImage);
+
+  const addTaskText = document.createElement('p');
+  addTaskText.id = 'add-task-text';
+  addTaskText.textContent = 'Add task';
+
+  addTaskContent.appendChild(addTaskText);
+
+  viewContent.appendChild(addTaskContainer);
 
   content.appendChild(viewContainer);
 }
