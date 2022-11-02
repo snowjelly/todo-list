@@ -11,6 +11,10 @@ body, ul, li, p{
   margin: 0;
 }
 
+:root{
+  --stone-200: #e7e5e4;
+}
+
 #content{
   display: grid;
   grid-template-columns: 300px auto;
@@ -36,6 +40,9 @@ body, ul, li, p{
   padding-top: 2rem;
   padding-right: 1rem;
   padding-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 #sidebar-container{
@@ -44,15 +51,19 @@ body, ul, li, p{
 
 #filter-inbox{
   display: flex;
-  justify-content: center;
   gap: 1rem;
   padding: 5px;
-  background-color: #e11d48;
+  background-color: var(--stone-200);
+  border-radius: 5px;
 }
 
 #header{
   background-color: #be123c;
   grid-area: header;
+}
+
+#top-menu li:hover{
+  background-color: var(--stone-200);
 }
 
 .todo-list-item{
