@@ -28,6 +28,32 @@ const sidebarDiv = () => {
     sidebarContent.appendChild(topMenu);
   })();
 
+  const bottomMenu = (() => {
+    const bottomMenuContent = document.createElement('div');
+    bottomMenuContent.id = 'bottom-menu-content';
+
+    const bottomMenuHeader = document.createElement('p');
+    bottomMenuHeader.classList.value = 'menu-header';
+    bottomMenuHeader.textContent = 'Projects';
+
+    bottomMenuContent.appendChild(bottomMenuHeader);
+
+    const projectList = document.createElement('ul');
+    projectList.id = 'project-list';
+
+    for (let i=1;i<=3;i++) {
+      const projectListItem = document.createElement('li');
+      projectListItem.classList.value = 'project-list-item';
+      projectListItem.textContent = `Example project ${i}`;
+  
+      projectList.appendChild(projectListItem);
+    }
+    
+    bottomMenuContent.appendChild(projectList);
+
+    sidebarContent.appendChild(bottomMenuContent);
+  })();
+
   sidebarContainer.appendChild(sidebarContent);
 
   return sidebarContainer;
