@@ -1,4 +1,3 @@
-
 const sidebarDiv = () => {
   const sidebarContainer = document.createElement('div');
   sidebarContainer.id = 'sidebar-container';
@@ -12,6 +11,7 @@ const sidebarDiv = () => {
 
     const inboxLi = document.createElement('li');
     inboxLi.id = 'filter-inbox';
+    inboxLi.classList.add('hover-stone-200');
 
     const inboxImage = document.createElement('div');
     inboxImage.classList.value = 'inbox-image';
@@ -45,6 +45,7 @@ const sidebarDiv = () => {
       const projectListItem = document.createElement('li');
       projectListItem.classList.value = 'project-list-item';
       projectListItem.textContent = `Example project ${i}`;
+      projectListItem.classList.add('hover-stone-200');
   
       projectList.appendChild(projectListItem);
     }
