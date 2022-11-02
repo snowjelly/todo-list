@@ -34,6 +34,12 @@ body, ul, li, p{
   grid-area: view;
 }
 
+#view-list-container{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 #view-content{
   display: flex;
   flex-direction: column;
@@ -95,8 +101,13 @@ body, ul, li, p{
   display: flex;
 }
 
-#add-task-content:hover{
+#add-task-content:hover div#add-task-image{
+  background-image: url(/src/assets/imgs/plus-circle.png);
   cursor: pointer;
+}
+
+#add-task-content:hover p#add-task-text{
+  color: #be123c;
 }
 
 #add-task-image{
@@ -113,10 +124,13 @@ body, ul, li, p{
 
 .todo-list-item{
   display: flex;
+  border-bottom: 1px solid var(--stone-200);
+  padding: 1rem;
 }
 
 .checkbox{
   background-image: url(/src/assets/imgs/todo-unchecked.png);
+  background-repeat: no-repeat;
   background-size: contain;
   width: 24px;
   height: 24px;
