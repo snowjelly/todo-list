@@ -1,4 +1,3 @@
-
 const inbox = () => {
   const content = document.querySelector('#content');
 
@@ -33,9 +32,30 @@ const inbox = () => {
 
     const viewListContent = document.createElement('div');
     viewListContent.id = 'view-list-content';
-    viewListContent.innerHTML = `
-    <p>Ya gotta do the stuff</p>
-    `;
+
+    const viewList = document.createElement('ul');
+    viewList.id = 'view-list';
+
+    const todoListItems = (() => {
+      const todoListItem = document.createElement('li');
+      todoListItem.classList.value = 'todo-list-item';
+  
+      const todoListItemCheckbox = document.createElement('div');
+      todoListItemCheckbox.classList.value = 'checkbox';
+  
+      todoListItem.appendChild(todoListItemCheckbox);
+  
+      const todoListItemText = document.createElement('p');
+      todoListItemText.textContent = `
+      Lorem ipsum dolor sit amet.`;
+
+      todoListItem.appendChild(todoListItemText);
+  
+      viewList.appendChild(todoListItem);
+    })();
+
+    
+    viewListContent.appendChild(viewList);
 
     viewListContainer.appendChild(viewListContent);
   })();
