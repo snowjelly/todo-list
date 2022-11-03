@@ -76,6 +76,54 @@ const inbox = () => {
       addTaskContent.appendChild(addTaskText);
 
       viewListContainer.appendChild(addTaskContent);
+
+      addTaskContent.addEventListener('click', (e) => {
+        addTaskContent.remove();
+
+        const addTaskMenu = (() => {
+          const container = document.createElement('div');
+          container.id = 'add-task-menu-container';
+  
+          const content = document.createElement('div');
+          content.id = 'add-task-menu-content';
+  
+          const form = document.createElement('form');
+          form.id = 'add-task-menu-form';
+
+          content.appendChild(form);
+
+          const formTextAreaContent = document.createElement('div');
+          formTextAreaContent.id = 'form-textarea-content';
+          
+          form.appendChild(formTextAreaContent);
+
+          const taskNameLabel = document.createElement('label');
+          taskNameLabel.id = 'task-name';
+
+          formTextAreaContent.appendChild(taskNameLabel);
+
+          const taskNameInput = document.createElement('input');
+          taskNameInput.setAttribute('type', 'textarea');
+          taskNameInput.setAttribute('name', 'task-name');
+          taskNameInput.id = 'task-name-input';
+          
+          taskNameLabel.appendChild(taskNameInput);
+
+          const taskDescriptionLabel = document.createElement('label');
+          taskDescriptionLabel.id = 'task-description';
+
+          formTextAreaContent.appendChild(taskDescriptionLabel);
+
+          const taskDescriptionInput = document.createElement('input');
+          taskDescriptionInput.setAttribute('type', 'textarea');
+          taskDescriptionInput.setAttribute('name', 'task-description');
+
+          taskDescriptionLabel.appendChild(taskDescriptionInput);
+
+          container.appendChild(content);
+          viewContent.appendChild(container);
+        })();
+      });
     })();
   })();
 

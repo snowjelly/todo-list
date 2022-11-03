@@ -29,10 +29,16 @@ const createTodo = (title, description = "", dueDate = "", priority = null, proj
     return newTodo;
 }
 
-const projectList = [];
+
 const inbox = createProject('inbox', 'the default');
 projectList.push(inbox.getProject());
 const cleanRoom = createTodo('clean room');
+
+const loadLocalStorage = () => {
+    if (localStorage.length === 0) return;
+    localStorage.getItem('projectList');
+}
+
 
 export default function todo() {
     console.log(cleanRoom);

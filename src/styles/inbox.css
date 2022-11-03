@@ -99,11 +99,11 @@ body, ul, li, p{
 
 #add-task-content{
   display: flex;
+  cursor: pointer;
 }
 
 #add-task-content:hover div#add-task-image{
   background-image: url(/src/assets/imgs/plus-circle.png);
-  cursor: pointer;
 }
 
 #add-task-content:hover p#add-task-text{
