@@ -117,6 +117,13 @@ body, ul, li, p{
   height: 24px;
 }
 
+#add-task-menu-container{
+  height: 100px;
+  border: #d6d3d1 solid 1px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
 .project-list-item{
   border-radius: 5px;
   padding: 5px;
