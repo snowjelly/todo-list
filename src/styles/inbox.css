@@ -122,6 +122,51 @@ body, ul, li, p{
   border: #d6d3d1 solid 1px;
   border-radius: 5px;
   margin-top: 10px;
+  display: flex;
+}
+
+#add-task-menu-content{
+  display: flex;
+  flex: 1;
+  padding: 1rem;
+}
+
+#add-task-menu-form{
+  display: flex;
+  flex: 1;
+}
+
+#form-textarea-content{
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+#form-textarea-content input{
+  border: 0;
+  outline: 0;
+}
+
+#task-description{
+  display: flex;
+  flex: 1;
+}
+
+#task-description-input{
+  width: 100%;
+}
+
+#task-description-hint{
+  position: absolute;
+}
+
+#task-name{
+  display: flex;
+}
+
+#task-name-input{
+  flex: 1;
+  font-size: 1rem;
 }
 
 .project-list-item{

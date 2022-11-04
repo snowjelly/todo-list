@@ -105,7 +105,11 @@ const inbox = () => {
           const taskNameInput = document.createElement('input');
           taskNameInput.setAttribute('type', 'textarea');
           taskNameInput.setAttribute('name', 'task-name');
+          taskNameInput.setAttribute('placeholder', 'Task name');
+          taskNameInput.setAttribute('maxlength', '500');
+          taskNameInput.setAttribute('minlength', '1');
           taskNameInput.id = 'task-name-input';
+
           
           taskNameLabel.appendChild(taskNameInput);
 
@@ -117,6 +121,10 @@ const inbox = () => {
           const taskDescriptionInput = document.createElement('input');
           taskDescriptionInput.setAttribute('type', 'textarea');
           taskDescriptionInput.setAttribute('name', 'task-description');
+          taskDescriptionInput.setAttribute('placeholder', 'Description');
+          taskDescriptionInput.setAttribute('maxlength', '500');
+          taskDescriptionInput.setAttribute('minlength', '1');
+          taskDescriptionInput.id = 'task-description-input';
 
           taskDescriptionLabel.appendChild(taskDescriptionInput);
 
