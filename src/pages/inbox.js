@@ -79,7 +79,8 @@ const inbox = () => {
       
       return addTaskContent;
     })();
-    return {getAddTaskContent};
+
+    return {getAddTaskContent, viewListContainer};
   })();
 
   
@@ -157,6 +158,7 @@ const inbox = () => {
         cancelBtn.addEventListener('click', (e) => {
           container.remove();
           document.querySelector('#add-task-menu-container').remove();
+          viewList.viewListContainer.appendChild(viewList.getAddTaskContent);
         });
       })();
 
