@@ -1,3 +1,5 @@
+import { addTask } from "../todo";
+
 const inbox = () => {
   const content = document.querySelector('#content');
 
@@ -167,6 +169,8 @@ const inbox = () => {
       addTaskBtn.textContent = 'Add task';
 
       content.appendChild(addTaskBtn);
+
+      addTaskBtn.addEventListener('click', addTask);
 
       viewContent.appendChild(container);
     })();

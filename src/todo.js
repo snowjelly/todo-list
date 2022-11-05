@@ -15,7 +15,28 @@ const createProject = (title, description) => {
     return {getProject, getTodoList};
 }
 
-const createTodo = (title, description = "", dueDate = "", priority = null, project = inbox.getProject()) => {
+const storageFirstLoad = () => {
+    if (localStorage.length > 0) return;
+    const inbox = createProject('inbox', 'the default');
+    const projectList = loadLocalStorage();
+
+    projectList.push(inbox.getProject());
+    localStorage.setItem('projectList', JSON.stringify(projectList));
+}
+
+const loadLocalStorage = () => {
+    if (localStorage.length === 0) {
+        const projectList = [];
+        localStorage.setItem('projectList', JSON.stringify(projectList));
+        return projectList;
+    }
+    else {
+        const projectList = JSON.parse(localStorage.getItem('projectList'));
+        return projectList;
+    }
+}
+
+const createTodo = (title, description = "", dueDate = "", priority = null, project = loadLocalStorage()[0]) => {
     const newTodo = {
         title,
         description,
@@ -29,18 +50,26 @@ const createTodo = (title, description = "", dueDate = "", priority = null, proj
     return newTodo;
 }
 
+const addTask = () => {
+    const taskName = document.querySelector('#task-name-input').value;
+    const taskDescription = document.querySelector('#task-description-input').value;
 
-const inbox = createProject('inbox', 'the default');
-projectList.push(inbox.getProject());
-const cleanRoom = createTodo('clean room');
+    const projectList = loadLocalStorage();
+    const inbox = projectList[0];
 
-const loadLocalStorage = () => {
-    if (localStorage.length === 0) return;
-    localStorage.getItem('projectList');
+    const newTodo = createTodo(taskName, taskDescription);
+    inbox.todoList.push(newTodo);
+
+    localStorage.setItem('projectList', JSON.stringify(projectList));
+
+    console.log(projectList);
+
+
+    
 }
 
 
-export default function todo() {
-    console.log(cleanRoom);
-}
+export {
+    addTask, storageFirstLoad
+};
 
