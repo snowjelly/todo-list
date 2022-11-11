@@ -1,3 +1,5 @@
+import { todoListItems } from "./pages/inbox";
+
 const createProject = (title, description) => {
     const newProject = {
         title,
@@ -36,13 +38,12 @@ const loadLocalStorage = () => {
     }
 }
 
-const createTodo = (title, description = "", dueDate = "", priority = null, project = loadLocalStorage()[0]) => {
+const createTodo = (title, description = "", dueDate = "", priority = null, project = loadLocalStorage()[0].title) => {
     const newTodo = {
         title,
         description,
         dueDate,
         priority,
-        complete: false,
         notes: "",
         project,
     }
@@ -63,13 +64,28 @@ const addTask = () => {
     localStorage.setItem('projectList', JSON.stringify(projectList));
 
     console.log(projectList);
+}
 
+const updateLocalStorage = (projectList) => {
+    localStorage.setItem('projectList', JSON.stringify(projectList));
+}
 
-    
+const removeTask = (e) => {
+    const listId = e.target.parentElement.dataset.listId;
+    const projectList = loadLocalStorage();
+    const inbox = projectList[0];
+
+    inbox.todoList.splice(listId, 1);
+    console.log(inbox.todoList);
+    updateLocalStorage(projectList);
+
+    e.target.parentElement.remove();
 }
 
 
+
+
 export {
-    addTask, storageFirstLoad
+    addTask, storageFirstLoad, loadLocalStorage, removeTask
 };
 

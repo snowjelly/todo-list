@@ -1,4 +1,6 @@
 import { addTask } from "../todo";
+import { loadLocalStorage } from "../todo";
+import { removeTask } from "../todo";
 
 const inbox = () => {
   const content = document.querySelector('#content');
@@ -12,6 +14,10 @@ const inbox = () => {
   viewContainer.appendChild(viewContent);
 
   const viewHeader = (() => {
+    let viewHeader = '';
+    if (loadLocalStorage().length === 1) {
+      viewHeader = 'Inbox';
+    }
     const viewHeaderContainer = document.createElement('div');
     viewHeaderContainer.id = 'view-header-container';
   
@@ -20,7 +26,7 @@ const inbox = () => {
     const viewHeaderContent = document.createElement('div');
     viewHeaderContent.id = 'view-header-content';
     viewHeaderContent.innerHTML = `
-    <h1>viewHeader</h1>
+    <h1>${viewHeader}</h1>
     `;
   
     viewHeaderContainer.appendChild(viewHeaderContent);
@@ -39,23 +45,36 @@ const inbox = () => {
     viewList.id = 'view-list';
 
     const todoListItems = (() => {
-      for (let i=0;i<5;i++) {
-        const todoListItem = document.createElement('li');
-        todoListItem.classList.value = 'todo-list-item';
-    
-        const todoListItemCheckbox = document.createElement('div');
-        todoListItemCheckbox.classList.value = 'checkbox';
-    
-        todoListItem.appendChild(todoListItemCheckbox);
-    
-        const todoListItemText = document.createElement('p');
-        todoListItemText.textContent = `
-        Lorem ipsum dolor sit amet.`;
-  
-        todoListItem.appendChild(todoListItemText);
-    
-        viewList.appendChild(todoListItem);
+      const inbox = loadLocalStorage()[0];
+
+      const clearTodoListItems = () => {
+        while (viewList.children > 0) {
+          viewList.children[0].remove();
+        }
       }
+
+      const renderTodoListItems = (() => {
+        for (let i=0;i<inbox.todoList.length;i++) {
+          const todoListItem = document.createElement('li');
+          todoListItem.classList.value = 'todo-list-item';
+          todoListItem.setAttribute('data-list-id', `${i}`);
+      
+          const todoListItemCheckbox = document.createElement('div');
+          todoListItemCheckbox.classList.value = 'checkbox';
+      
+          todoListItem.appendChild(todoListItemCheckbox);
+      
+          const todoListItemText = document.createElement('p');
+          todoListItemText.textContent = `${inbox.todoList[i].title}`;
+    
+          todoListItem.appendChild(todoListItemText);
+      
+          viewList.appendChild(todoListItem);
+  
+          todoListItemCheckbox.addEventListener('click', removeTask);
+        }
+      })();
+
     })();
     
     viewListContent.appendChild(viewList);
