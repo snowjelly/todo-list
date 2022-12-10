@@ -183,13 +183,20 @@ const inbox = () => {
         });
       })();
 
-      const addTaskBtn = document.createElement('button');
-      addTaskBtn.id = 'add-task-btn';
-      addTaskBtn.textContent = 'Add task';
-
-      content.appendChild(addTaskBtn);
-
-      addTaskBtn.addEventListener('click', addTask);
+      const addTaskBtn = (() => {
+        const addTaskBtn = document.createElement('button');
+        addTaskBtn.id = 'add-task-btn';
+        addTaskBtn.textContent = 'Add task';
+  
+        content.appendChild(addTaskBtn);
+  
+        addTaskBtn.addEventListener('click', (e) => {
+          if (addTask() !== true) return;
+          container.remove();
+          document.querySelector('#add-task-menu-container').remove();
+          viewList.viewListContainer.appendChild(viewList.getAddTaskContent);
+        });
+      })();
 
       viewContent.appendChild(container);
     })();

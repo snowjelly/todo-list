@@ -1,5 +1,3 @@
-import { todoListItems } from "./pages/inbox";
-
 const createProject = (title, description) => {
     const newProject = {
         title,
@@ -55,6 +53,10 @@ const addTask = () => {
     const taskName = document.querySelector('#task-name-input').value;
     const taskDescription = document.querySelector('#task-description-input').value;
 
+    if (taskName === "") {
+        return;
+    }
+
     const projectList = loadLocalStorage();
     const inbox = projectList[0];
 
@@ -63,7 +65,7 @@ const addTask = () => {
 
     localStorage.setItem('projectList', JSON.stringify(projectList));
 
-    console.log(projectList);
+    return true;
 }
 
 const updateLocalStorage = (projectList) => {
