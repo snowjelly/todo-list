@@ -45,15 +45,11 @@ const inbox = () => {
     viewList.id = 'view-list';
 
     const todoListItems = (() => {
-      const inbox = loadLocalStorage()[0];
-
-      const clearTodoListItems = () => {
-        while (viewList.children > 0) {
-          viewList.children[0].remove();
-        }
-      }
 
       const renderTodoListItems = () => {
+
+        const inbox = loadLocalStorage()[0];
+
         for (let i=0;i<inbox.todoList.length;i++) {
           const todoListItem = document.createElement('li');
           todoListItem.classList.value = 'todo-list-item';
@@ -76,7 +72,7 @@ const inbox = () => {
       };
       renderTodoListItems();
 
-      return {clearTodoListItems, renderTodoListItems};
+      return {renderTodoListItems};
 
     })();
 
@@ -199,7 +195,10 @@ const inbox = () => {
           container.remove();
           document.querySelector('#add-task-menu-container').remove();
           viewList.viewListContainer.appendChild(viewList.getAddTaskContent);
-          viewList.todoListItems.clearTodoListItems();
+          const getViewList = document.querySelector('#view-list');
+          while (getViewList.children.length > 0) {
+            getViewList.children[0].remove();
+          }
           viewList.todoListItems.renderTodoListItems();
         });
       })();
