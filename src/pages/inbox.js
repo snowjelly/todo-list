@@ -1,3 +1,4 @@
+import taskDueDateImage from '../assets/imgs/due-date.png';
 import { addTask } from "../todo";
 import { loadLocalStorage } from "../todo";
 import { removeTask } from "../todo";
@@ -177,6 +178,29 @@ const inbox = () => {
       taskDescriptionInput.id = 'task-description-input';
 
       taskDescriptionLabel.appendChild(taskDescriptionInput);
+
+      const formBtnContent = document.createElement('div');
+      formBtnContent.id = 'form-btn-content';
+
+      form.appendChild(formBtnContent);
+
+      const taskDueDateLabel = document.createElement('label');
+      taskDueDateLabel.id = 'task-due-date-label';
+
+      const taskDueDateImg = new Image();
+      taskDueDateImg.src = taskDueDateImage;
+      taskDueDateImg.width = '20';
+      taskDueDateImg.height = '20';
+
+      taskDueDateLabel.appendChild(taskDueDateImg);
+
+      const taskDueDateText = document.createElement('p');
+      taskDueDateText.id = 'task-due-date-text';
+      taskDueDateText.textContent = 'Due date';
+
+      taskDueDateLabel.appendChild(taskDueDateText);
+
+      formBtnContent.appendChild(taskDueDateLabel);
 
       container.appendChild(content);
       viewContent.appendChild(container);

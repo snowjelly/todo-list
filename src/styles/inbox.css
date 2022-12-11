@@ -134,6 +134,8 @@ body, ul, li, p{
 #add-task-menu-form{
   display: flex;
   flex: 1;
+  flex-direction: column;
+  row-gap: 6px;
 }
 
 #form-textarea-content{
@@ -145,6 +147,17 @@ body, ul, li, p{
 #form-textarea-content input{
   border: 0;
   outline: 0;
+}
+
+#task-due-date-label{
+  display: flex;
+  width: fit-content;
+  border: black solid 1px;
+  border-radius: 3px;
+  font-size: 0.7rem;
+  align-items: center;
+  padding: 3px;
+  column-gap: 3px;
 }
 
 #task-description{
