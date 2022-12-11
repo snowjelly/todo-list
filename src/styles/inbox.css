@@ -123,6 +123,11 @@ body, ul, li, p{
   border-radius: 5px;
   margin-top: 10px;
   display: flex;
+  height: fit-content;
+}
+
+#task-due-date-text, #task-project-text{
+  margin-right: 2px;
 }
 
 #add-task-menu-content{
@@ -136,6 +141,7 @@ body, ul, li, p{
   flex: 1;
   flex-direction: column;
   row-gap: 6px;
+  height: fit-content;
 }
 
 #form-textarea-content{
@@ -149,7 +155,13 @@ body, ul, li, p{
   outline: 0;
 }
 
-#task-due-date-label{
+#form-btn-content-left-side{
+  display: flex;
+  column-gap: 10px;
+  width: fit-content;
+}
+
+.left-side-btn{
   display: flex;
   width: fit-content;
   border: black solid 1px;

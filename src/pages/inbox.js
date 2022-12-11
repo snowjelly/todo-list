@@ -1,4 +1,5 @@
 import taskDueDateImage from '../assets/imgs/due-date.png';
+import taskProjectImage from '../assets/imgs/inbox.png';
 import { addTask } from "../todo";
 import { loadLocalStorage } from "../todo";
 import { removeTask } from "../todo";
@@ -184,8 +185,13 @@ const inbox = () => {
 
       form.appendChild(formBtnContent);
 
+      const leftContent = document.createElement('div');
+      leftContent.id = 'form-btn-content-left-side';
+
+      formBtnContent.appendChild(leftContent);
+
       const taskDueDateLabel = document.createElement('label');
-      taskDueDateLabel.id = 'task-due-date-label';
+      taskDueDateLabel.classList.add('left-side-btn');
 
       const taskDueDateImg = new Image();
       taskDueDateImg.src = taskDueDateImage;
@@ -200,7 +206,26 @@ const inbox = () => {
 
       taskDueDateLabel.appendChild(taskDueDateText);
 
-      formBtnContent.appendChild(taskDueDateLabel);
+      leftContent.appendChild(taskDueDateLabel);
+
+      const taskProjectLabel = document.createElement('label');
+      taskProjectLabel.classList.add('left-side-btn');
+
+      const taskProjectImg = new Image();
+      taskProjectImg.src = taskProjectImage;
+      taskProjectImg.width = '20';
+      taskProjectImg.height = '20';
+
+      taskProjectLabel.appendChild(taskProjectImg);
+
+      const taskProjectText = document.createElement('p');
+      taskProjectText.id = 'task-project-text';
+      taskProjectText.textContent = 'Inbox';
+      // 'Inbox' will be replaced with current project in view
+
+      taskProjectLabel.appendChild(taskProjectText);
+
+      leftContent.appendChild(taskProjectLabel);
 
       container.appendChild(content);
       viewContent.appendChild(container);
