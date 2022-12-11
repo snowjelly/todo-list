@@ -144,88 +144,107 @@ const inbox = () => {
 
       content.appendChild(form);
 
-      const formTextAreaContent = document.createElement('div');
-      formTextAreaContent.id = 'form-textarea-content';
+      const formTextArea = (() => {
+        const formTextAreaContent = document.createElement('div');
+        formTextAreaContent.id = 'form-textarea-content';
+        
+        form.appendChild(formTextAreaContent);
+
+        const taskNameLabel = document.createElement('label');
+        taskNameLabel.id = 'task-name';
+
+        formTextAreaContent.appendChild(taskNameLabel);
+
+        const taskNameInput = document.createElement('input');
+        taskNameInput.setAttribute('type', 'textarea');
+        taskNameInput.setAttribute('name', 'task-name');
+        taskNameInput.setAttribute('placeholder', 'Task name');
+        taskNameInput.setAttribute('maxlength', '500');
+        taskNameInput.setAttribute('minlength', '1');
+        taskNameInput.id = 'task-name-input';
+
+        
+        taskNameLabel.appendChild(taskNameInput);
+
+        const taskDescriptionLabel = document.createElement('label');
+        taskDescriptionLabel.id = 'task-description';
+
+        formTextAreaContent.appendChild(taskDescriptionLabel);
+
+        const taskDescriptionInput = document.createElement('input');
+        taskDescriptionInput.setAttribute('type', 'textarea');
+        taskDescriptionInput.setAttribute('name', 'task-description');
+        taskDescriptionInput.setAttribute('placeholder', 'Description');
+        taskDescriptionInput.setAttribute('maxlength', '500');
+        taskDescriptionInput.setAttribute('minlength', '1');
+        taskDescriptionInput.id = 'task-description-input';
+
+        taskDescriptionLabel.appendChild(taskDescriptionInput);
+      })();
+
+      const formBtns = (() => {
+        const formBtnContent = document.createElement('div');
+        formBtnContent.id = 'form-btn-content';
+
+        form.appendChild(formBtnContent);
+
+        const leftSideBtns = (() => {
+          const leftContent = document.createElement('div');
+          leftContent.id = 'form-btn-content-left-side';
+
+          formBtnContent.appendChild(leftContent);
+
+          const taskDueDateLabel = document.createElement('label');
+          taskDueDateLabel.classList.add('left-side-btn');
+
+          const taskDueDateImg = new Image();
+          taskDueDateImg.src = taskDueDateImage;
+          taskDueDateImg.width = '20';
+          taskDueDateImg.height = '20';
+
+          taskDueDateLabel.appendChild(taskDueDateImg);
+
+          const taskDueDateText = document.createElement('p');
+          taskDueDateText.id = 'task-due-date-text';
+          taskDueDateText.textContent = 'Due date';
+
+          taskDueDateLabel.appendChild(taskDueDateText);
+
+          leftContent.appendChild(taskDueDateLabel);
+
+          const taskProjectLabel = document.createElement('label');
+          taskProjectLabel.classList.add('left-side-btn');
+
+          const taskProjectImg = new Image();
+          taskProjectImg.src = taskProjectImage;
+          taskProjectImg.width = '20';
+          taskProjectImg.height = '20';
+
+          taskProjectLabel.appendChild(taskProjectImg);
+
+          const taskProjectText = document.createElement('p');
+          taskProjectText.id = 'task-project-text';
+          taskProjectText.textContent = 'Inbox';
+          // 'Inbox' will be replaced with current project in view
+
+          taskProjectLabel.appendChild(taskProjectText);
+
+          leftContent.appendChild(taskProjectLabel);
+        })();
+
+        const rightSideBtns = (() => {
+          const rightContent = document.createElement('div');
+          rightContent.id = 'form-btn-content-right-side';
+
+          formBtnContent.appendChild(rightContent);
+
+          const priorityLabel = document.createElement('label');
+          
+        })();
+
+      })();
+
       
-      form.appendChild(formTextAreaContent);
-
-      const taskNameLabel = document.createElement('label');
-      taskNameLabel.id = 'task-name';
-
-      formTextAreaContent.appendChild(taskNameLabel);
-
-      const taskNameInput = document.createElement('input');
-      taskNameInput.setAttribute('type', 'textarea');
-      taskNameInput.setAttribute('name', 'task-name');
-      taskNameInput.setAttribute('placeholder', 'Task name');
-      taskNameInput.setAttribute('maxlength', '500');
-      taskNameInput.setAttribute('minlength', '1');
-      taskNameInput.id = 'task-name-input';
-
-      
-      taskNameLabel.appendChild(taskNameInput);
-
-      const taskDescriptionLabel = document.createElement('label');
-      taskDescriptionLabel.id = 'task-description';
-
-      formTextAreaContent.appendChild(taskDescriptionLabel);
-
-      const taskDescriptionInput = document.createElement('input');
-      taskDescriptionInput.setAttribute('type', 'textarea');
-      taskDescriptionInput.setAttribute('name', 'task-description');
-      taskDescriptionInput.setAttribute('placeholder', 'Description');
-      taskDescriptionInput.setAttribute('maxlength', '500');
-      taskDescriptionInput.setAttribute('minlength', '1');
-      taskDescriptionInput.id = 'task-description-input';
-
-      taskDescriptionLabel.appendChild(taskDescriptionInput);
-
-      const formBtnContent = document.createElement('div');
-      formBtnContent.id = 'form-btn-content';
-
-      form.appendChild(formBtnContent);
-
-      const leftContent = document.createElement('div');
-      leftContent.id = 'form-btn-content-left-side';
-
-      formBtnContent.appendChild(leftContent);
-
-      const taskDueDateLabel = document.createElement('label');
-      taskDueDateLabel.classList.add('left-side-btn');
-
-      const taskDueDateImg = new Image();
-      taskDueDateImg.src = taskDueDateImage;
-      taskDueDateImg.width = '20';
-      taskDueDateImg.height = '20';
-
-      taskDueDateLabel.appendChild(taskDueDateImg);
-
-      const taskDueDateText = document.createElement('p');
-      taskDueDateText.id = 'task-due-date-text';
-      taskDueDateText.textContent = 'Due date';
-
-      taskDueDateLabel.appendChild(taskDueDateText);
-
-      leftContent.appendChild(taskDueDateLabel);
-
-      const taskProjectLabel = document.createElement('label');
-      taskProjectLabel.classList.add('left-side-btn');
-
-      const taskProjectImg = new Image();
-      taskProjectImg.src = taskProjectImage;
-      taskProjectImg.width = '20';
-      taskProjectImg.height = '20';
-
-      taskProjectLabel.appendChild(taskProjectImg);
-
-      const taskProjectText = document.createElement('p');
-      taskProjectText.id = 'task-project-text';
-      taskProjectText.textContent = 'Inbox';
-      // 'Inbox' will be replaced with current project in view
-
-      taskProjectLabel.appendChild(taskProjectText);
-
-      leftContent.appendChild(taskProjectLabel);
 
       container.appendChild(content);
       viewContent.appendChild(container);
