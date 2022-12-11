@@ -56,8 +56,18 @@ const inbox = () => {
           todoListItem.setAttribute('data-list-id', `${i}`);
       
           const todoListItemCheckbox = document.createElement('div');
-          todoListItemCheckbox.classList.value = 'checkbox';
-      
+          todoListItemCheckbox.classList.add('checkbox');
+          
+          if (inbox.todoList[i].priority === 3) {
+            todoListItemCheckbox.classList.add('priority-3');
+          }
+          if (inbox.todoList[i].priority === 2) {
+            todoListItemCheckbox.classList.add('priority-2');
+          }
+          if (inbox.todoList[i].priority === 1) {
+            todoListItemCheckbox.classList.add('priority-1');
+          } 
+
           todoListItem.appendChild(todoListItemCheckbox);
 
           const todoListItemContent = document.createElement('div');
