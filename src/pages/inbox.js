@@ -59,11 +59,23 @@ const inbox = () => {
           todoListItemCheckbox.classList.value = 'checkbox';
       
           todoListItem.appendChild(todoListItemCheckbox);
+
+          const todoListItemContent = document.createElement('div');
+          todoListItemContent.classList.add('list-item-content');
+
       
-          const todoListItemText = document.createElement('p');
-          todoListItemText.textContent = `${inbox.todoList[i].title}`;
+          const todoListItemTitle = document.createElement('p');
+          todoListItemTitle.textContent = `${inbox.todoList[i].title}`;
     
-          todoListItem.appendChild(todoListItemText);
+          todoListItemContent.appendChild(todoListItemTitle);
+
+          const todoListItemDescription = document.createElement('p');
+          todoListItemDescription.textContent = `${inbox.todoList[i].description}`;
+          todoListItemDescription.classList.add('list-item-description');
+
+          todoListItemContent.appendChild(todoListItemDescription);
+
+          todoListItem.appendChild(todoListItemContent);
       
           viewList.appendChild(todoListItem);
   
