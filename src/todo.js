@@ -36,7 +36,7 @@ const loadLocalStorage = () => {
     }
 }
 
-const createTodo = (title, description = "", dueDate = "", priority = null, project = loadLocalStorage()[0].title) => {
+const createTodo = (title, description = "", dueDate = "", priority = 4, project = loadLocalStorage()[0].title) => {
     const newTodo = {
         title,
         description,

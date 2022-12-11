@@ -223,6 +223,20 @@ body, ul, li, p{
   width: 24px;
   height: 24px;
   margin-right: 5px;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+
+.priority-1{
+  background-color: red;
+}
+
+.priority-2{
+  background-color: orange;
+}
+
+.priority-3{
+  background-color: cyan;
 }
 
 .checkbox:hover{
