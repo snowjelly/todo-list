@@ -85,13 +85,17 @@ const removeTask = (e) => {
 }
 
 const projectMenu = (e) => {
-    const container = document.createElement('div');
-    container.id = 'project-menu-container';
-    
-    const bodyContent = document.querySelector('#content');
-    bodyContent.appendChild(container);
+    const container = (() => {
+        const container = document.createElement('div');
+        container.id = 'project-menu-container';
+        
+        const bodyContent = document.querySelector('#content');
+        bodyContent.appendChild(container);
+        
+        return container;
+    })();
 
-    const content = document.createElement('div');
+    const content = document.createElement('form');
     content.id = 'project-menu-content';
     container.appendChild(content);
 
@@ -99,6 +103,24 @@ const projectMenu = (e) => {
     header.id = 'project-menu-header';
     header.textContent = 'Add project';
     content.appendChild(header);
+
+    const name = (() => {
+        const content = document.createElement('div');
+        content.id = 'project-menu-name-content';
+
+        const nameHeader = document.createElement('div');
+        nameHeader.id = 'name-header';
+        nameHeader.textContent = 'Name';
+        content.appendChild(nameHeader);
+
+        const name = document.createElement('input');
+        content.appendChild(name);
+
+        return {content};
+    })();
+    content.appendChild(name.content);
+
+
 }
 
 

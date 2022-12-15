@@ -265,7 +265,15 @@ body, ul, li, p{
 }
 
 #project-menu-header{
-  
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 1rem 1rem 0.5rem;
+}
+
+#project-menu-name-content{
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 1rem 0.5rem;
 }
 
 .project-list-item{
