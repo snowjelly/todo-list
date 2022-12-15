@@ -114,11 +114,26 @@ const projectMenu = (e) => {
         content.appendChild(nameHeader);
 
         const name = document.createElement('input');
+        name.id = 'project-menu-name-input';
+        name.type = 'textarea';
+        name.maxLength = '300';
+        name.minLength = '1';
         content.appendChild(name);
 
         return {content};
     })();
     content.appendChild(name.content);
+
+    const addProject = (e) => {
+        const projectName = document.querySelector('#project-menu-name-input');
+        if (projectName === "") return;
+        const projectList = loadLocalStorage();
+        const newProject = createProject(projectName.value);
+        projectList.push(newProject.getProject());
+        updateLocalStorage(projectList);
+        console.log(projectList);
+        container.remove();
+    }
 
     const buttons = (() => {
         const content = document.createElement('div');
@@ -127,19 +142,25 @@ const projectMenu = (e) => {
         const cancelBtn = document.createElement('button');
         cancelBtn.classList.add('cancel-btn');
         cancelBtn.textContent = 'Cancel';
+        cancelBtn.type = 'button';
+        cancelBtn.addEventListener('click', (e) => {
+            container.remove();
+        });
         content.appendChild(cancelBtn);
 
         const addBtn = document.createElement('button');
         addBtn.classList.add('add-btn');
         addBtn.textContent = 'Add';
+        addBtn.type = 'button';
+        addBtn.addEventListener('click', addProject);
         content.appendChild(addBtn);
 
         return {content};
     })();
     content.appendChild(buttons.content);
-
-
 }
+
+
 
 
 
