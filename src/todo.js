@@ -84,10 +84,27 @@ const removeTask = (e) => {
     e.target.parentElement.remove();
 }
 
+const projectMenu = (e) => {
+    const container = document.createElement('div');
+    container.id = 'project-menu-container';
+    
+    const bodyContent = document.querySelector('#content');
+    bodyContent.appendChild(container);
+
+    const content = document.createElement('div');
+    content.id = 'project-menu-content';
+    container.appendChild(content);
+
+    const header = document.createElement('div');
+    header.id = 'project-menu-header';
+    header.textContent = 'Add project';
+    content.appendChild(header);
+}
+
 
 
 
 export {
-    addTask, storageFirstLoad, loadLocalStorage, removeTask
+    addTask, storageFirstLoad, loadLocalStorage, removeTask, projectMenu
 };
 

@@ -220,6 +220,54 @@ body, ul, li, p{
   border-radius: 5px;
 }
 
+#bottom-menu-header-content{
+  display: flex;
+  column-gap: 0.5rem;
+}
+
+#bottom-menu-header-plus{
+  background-image: url(/src/assets/imgs/plus.png);
+  background-size: contain;
+  width: 24px;
+  height: 24px;
+}
+
+#bottom-menu-header-content:hover{
+  cursor: pointer;
+}
+
+#bottom-menu-header-content:hover #bottom-menu-header-plus{
+  background-image: url(/src/assets/imgs/plus-circle.png);
+  background-size: contain;
+}
+
+#bottom-menu-header-content:hover .menu-header{
+  color: #be123c;
+}
+
+#project-menu-container{
+  isolation: isolate;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+}
+
+#project-menu-content{
+  width: 450px;
+  background-color: white;
+  margin: 50px;
+  border-radius: 1rem;
+}
+
+#project-menu-header{
+  
+}
+
 .project-list-item{
   border-radius: 5px;
   padding: 5px;

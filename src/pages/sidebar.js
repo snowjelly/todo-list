@@ -1,3 +1,6 @@
+import plusImage from '../assets/imgs/plus.png';
+import { projectMenu } from '../todo';
+
 const sidebarDiv = () => {
   const sidebarContainer = document.createElement('div');
   sidebarContainer.id = 'sidebar-container';
@@ -32,11 +35,23 @@ const sidebarDiv = () => {
     const bottomMenuContent = document.createElement('div');
     bottomMenuContent.id = 'bottom-menu-content';
 
+
+    const bottomMenuHeaderContent = document.createElement('div');
+    bottomMenuHeaderContent.id = 'bottom-menu-header-content';
+    bottomMenuHeaderContent.addEventListener('click', projectMenu);
+
+    bottomMenuContent.appendChild(bottomMenuHeaderContent);
+
     const bottomMenuHeader = document.createElement('p');
     bottomMenuHeader.classList.value = 'menu-header';
     bottomMenuHeader.textContent = 'Projects';
 
-    bottomMenuContent.appendChild(bottomMenuHeader);
+    bottomMenuHeaderContent.appendChild(bottomMenuHeader);
+
+    const bottomMenuHeaderPlusImage = document.createElement('div');
+    bottomMenuHeaderPlusImage.id = 'bottom-menu-header-plus';
+
+    bottomMenuHeaderContent.appendChild(bottomMenuHeaderPlusImage);
 
     const projectList = document.createElement('ul');
     projectList.id = 'project-list';
