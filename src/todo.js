@@ -120,6 +120,24 @@ const projectMenu = (e) => {
     })();
     content.appendChild(name.content);
 
+    const buttons = (() => {
+        const content = document.createElement('div');
+        content.id = 'project-menu-button-content';
+
+        const cancelBtn = document.createElement('button');
+        cancelBtn.classList.add('cancel-btn');
+        cancelBtn.textContent = 'Cancel';
+        content.appendChild(cancelBtn);
+
+        const addBtn = document.createElement('button');
+        addBtn.classList.add('add-btn');
+        addBtn.textContent = 'Add';
+        content.appendChild(addBtn);
+
+        return {content};
+    })();
+    content.appendChild(buttons.content);
+
 
 }
 

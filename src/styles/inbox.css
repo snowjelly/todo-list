@@ -204,20 +204,28 @@ body, ul, li, p{
   gap: 1rem;
 }
 
-#cancel-btn{
+#cancel-btn, .cancel-btn{
   width: 70px;
   height: 30px;
   border: 0;
   border-radius: 5px;
 }
 
-#add-task-btn{
+#add-task-btn, .add-btn{
   width: 80px;
   height: 30px;
   background-color: #be123c;
   color: white;
   border: 0;
   border-radius: 5px;
+}
+
+.cancel-btn{
+  width: 60px;
+}
+
+.add-btn{
+  width: 60px;
 }
 
 #bottom-menu-header-content{
@@ -259,9 +267,12 @@ body, ul, li, p{
 
 #project-menu-content{
   width: 450px;
+  height: 200px;
   background-color: white;
   margin: 50px;
   border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
 }
 
 #project-menu-header{
@@ -274,6 +285,18 @@ body, ul, li, p{
   display: flex;
   flex-direction: column;
   margin: 1rem 1rem 0.5rem;
+  flex: 1;
+}
+
+#name-header{
+  font-weight: 700;
+}
+
+#project-menu-button-content{
+  display: flex;
+  justify-content: right;
+  column-gap: 1.5rem;
+  margin: 0.5rem 1rem 1rem;
 }
 
 .project-list-item{
