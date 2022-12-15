@@ -1,5 +1,5 @@
 import plusImage from '../assets/imgs/plus.png';
-import { projectMenu } from '../todo';
+import { loadLocalStorage, projectMenu } from '../todo';
 
 const sidebarDiv = () => {
   const sidebarContainer = document.createElement('div');
@@ -56,11 +56,12 @@ const sidebarDiv = () => {
     const projectList = document.createElement('ul');
     projectList.id = 'project-list';
 
-    for (let i=1;i<=3;i++) {
+    const projectListArray = loadLocalStorage();
+
+    for (let i=1;i<projectListArray.length;i++) {
       const projectListItem = document.createElement('li');
-      projectListItem.classList.value = 'project-list-item';
-      projectListItem.textContent = `Example project ${i}`;
-      projectListItem.classList.add('hover-stone-200');
+      projectListItem.textContent = projectListArray[i].title;
+      projectListItem.classList.add('project-list-item', 'hover-stone-200');
   
       projectList.appendChild(projectListItem);
     }
