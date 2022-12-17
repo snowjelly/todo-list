@@ -6,7 +6,7 @@ import { storageFirstLoad } from '../todo';
 const firstLoad = () => {
   const content = document.querySelector('#content');
   const header = headerDiv();
-  const sidebar = sidebarDiv();
+  const sidebar = sidebarDiv().sidebarContainer;
 
   content.appendChild(header);
   content.appendChild(sidebar);

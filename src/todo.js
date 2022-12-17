@@ -1,3 +1,5 @@
+import sidebarDiv from "./pages/sidebar";
+
 const createProject = (title, description) => {
     const newProject = {
         title,
@@ -133,6 +135,13 @@ const projectMenu = (e) => {
         updateLocalStorage(projectList);
         console.log(projectList);
         container.remove();
+        
+        const projectListDomElement = document.querySelector('#project-list');
+        while (projectListDomElement.children.length > 0) {
+            projectListDomElement.children[0].remove();
+          }
+        sidebarDiv().bottomMenu.renderProjectList();
+          
     }
 
     const buttons = (() => {

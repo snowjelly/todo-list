@@ -55,6 +55,9 @@ const sidebarDiv = () => {
 
     const projectList = document.createElement('ul');
     projectList.id = 'project-list';
+    bottomMenuContent.appendChild(projectList);
+
+    const renderProjectList = () => {
 
     const projectListArray = loadLocalStorage();
 
@@ -65,15 +68,18 @@ const sidebarDiv = () => {
   
       projectList.appendChild(projectListItem);
     }
-    
-    bottomMenuContent.appendChild(projectList);
+    console.log('rendered');
+  }
+  renderProjectList();
 
     sidebarContent.appendChild(bottomMenuContent);
+
+    return {renderProjectList};
   })();
 
   sidebarContainer.appendChild(sidebarContent);
 
-  return sidebarContainer;
+  return {sidebarContainer, bottomMenu};
 }
 
 export default sidebarDiv;
