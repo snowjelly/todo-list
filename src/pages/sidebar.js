@@ -68,7 +68,6 @@ const sidebarDiv = () => {
   
       projectListElement.appendChild(projectListItem);
     }
-    console.log('rendered');
   }
   renderProjectList();
 

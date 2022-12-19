@@ -125,7 +125,6 @@ const projectMenu = (e) => {
         const newProject = createProject(projectName.value);
         projectList.push(newProject.getProject());
         updateLocalStorage(projectList);
-        console.log(projectList);
         container.remove();
         const projectListElement = document.querySelector('#project-list');
         while (projectListElement.children.length > 0) {
