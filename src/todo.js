@@ -72,7 +72,6 @@ const removeTask = (e) => {
     const inbox = projectList[0];
 
     inbox.todoList.splice(listId, 1);
-    console.log(inbox.todoList);
     updateLocalStorage(projectList);
 
     e.target.parentElement.remove();
