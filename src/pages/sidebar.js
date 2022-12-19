@@ -55,6 +55,9 @@ const sidebarDiv = () => {
 
     const projectList = document.createElement('ul');
     projectList.id = 'project-list';
+    bottomMenuContent.appendChild(projectList);
+
+    const renderProjectList = (projectListElement = projectList) => {
 
     const projectListArray = loadLocalStorage();
 
@@ -63,17 +66,20 @@ const sidebarDiv = () => {
       projectListItem.textContent = projectListArray[i].title;
       projectListItem.classList.add('project-list-item', 'hover-stone-200');
   
-      projectList.appendChild(projectListItem);
+      projectListElement.appendChild(projectListItem);
     }
-    
-    bottomMenuContent.appendChild(projectList);
+    console.log('rendered');
+  }
+  renderProjectList();
 
     sidebarContent.appendChild(bottomMenuContent);
+
+    return {renderProjectList};
   })();
 
   sidebarContainer.appendChild(sidebarContent);
 
-  return sidebarContainer;
+  return {sidebarContainer, bottomMenu};
 }
 
 export default sidebarDiv;
