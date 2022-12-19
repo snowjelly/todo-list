@@ -18,22 +18,15 @@ const createProject = (title, description) => {
 const storageFirstLoad = () => {
     if (localStorage.length > 0) return;
     const inbox = createProject('inbox', 'the default');
-    const projectList = loadLocalStorage();
+    const projectList = [];
 
     projectList.push(inbox.getProject());
     localStorage.setItem('projectList', JSON.stringify(projectList));
 }
 
 const loadLocalStorage = () => {
-    if (localStorage.length === 0) {
-        const projectList = [];
-        localStorage.setItem('projectList', JSON.stringify(projectList));
-        return projectList;
-    }
-    else {
-        const projectList = JSON.parse(localStorage.getItem('projectList'));
-        return projectList;
-    }
+    const projectList = JSON.parse(localStorage.getItem('projectList'));
+    return projectList;
 }
 
 const createTodo = (title, description = "", dueDate = "", priority = 4, project = loadLocalStorage()[0].title) => {
