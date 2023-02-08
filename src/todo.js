@@ -78,7 +78,12 @@ const removeTask = (e) => {
 }
 
 const removeProject = (e) => {
-    
+    const listId = e.target.parentElement.dataset.listId;
+    const projectList = loadLocalStorage();
+    projectList.splice(listId, 1);
+    updateLocalStorage(projectList);
+
+    e.target.parentElement.remove();
 }
 
 const projectMenu = (e) => {
