@@ -1,7 +1,7 @@
 import plusImage from '../assets/imgs/plus.png';
 import trashImage from '../assets/imgs/trash.png';
 import { loadLocalStorage, projectMenu } from '../todo';
-import { removeProject } from '../todo';
+import { removeProject, selectProject } from '../todo';
 
 const sidebarDiv = () => {
   const sidebarContainer = document.createElement('div');
@@ -80,6 +80,7 @@ const sidebarDiv = () => {
       
       projectListItem.classList.add('project-list-item', 'hover-stone-200');
       projectListItem.setAttribute('data-list-id', [i]);
+      projectListItem.addEventListener('click', selectProject);
       
 
       projectListElement.appendChild(projectListItem);

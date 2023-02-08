@@ -370,3 +370,7 @@ body, ul, li, p{
   background-color: var(--stone-200);
   cursor: pointer;
 }
+
+.stone-200{
+  background-color: var(--stone-200);
+}
