@@ -1,8 +1,9 @@
 import sidebarDiv from "./pages/sidebar";
-const createProject = (title, description) => {
+const createProject = (title, description, selected = false) => {
     const newProject = {
         title,
         description,
+        selected,
         todoList: [],
     }
 
@@ -18,7 +19,7 @@ const createProject = (title, description) => {
 
 const storageFirstLoad = () => {
     if (localStorage.length > 0) return;
-    const inbox = createProject('inbox', 'the default');
+    const inbox = createProject('inbox', 'the default', true);
     const projectList = [];
 
     projectList.push(inbox.getProject());
@@ -88,7 +89,22 @@ const removeProject = (e) => {
 
 const selectProject = (e) => {
     e.target.classList.add('stone-200');
+    const listId = e.target.dataset.listId;
+
+
+}
+
+const getActiveProject = () => {
+    const projectList = loadLocalStorage();
+    const inbox = projectList[0];
+
     
+    for (let i=0;i<projectList.length;i++) {
+      if (projectList[i].selected === false) return;
+
+      const activeProject = projectList[i];
+      return activeProject;
+    }
 }
 
 const projectMenu = (e) => {
@@ -177,6 +193,6 @@ const projectMenu = (e) => {
 
 
 export {
-    addTask, storageFirstLoad, loadLocalStorage, removeTask, projectMenu, removeProject, selectProject
+    addTask, storageFirstLoad, loadLocalStorage, removeTask, projectMenu, removeProject, selectProject, getActiveProject
 };
 
