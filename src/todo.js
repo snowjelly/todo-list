@@ -86,6 +86,11 @@ const removeProject = (e) => {
     e.target.parentElement.remove();
 }
 
+const selectProject = (e) => {
+    e.target.classList.add('stone-200');
+    
+}
+
 const projectMenu = (e) => {
     const container = (() => {
         const container = document.createElement('div');
@@ -172,6 +177,6 @@ const projectMenu = (e) => {
 
 
 export {
-    addTask, storageFirstLoad, loadLocalStorage, removeTask, projectMenu, removeProject
+    addTask, storageFirstLoad, loadLocalStorage, removeTask, projectMenu, removeProject, selectProject
 };
 
