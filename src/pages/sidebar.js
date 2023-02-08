@@ -1,5 +1,7 @@
 import plusImage from '../assets/imgs/plus.png';
+import trashImage from '../assets/imgs/trash.png';
 import { loadLocalStorage, projectMenu } from '../todo';
+import { removeProject } from '../todo';
 
 const sidebarDiv = () => {
   const sidebarContainer = document.createElement('div');
@@ -63,9 +65,23 @@ const sidebarDiv = () => {
 
     for (let i=1;i<projectListArray.length;i++) {
       const projectListItem = document.createElement('li');
-      projectListItem.textContent = projectListArray[i].title;
+
+      const projectListItemText = document.createElement('p');
+      projectListItemText.textContent = projectListArray[i].title;
+      projectListItem.appendChild(projectListItemText);
+
+      const projectListItemTrashImage = new Image();
+      projectListItemTrashImage.src = trashImage;
+      projectListItemTrashImage.width = 20;
+      projectListItemTrashImage.height = 20;
+      projectListItemTrashImage.classList.add('trash-image');
+      projectListItem.appendChild(projectListItemTrashImage);
+      projectListItemTrashImage.addEventListener('click', removeProject);
+      
       projectListItem.classList.add('project-list-item', 'hover-stone-200');
-  
+      projectListItem.setAttribute('data-list-id', [i]);
+      
+
       projectListElement.appendChild(projectListItem);
     }
   }

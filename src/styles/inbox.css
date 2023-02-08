@@ -302,6 +302,17 @@ body, ul, li, p{
 .project-list-item{
   border-radius: 5px;
   padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.project-list-item:hover .trash-image{
+  visibility: visible;
+}
+
+.trash-image{
+  visibility: collapse;
 }
 
 .todo-list-item{
