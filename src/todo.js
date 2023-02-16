@@ -1,3 +1,4 @@
+import inbox from "./pages/inbox";
 import sidebarDiv from "./pages/sidebar";
 const createProject = (title, description, selected = false) => {
     const newProject = {
@@ -85,9 +86,11 @@ const removeProject = (e) => {
     updateLocalStorage(projectList);
 
     e.target.parentElement.remove();
+    console.log(projectList);
 }
 
 const selectProject = (e) => {
+    if (e.target.className === "trash-image") return;
     const listId = e.target.dataset.listId;
     const projectList = loadLocalStorage();
 
@@ -111,12 +114,17 @@ const getActiveProject = () => {
     const projectList = loadLocalStorage();
 
     const getActiveProjectId = () => {
+        const inboxId = 0;
+
         for (let i=0;i<projectList.length;i++) {
             if (projectList[i].selected === false) continue;
       
             const activeProjectId = i;
             return activeProjectId;
           }
+          projectList[inboxId].selected = true;
+          updateLocalStorage(projectList);
+          return inboxId;
     }
 
     const id = getActiveProjectId();
