@@ -31,14 +31,14 @@ const loadLocalStorage = () => {
     return projectList;
 }
 
-const createTodo = (title, description = "", dueDate = "", priority = 4, project = loadLocalStorage()[0].title) => {
+const createTodo = (title, description = "", project = loadLocalStorage()[0].title, dueDate = "", priority = 4) => {
     const newTodo = {
         title,
         description,
+        project,
         dueDate,
         priority,
         notes: "",
-        project,
     }
 
     return newTodo;
@@ -53,12 +53,12 @@ const addTask = () => {
     }
 
     const projectList = loadLocalStorage();
-    const inbox = projectList[0];
+    const activeProject = projectList[getActiveProject().id];
 
-    const newTodo = createTodo(taskName, taskDescription);
-    inbox.todoList.push(newTodo);
+    const newTodo = createTodo(taskName, taskDescription, activeProject.title);
+    activeProject.todoList.push(newTodo);
 
-    localStorage.setItem('projectList', JSON.stringify(projectList));
+    updateLocalStorage(projectList);
 
     return true;
 }

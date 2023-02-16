@@ -225,8 +225,7 @@ const inbox = () => {
 
           const taskProjectText = document.createElement('p');
           taskProjectText.id = 'task-project-text';
-          taskProjectText.textContent = 'Inbox';
-          // 'Inbox' will be replaced with current project in view
+          taskProjectText.textContent = getActiveProject().activeProject.title;
 
           taskProjectLabel.appendChild(taskProjectText);
 
