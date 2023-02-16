@@ -16,10 +16,7 @@ const inbox = () => {
   viewContainer.appendChild(viewContent);
 
   const viewHeader = (() => {
-    let viewHeader = '';
-    if (loadLocalStorage().length === 1) {
-      viewHeader = 'Inbox';
-    }
+    const viewHeader = getActiveProject().activeProject.title;
     const viewHeaderContainer = document.createElement('div');
     viewHeaderContainer.id = 'view-header-container';
   
