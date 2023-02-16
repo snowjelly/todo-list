@@ -86,15 +86,12 @@ const removeProject = (e) => {
     updateLocalStorage(projectList);
 
     e.target.parentElement.remove();
-    console.log(projectList);
 }
 
 const selectProject = (e) => {
     if (e.target.className === "trash-image") return;
     const listId = e.target.dataset.listId;
     const projectList = loadLocalStorage();
-
-    console.log(projectList);
 
     if (projectList[listId].selected === true) return;
     e.target.classList.add('stone-200');

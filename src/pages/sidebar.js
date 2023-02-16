@@ -20,6 +20,9 @@ const sidebarDiv = () => {
     if (getActiveProject().activeProject.title === "inbox") {
       inboxLi.classList.add('stone-200');
     }
+    inboxLi.setAttribute('data-list-id', '0');
+
+    inboxLi.addEventListener('click', selectProject);
 
     const inboxImage = document.createElement('div');
     inboxImage.classList.value = 'inbox-image';
