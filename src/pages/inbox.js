@@ -50,7 +50,7 @@ const inbox = () => {
 
       const renderTodoListItems = () => {
 
-        const activeProject = getActiveProject();
+        const activeProject = getActiveProject().activeProject;
         
 
         for (let i=0;i<activeProject.todoList.length;i++) {

@@ -88,23 +88,47 @@ const removeProject = (e) => {
 }
 
 const selectProject = (e) => {
-    e.target.classList.add('stone-200');
     const listId = e.target.dataset.listId;
+    const projectList = loadLocalStorage();
+
+    console.log(projectList);
+
+    if (projectList[listId].selected === true) return;
+    e.target.classList.add('stone-200');
 
 
+    projectList[getActiveProject().id].selected = false;
+
+    projectList[listId].selected = true;
+    
+    console.log(projectList);
+    updateLocalStorage(projectList);
+
+    
 }
 
 const getActiveProject = () => {
     const projectList = loadLocalStorage();
-    const inbox = projectList[0];
 
-    
-    for (let i=0;i<projectList.length;i++) {
-      if (projectList[i].selected === false) return;
-
-      const activeProject = projectList[i];
-      return activeProject;
+    const getActiveProjectId = () => {
+        for (let i=0;i<projectList.length;i++) {
+            if (projectList[i].selected === false) continue;
+      
+            const activeProjectId = i;
+            return activeProjectId;
+          }
     }
+
+    const id = getActiveProjectId();
+
+    const getActiveProject = () => {
+        const activeProject = projectList[id];
+        return activeProject;
+    }
+
+    const activeProject = getActiveProject();
+
+    return {activeProject, id};
 }
 
 const projectMenu = (e) => {
