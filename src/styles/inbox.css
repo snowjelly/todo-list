@@ -69,7 +69,6 @@ body, ul, li, p{
   display: flex;
   gap: 1rem;
   padding: 5px;
-  background-color: var(--stone-200);
   border-radius: 5px;
 }
 

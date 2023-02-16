@@ -17,6 +17,9 @@ const sidebarDiv = () => {
     const inboxLi = document.createElement('li');
     inboxLi.id = 'filter-inbox';
     inboxLi.classList.add('hover-stone-200');
+    if (getActiveProject().activeProject.title === "inbox") {
+      inboxLi.classList.add('stone-200');
+    }
 
     const inboxImage = document.createElement('div');
     inboxImage.classList.value = 'inbox-image';
