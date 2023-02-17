@@ -5,6 +5,10 @@ import { storageFirstLoad } from '../todo';
 
 const firstLoad = () => {
   storageFirstLoad();
+  render();
+}
+
+const render = () => {
   const content = document.querySelector('#content');
   const header = headerDiv();
   const sidebar = sidebarDiv().sidebarContainer;
@@ -14,4 +18,4 @@ const firstLoad = () => {
   inbox();
 }
 
-export default firstLoad;
+export {firstLoad, render};

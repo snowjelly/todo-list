@@ -1,5 +1,6 @@
 import inbox from "./pages/inbox";
 import sidebarDiv from "./pages/sidebar";
+import { render } from "./functions/firstLoad";
 
 const createProject = (title, description, selected = false) => {
     const newProject = {
@@ -100,6 +101,13 @@ const selectProject = (e) => {
     projectList[listId].selected = true;
     
     updateLocalStorage(projectList);
+
+    const content = document.querySelector('#content');
+
+    while (content.children.length > 0) {
+        content.children[0].remove();
+    }
+    render();
 
     
 }
