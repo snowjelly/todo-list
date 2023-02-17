@@ -47,6 +47,10 @@ const inbox = () => {
 
       const renderTodoListItems = () => {
 
+        for (let i=0;i<viewList.children.length;i++) {
+          viewList.children[i].remove();
+        }
+
         const activeProject = getActiveProject().activeProject;
         
 
@@ -297,6 +301,7 @@ const inbox = () => {
   viewList.getAddTaskContent.addEventListener('click', openAddTaskMenu);
 
   content.appendChild(viewContainer);
+  return {viewList};
 }
 
 export default inbox;

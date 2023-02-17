@@ -1,5 +1,6 @@
 import inbox from "./pages/inbox";
 import sidebarDiv from "./pages/sidebar";
+
 const createProject = (title, description, selected = false) => {
     const newProject = {
         title,
@@ -69,11 +70,10 @@ const updateLocalStorage = (projectList) => {
 }
 
 const removeTask = (e) => {
-    const listId = e.target.parentElement.dataset.listId;
+    const taskId = e.target.parentElement.dataset.listId;
     const projectList = loadLocalStorage();
-    const inbox = projectList[0];
 
-    inbox.todoList.splice(listId, 1);
+    projectList[getActiveProject().id].todoList.splice(taskId, 1);
     updateLocalStorage(projectList);
 
     e.target.parentElement.remove();
@@ -96,12 +96,9 @@ const selectProject = (e) => {
     if (projectList[listId].selected === true) return;
     e.target.classList.add('stone-200');
 
-
     projectList[getActiveProject().id].selected = false;
-
     projectList[listId].selected = true;
     
-    console.log(projectList);
     updateLocalStorage(projectList);
 
     
