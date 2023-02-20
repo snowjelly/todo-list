@@ -252,7 +252,7 @@ body, ul, li, p{
   color: #be123c;
 }
 
-#project-menu-container{
+#project-menu-container, #expanded-todo-container {
   isolation: isolate;
   position: absolute;
   top: 0;
@@ -264,7 +264,7 @@ body, ul, li, p{
   justify-content: center;
 }
 
-#project-menu-content{
+#project-menu-content, #expanded-todo-content {
   width: 450px;
   height: 200px;
   background-color: white;
@@ -274,7 +274,7 @@ body, ul, li, p{
   flex-direction: column;
 }
 
-#project-menu-header{
+#project-menu-header, #expanded-todo-header {
   font-size: 1.5rem;
   font-weight: 700;
   margin: 1rem 1rem 0.5rem;

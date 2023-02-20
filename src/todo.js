@@ -80,6 +80,80 @@ const removeTask = (e) => {
     e.target.parentElement.remove();
 }
 
+const expandTodo = (e) => {
+    const projectList = loadLocalStorage();
+    const activeProject = projectList[getActiveProject().id];
+    const listId = e.currentTarget.dataset.listId;
+    const selectedTodo = activeProject.todoList[listId];
+
+    const container = (() => {
+        const container = document.createElement('div');
+        container.id = 'expanded-todo-container';
+        
+        const bodyContent = document.querySelector('#content');
+        bodyContent.appendChild(container);
+        
+        return container;
+    })();
+
+    const content = document.createElement('div');
+    content.id = 'expanded-todo-content';
+    content.addEventListener('click', finishTodoEdit);
+
+    container.appendChild(content);
+
+    const header = document.createElement('div');
+    header.id = 'expanded-todo-header';
+    header.textContent = `${selectedTodo.title}`;
+    header.addEventListener('click', editTodoHeader);
+
+    content.appendChild(header);
+
+
+    console.log(selectedTodo);
+}
+
+const editTodoHeader = () => {
+    const content = document.querySelector('#expanded-todo-content');
+
+    const header = document.querySelector('#expanded-todo-header');
+    header.remove();
+
+    const headerEditBox = document.createElement('input');
+    headerEditBox.id = 'expanded-todo-header-edit';
+    headerEditBox.type = 'textarea';
+    headerEditBox.maxLength = '30';
+    headerEditBox.minLength = '1';
+
+    content.appendChild(headerEditBox);
+
+    
+}
+
+const finishTodoEdit = (e) => {
+    const headerEditBox = document.querySelector('#expanded-todo-header-edit');
+    if (headerEditBox === null) return;
+
+    const content = document.querySelector('#expanded-todo-content');
+    if (e.target.id !== "expanded-todo-content") return;
+
+    for (let i=0;i<content.children.length;i++) {
+        if (content.children[i].id === 'expanded-todo-content') {
+            return;   
+        }
+    }
+
+    const newTodoTitle = headerEditBox.value; 
+    headerEditBox.remove();
+
+    const newHeader = document.createElement('div');
+    newHeader.id = 'expanded-todo-header';
+    newHeader.textContent = `${newTodoTitle}`;
+    newHeader.addEventListener('click', editTodoHeader);
+
+    content.appendChild(newHeader);
+}
+
 const removeProject = (e) => {
     const listId = e.target.parentElement.dataset.listId;
     const projectList = loadLocalStorage();
@@ -227,6 +301,6 @@ const projectMenu = (e) => {
 
 
 export {
-    addTask, storageFirstLoad, loadLocalStorage, removeTask, projectMenu, removeProject, selectProject, getActiveProject
+    addTask, storageFirstLoad, loadLocalStorage, removeTask, projectMenu, removeProject, selectProject, getActiveProject, expandTodo
 };
 

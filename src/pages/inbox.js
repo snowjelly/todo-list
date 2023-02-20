@@ -1,6 +1,6 @@
 import taskDueDateImage from '../assets/imgs/due-date.png';
 import taskProjectImage from '../assets/imgs/inbox.png';
-import { addTask, getActiveProject } from "../todo";
+import { addTask, getActiveProject, expandTodo} from "../todo";
 import { loadLocalStorage } from "../todo";
 import { removeTask } from "../todo";
 
@@ -58,6 +58,8 @@ const inbox = () => {
           const todoListItem = document.createElement('li');
           todoListItem.classList.value = 'todo-list-item';
           todoListItem.setAttribute('data-list-id', `${i}`);
+          todoListItem.addEventListener('click', expandTodo);
+          
       
           const todoListItemCheckbox = document.createElement('div');
           todoListItemCheckbox.classList.add('checkbox');
