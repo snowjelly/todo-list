@@ -99,6 +99,7 @@ const expandTodo = (e) => {
     const content = document.createElement('div');
     content.id = 'expanded-todo-content';
     content.addEventListener('click', finishTodoEdit);
+    content.todoListId = listId;
 
     container.appendChild(content);
 
@@ -138,9 +139,14 @@ const finishTodoEdit = (e) => {
     const newTodoTitle = headerEditBox.value; 
     if (newTodoTitle === "") return;
 
-
     const content = document.querySelector('#expanded-todo-content');
     if (e.target.id !== "expanded-todo-content") return;
+
+    const projectList = loadLocalStorage();
+    const activeProject = projectList[getActiveProject().id]
+    const listId = content.todoListId;
+    const selectedTodo = activeProject.todoList[listId];
+
 
     for (let i=0;i<content.children.length;i++) {
         if (content.children[i].id === 'expanded-todo-content') {
@@ -148,6 +154,9 @@ const finishTodoEdit = (e) => {
         }
     }
 
+    selectedTodo.title = `${newTodoTitle}`;
+
+    updateLocalStorage(projectList);
     
     headerEditBox.remove();
 
