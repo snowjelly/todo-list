@@ -81,6 +81,8 @@ const removeTask = (e) => {
 }
 
 const expandTodo = (e) => {
+    if (e.target.className === 'checkbox') return;
+    
     const projectList = loadLocalStorage();
     const activeProject = projectList[getActiveProject().id];
     const listId = e.currentTarget.dataset.listId;
@@ -109,9 +111,6 @@ const expandTodo = (e) => {
     header.addEventListener('click', editTodoHeader);
 
     content.appendChild(header);
-
-
-    console.log(selectedTodo);
 }
 
 const editTodoHeader = () => {
