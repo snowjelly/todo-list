@@ -117,22 +117,26 @@ const editTodoHeader = () => {
     const content = document.querySelector('#expanded-todo-content');
 
     const header = document.querySelector('#expanded-todo-header');
-    header.remove();
+    const previousHeaderText = header.textContent;
+
 
     const headerEditBox = document.createElement('input');
     headerEditBox.id = 'expanded-todo-header-edit';
     headerEditBox.type = 'textarea';
     headerEditBox.maxLength = '30';
     headerEditBox.minLength = '1';
+    headerEditBox.value = `${previousHeaderText}`;
 
     content.appendChild(headerEditBox);
 
-    
+    header.remove();
 }
 
 const finishTodoEdit = (e) => {
     const headerEditBox = document.querySelector('#expanded-todo-header-edit');
-    if (headerEditBox === null) return;
+    const newTodoTitle = headerEditBox.value; 
+    if (headerEditBox === null || newTodoTitle === "") return;
+
 
     const content = document.querySelector('#expanded-todo-content');
     if (e.target.id !== "expanded-todo-content") return;
@@ -143,7 +147,7 @@ const finishTodoEdit = (e) => {
         }
     }
 
-    const newTodoTitle = headerEditBox.value; 
+    
     headerEditBox.remove();
 
     const newHeader = document.createElement('div');
