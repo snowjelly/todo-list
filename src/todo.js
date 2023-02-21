@@ -101,21 +101,24 @@ const expandTodo = (e) => {
 
     const content = document.createElement('div');
     content.id = 'expanded-todo-content';
-    content.addEventListener('click', finishTodoEdit);
     content.todoListId = listId;
 
     container.appendChild(content);
 
+    const headerContent = document.createElement('div');
+    headerContent.id = 'expanded-todo-header-content';
+
     const header = document.createElement('div');
     header.id = 'expanded-todo-header';
     header.textContent = `${selectedTodo.title}`;
+    headerContent.appendChild(header);
     header.addEventListener('click', editTodoHeader);
 
-    content.appendChild(header);
+    content.appendChild(headerContent);
 }
 
 const editTodoHeader = () => {
-    const content = document.querySelector('#expanded-todo-content');
+    const content = document.querySelector('#expanded-todo-header-content');
 
     const header = document.querySelector('#expanded-todo-header');
     const previousHeaderText = header.textContent;
@@ -140,6 +143,7 @@ const editTodoHeader = () => {
 
     const headerAddBtn = document.createElement('button');
     headerAddBtn.id = 'header-add-button';
+    headerAddBtn.addEventListener('click', finishTodoEdit);
     buttonContainer.appendChild(headerAddBtn);
 
 
