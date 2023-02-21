@@ -1,6 +1,7 @@
 import inbox from "./pages/inbox";
 import sidebarDiv from "./pages/sidebar";
 import { render } from "./functions/firstLoad";
+import closeImage from "./assets/imgs/close.png";
 
 const createProject = (title, description, selected = false) => {
     const newProject = {
@@ -129,10 +130,24 @@ const editTodoHeader = () => {
 
     content.appendChild(headerEditBox);
 
+    const buttonContainer = document.createElement('div');
+    buttonContainer.id = 'header-button-content';
+    content.appendChild(buttonContainer);
+
+    const headerCancelBtn = document.createElement('button');
+    headerCancelBtn.id = 'header-cancel-button';
+    buttonContainer.appendChild(headerCancelBtn);
+
+    const headerAddBtn = document.createElement('button');
+    headerAddBtn.id = 'header-add-button';
+    buttonContainer.appendChild(headerAddBtn);
+
+
     header.remove();
 }
 
 const finishTodoEdit = (e) => {
+    /*
     const headerEditBox = document.querySelector('#expanded-todo-header-edit');
     if (headerEditBox === null) return;
     const newTodoTitle = headerEditBox.value; 
@@ -165,6 +180,7 @@ const finishTodoEdit = (e) => {
     newHeader.addEventListener('click', editTodoHeader);
 
     content.appendChild(newHeader);
+    */
 }
 
 const removeProject = (e) => {

@@ -203,14 +203,14 @@ body, ul, li, p{
   gap: 1rem;
 }
 
-#cancel-btn, .cancel-btn{
+#cancel-btn, .cancel-btn, #header-cancel-button{
   width: 70px;
   height: 30px;
   border: 0;
   border-radius: 5px;
 }
 
-#add-task-btn, .add-btn{
+#add-task-btn, .add-btn, #header-add-button{
   width: 80px;
   height: 30px;
   background-color: #be123c;
