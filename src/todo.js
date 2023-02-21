@@ -134,8 +134,9 @@ const editTodoHeader = () => {
 
 const finishTodoEdit = (e) => {
     const headerEditBox = document.querySelector('#expanded-todo-header-edit');
+    if (headerEditBox === null) return;
     const newTodoTitle = headerEditBox.value; 
-    if (headerEditBox === null || newTodoTitle === "") return;
+    if (newTodoTitle === "") return;
 
 
     const content = document.querySelector('#expanded-todo-content');
