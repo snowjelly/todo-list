@@ -122,6 +122,7 @@ const editTodoHeader = () => {
 
     const header = document.querySelector('#expanded-todo-header');
     const previousHeaderText = header.textContent;
+    content.prevHeaderText = previousHeaderText;
 
 
     const headerEditBox = document.createElement('input');
@@ -140,6 +141,7 @@ const editTodoHeader = () => {
     const headerCancelBtn = document.createElement('button');
     headerCancelBtn.id = 'header-cancel-button';
     buttonContainer.appendChild(headerCancelBtn);
+    headerCancelBtn.addEventListener('click', cancelTodoEdit);
 
     const headerAddBtn = document.createElement('button');
     headerAddBtn.id = 'header-add-button';
@@ -181,6 +183,22 @@ const finishTodoEdit = (e) => {
     newHeader.addEventListener('click', editTodoHeader);
 
     content.appendChild(newHeader);
+}
+
+const cancelTodoEdit = () => {
+    const headerBtnContent = document.querySelector('#header-button-content');
+    headerBtnContent.remove();
+    
+    const headerEditBox = document.querySelector('#expanded-todo-header-edit');
+    headerEditBox.remove();
+
+    const headerContent = document.querySelector('#expanded-todo-header-content');
+
+    const header = document.createElement('div');
+    header.id = 'expanded-todo-header';
+    header.textContent = headerContent.prevHeaderText;
+    header.addEventListener('click', editTodoHeader);
+    headerContent.appendChild(header);
 }
 
 const removeProject = (e) => {
