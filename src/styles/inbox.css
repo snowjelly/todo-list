@@ -239,6 +239,25 @@ body, ul, li, p{
   height: 24px;
 }
 
+#expanded-todo-header-content{
+  display: flex;
+  flex-direction: column;
+}
+
+#expanded-todo-header-edit{
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 1rem 1rem 0.5rem;
+}
+
+#header-button-content {
+  display: flex;
+  justify-content: end;
+  margin: 0.5rem 1rem 0.5rem;
+  gap: 1rem;
+}
+
+
 #bottom-menu-header-content:hover{
   cursor: pointer;
 }
