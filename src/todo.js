@@ -140,11 +140,13 @@ const editTodoHeader = () => {
 
     const headerCancelBtn = document.createElement('button');
     headerCancelBtn.id = 'header-cancel-button';
-    buttonContainer.appendChild(headerCancelBtn);
+    headerCancelBtn.textContent = 'Cancel';
     headerCancelBtn.addEventListener('click', cancelTodoEdit);
+    buttonContainer.appendChild(headerCancelBtn);
 
     const headerAddBtn = document.createElement('button');
     headerAddBtn.id = 'header-add-button';
+    headerAddBtn.textContent = 'Submit';
     headerAddBtn.addEventListener('click', finishTodoEdit);
     buttonContainer.appendChild(headerAddBtn);
 
