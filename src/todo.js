@@ -151,26 +151,20 @@ const editTodoHeader = () => {
 }
 
 const finishTodoEdit = (e) => {
-    /*
     const headerEditBox = document.querySelector('#expanded-todo-header-edit');
     if (headerEditBox === null) return;
     const newTodoTitle = headerEditBox.value; 
     if (newTodoTitle === "") return;
 
-    const content = document.querySelector('#expanded-todo-content');
-    if (e.target.id !== "expanded-todo-content") return;
+    const content = document.querySelector('#expanded-todo-header-content');
+
+    const parentContent = document.querySelector('#expanded-todo-content');
 
     const projectList = loadLocalStorage();
     const activeProject = projectList[getActiveProject().id]
-    const listId = content.todoListId;
+    const listId = parentContent.todoListId;
     const selectedTodo = activeProject.todoList[listId];
 
-
-    for (let i=0;i<content.children.length;i++) {
-        if (content.children[i].id === 'expanded-todo-content') {
-            return;   
-        }
-    }
 
     selectedTodo.title = `${newTodoTitle}`;
 
@@ -178,13 +172,15 @@ const finishTodoEdit = (e) => {
     
     headerEditBox.remove();
 
+    const headerBtnContent = document.querySelector('#header-button-content');
+    headerBtnContent.remove();
+
     const newHeader = document.createElement('div');
     newHeader.id = 'expanded-todo-header';
     newHeader.textContent = `${newTodoTitle}`;
     newHeader.addEventListener('click', editTodoHeader);
 
     content.appendChild(newHeader);
-    */
 }
 
 const removeProject = (e) => {
