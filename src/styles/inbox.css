@@ -219,6 +219,10 @@ body, ul, li, p{
   border-radius: 5px;
 }
 
+#header-cancel-button, #header-add-button{
+  cursor: pointer;
+}
+
 .cancel-btn{
   width: 60px;
 }
@@ -242,6 +246,10 @@ body, ul, li, p{
 #expanded-todo-header-content{
   display: flex;
   flex-direction: column;
+}
+
+#expanded-todo-header{
+  cursor: pointer;
 }
 
 #expanded-todo-header-edit{
@@ -305,6 +313,7 @@ body, ul, li, p{
 
 #close{
   grid-area: sidebar;
+  cursor: pointer;
 }
 
 #project-menu-header, #expanded-todo-header {
@@ -351,6 +360,7 @@ body, ul, li, p{
   display: flex;
   border-bottom: 1px solid var(--stone-200);
   padding: 1rem;
+  cursor: pointer;
 }
 
 .list-item-description{
