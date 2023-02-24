@@ -119,9 +119,15 @@ const expandTodo = (e) => {
     close.width = 30;
     close.height = 30;
     close.id = 'close';
+    close.addEventListener('click', closeExpandedTodo);
     content.appendChild(close);
 
     content.appendChild(headerContent);
+}
+
+const closeExpandedTodo = () => {
+    const expandedTodoContainer = document.querySelector('#expanded-todo-container');
+    expandedTodoContainer.remove();
 }
 
 const editTodoHeader = () => {
