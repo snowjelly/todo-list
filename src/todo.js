@@ -111,8 +111,15 @@ const expandTodo = (e) => {
     const header = document.createElement('div');
     header.id = 'expanded-todo-header';
     header.textContent = `${selectedTodo.title}`;
-    headerContent.appendChild(header);
     header.addEventListener('click', editTodoHeader);
+    headerContent.appendChild(header);
+
+    const close = new Image();
+    close.src = closeImage;
+    close.width = 30;
+    close.height = 30;
+    close.id = 'close';
+    content.appendChild(close);
 
     content.appendChild(headerContent);
 }
