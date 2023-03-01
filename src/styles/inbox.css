@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
 html, body, #content{
   height: 100%;
@@ -317,6 +318,8 @@ body, ul, li, p{
 
 #expanded-todo-description{
   grid-area: description;
+  margin: 0rem 1rem 0.5rem;
+  font-family: 'Montserrat', sans-serif;
 }
 
 #project-menu-header, #expanded-todo-header {
