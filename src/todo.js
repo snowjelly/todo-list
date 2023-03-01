@@ -126,8 +126,10 @@ const expandTodo = (e) => {
 }
 
 const closeExpandedTodo = () => {
-    const expandedTodoContainer = document.querySelector('#expanded-todo-container');
-    expandedTodoContainer.remove();
+    while (content.children.length > 0) {
+        content.children[0].remove();
+    }
+    render();
 }
 
 const editTodoHeader = () => {

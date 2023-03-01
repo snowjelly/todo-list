@@ -249,7 +249,7 @@ body, ul, li, p{
 }
 
 #expanded-todo-header{
-  cursor: pointer;
+  cursor: text;
 }
 
 #expanded-todo-header-edit{
