@@ -243,11 +243,6 @@ body, ul, li, p{
   height: 24px;
 }
 
-#expanded-todo-header-content{
-  display: flex;
-  flex-direction: column;
-}
-
 #expanded-todo-header{
   cursor: text;
 }
@@ -303,17 +298,25 @@ body, ul, li, p{
 
 #expanded-todo-content{
   display: grid;
-  grid-template-areas: 'body sidebar';
+  grid-template-areas:  'header right-sidebar'
+                        'description right-sidebar';
   grid-template-columns: 1fr min-content;
+  grid-template-rows: min-content min-content;
 }
 
 #expanded-todo-header-content{
-  grid-area: body;
+  display: flex;
+  flex-direction: column;
+  grid-area: header;
 }
 
 #close{
-  grid-area: sidebar;
+  grid-area: right-sidebar;
   cursor: pointer;
+}
+
+#expanded-todo-description{
+  grid-area: description;
 }
 
 #project-menu-header, #expanded-todo-header {
