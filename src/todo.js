@@ -102,17 +102,7 @@ const expandTodo = (e) => {
     const content = document.createElement('div');
     content.id = 'expanded-todo-content';
     content.todoListId = listId;
-
     container.appendChild(content);
-
-    const headerContent = document.createElement('div');
-    headerContent.id = 'expanded-todo-header-content';
-
-    const header = document.createElement('div');
-    header.id = 'expanded-todo-header';
-    header.textContent = `${selectedTodo.title}`;
-    header.addEventListener('click', editTodoHeader);
-    headerContent.appendChild(header);
 
     const close = new Image();
     close.src = closeImage;
@@ -122,7 +112,21 @@ const expandTodo = (e) => {
     close.addEventListener('click', closeExpandedTodo);
     content.appendChild(close);
 
+    const headerContent = document.createElement('div');
+    headerContent.id = 'expanded-todo-header-content';
     content.appendChild(headerContent);
+
+    const header = document.createElement('div');
+    header.id = 'expanded-todo-header';
+    header.textContent = `${selectedTodo.title}`;
+    header.addEventListener('click', editTodoHeader);
+    headerContent.appendChild(header);
+
+    const description = document.createElement('div');
+    description.id = 'expanded-todo-description';
+    description.textContent = `${selectedTodo.description}`;
+    description.addEventListener('click', editTodoDescription);
+    content.appendChild(description);
 }
 
 const closeExpandedTodo = () => {
@@ -216,6 +220,10 @@ const cancelTodoEdit = () => {
     header.textContent = headerContent.prevHeaderText;
     header.addEventListener('click', editTodoHeader);
     headerContent.appendChild(header);
+}
+
+const editTodoDescription = (e) => {
+
 }
 
 const removeProject = (e) => {
