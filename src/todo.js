@@ -112,6 +112,13 @@ const expandTodo = (e) => {
     close.addEventListener('click', closeExpandedTodo);
     content.appendChild(close);
 
+    const checkboxDiv = document.createElement('div');
+    checkboxDiv.classList.add('checkbox');
+    checkboxDiv.width = 24;
+    checkboxDiv.height = 24;
+    checkboxDiv.addEventListener('click', removeTask);
+    content.appendChild(checkboxDiv);
+
     const titleContent = document.createElement('div');
     titleContent.id = 'expanded-todo-title-content';
     content.appendChild(titleContent);

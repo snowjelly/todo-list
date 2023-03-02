@@ -299,9 +299,9 @@ body, ul, li, p{
 
 #expanded-todo-content{
   display: grid;
-  grid-template-areas:  'title right-sidebar'
-                        'description right-sidebar';
-  grid-template-columns: 1fr min-content;
+  grid-template-areas:  'checkbox title right-sidebar'
+                        'checkbox description right-sidebar';
+  grid-template-columns: min-content 1fr min-content;
   grid-template-rows: min-content min-content;
   width: auto;
   height: auto;
@@ -393,6 +393,7 @@ body, ul, li, p{
   margin-right: 5px;
   flex-shrink: 0;
   border-radius: 50%;
+  grid-area: checkbox;
 }
 
 .priority-1{
