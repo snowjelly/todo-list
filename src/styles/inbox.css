@@ -204,14 +204,14 @@ body, ul, li, p{
   gap: 1rem;
 }
 
-#cancel-btn, .cancel-btn, #header-cancel-button{
+#cancel-btn, .cancel-btn, #title-cancel-button{
   width: 70px;
   height: 30px;
   border: 0;
   border-radius: 5px;
 }
 
-#add-task-btn, .add-btn, #header-add-button{
+#add-task-btn, .add-btn, #title-add-button{
   width: 80px;
   height: 30px;
   background-color: #be123c;
@@ -220,7 +220,7 @@ body, ul, li, p{
   border-radius: 5px;
 }
 
-#header-cancel-button, #header-add-button{
+#title-cancel-button, #title-add-button{
   cursor: pointer;
 }
 
@@ -244,17 +244,17 @@ body, ul, li, p{
   height: 24px;
 }
 
-#expanded-todo-header{
+#expanded-todo-title{
   cursor: text;
 }
 
-#expanded-todo-header-edit{
+#expanded-todo-title-edit{
   font-size: 1.5rem;
   font-weight: 700;
   margin: 1rem 1rem 0.5rem;
 }
 
-#header-button-content {
+#title-button-content {
   display: flex;
   justify-content: end;
   margin: 0.5rem 1rem 0.5rem;
@@ -299,7 +299,7 @@ body, ul, li, p{
 
 #expanded-todo-content{
   display: grid;
-  grid-template-areas:  'header right-sidebar'
+  grid-template-areas:  'title right-sidebar'
                         'description right-sidebar';
   grid-template-columns: 1fr min-content;
   grid-template-rows: min-content min-content;
@@ -310,10 +310,10 @@ body, ul, li, p{
   margin-right: 30%;
 }
 
-#expanded-todo-header-content{
+#expanded-todo-title-content{
   display: flex;
   flex-direction: column;
-  grid-area: header;
+  grid-area: title;
 }
 
 #close{
@@ -327,7 +327,7 @@ body, ul, li, p{
   font-family: 'Montserrat', sans-serif;
 }
 
-#project-menu-header, #expanded-todo-header {
+#project-menu-header, #expanded-todo-title {
   font-size: 1.5rem;
   font-weight: 700;
   margin: 1rem 1rem 0.5rem;
