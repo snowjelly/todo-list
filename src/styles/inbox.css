@@ -396,6 +396,17 @@ body, ul, li, p{
   grid-area: checkbox;
 }
 
+#checkbox-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#checkbox-container > * {
+  margin-right: 0;
+  margin-left: 10px;
+}
+
 .priority-1{
   background-color: red;
 }
