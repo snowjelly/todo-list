@@ -119,7 +119,7 @@ const expandTodo = (e) => {
     const header = document.createElement('div');
     header.id = 'expanded-todo-header';
     header.textContent = `${selectedTodo.title}`;
-    header.addEventListener('click', editTodoHeader);
+    header.addEventListener('click', editTodo);
     headerContent.appendChild(header);
 
     const description = document.createElement('div');
@@ -136,13 +136,18 @@ const closeExpandedTodo = () => {
     render();
 }
 
-const editTodoHeader = () => {
-    const content = document.querySelector('#expanded-todo-header-content');
+const editTodo = () => {
+    const content = document.querySelector('#expanded-todo-content');
 
     const header = document.querySelector('#expanded-todo-header');
     const previousHeaderText = header.textContent;
     content.prevHeaderText = previousHeaderText;
 
+
+    const editContainer = document.createElement('div');
+    editContainer.id = 'expanded-todo-edit-container';
+    content.appendChild(editContainer);
+    
 
     const headerEditBox = document.createElement('input');
     headerEditBox.id = 'expanded-todo-header-edit';
@@ -150,8 +155,9 @@ const editTodoHeader = () => {
     headerEditBox.maxLength = '30';
     headerEditBox.minLength = '1';
     headerEditBox.value = `${previousHeaderText}`;
+    editContainer.appendChild(headerEditBox);
 
-    content.appendChild(headerEditBox);
+    const descriptionEditBox = document.createElement('div');
 
     const buttonContainer = document.createElement('div');
     buttonContainer.id = 'header-button-content';
@@ -201,7 +207,7 @@ const finishTodoEdit = (e) => {
     const newHeader = document.createElement('div');
     newHeader.id = 'expanded-todo-header';
     newHeader.textContent = `${newTodoTitle}`;
-    newHeader.addEventListener('click', editTodoHeader);
+    newHeader.addEventListener('click', editTodo);
 
     content.appendChild(newHeader);
 }
@@ -218,7 +224,7 @@ const cancelTodoEdit = () => {
     const header = document.createElement('div');
     header.id = 'expanded-todo-header';
     header.textContent = headerContent.prevHeaderText;
-    header.addEventListener('click', editTodoHeader);
+    header.addEventListener('click', editTodo);
     headerContent.appendChild(header);
 }
 
