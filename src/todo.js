@@ -143,6 +143,10 @@ const editTodo = () => {
     const previousHeaderText = header.textContent;
     content.prevHeaderText = previousHeaderText;
 
+    const description = document.querySelector('#expanded-todo-description');
+    const previousDescriptionText = description.textContent;
+    content.prevDescText = previousDescriptionText;
+
 
     const editContainer = document.createElement('div');
     editContainer.id = 'expanded-todo-edit-container';
@@ -157,7 +161,12 @@ const editTodo = () => {
     headerEditBox.value = `${previousHeaderText}`;
     editContainer.appendChild(headerEditBox);
 
-    const descriptionEditBox = document.createElement('div');
+    const descriptionEditBox = document.createElement('input');
+    descriptionEditBox.id = 'expanded-todo-description-edit';
+    descriptionEditBox.type = 'textarea';
+    descriptionEditBox.maxLength = '200';
+    descriptionEditBox.value = `${previousDescriptionText}`;
+    editContainer.appendChild(descriptionEditBox);
 
     const buttonContainer = document.createElement('div');
     buttonContainer.id = 'header-button-content';
