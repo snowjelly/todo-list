@@ -1,6 +1,6 @@
 import taskDueDateImage from '../assets/imgs/due-date.png';
 import taskProjectImage from '../assets/imgs/inbox.png';
-import { addTask } from "../todo";
+import { addTask, getActiveProject, expandTodo} from "../todo";
 import { loadLocalStorage } from "../todo";
 import { removeTask } from "../todo";
 
@@ -16,10 +16,7 @@ const inbox = () => {
   viewContainer.appendChild(viewContent);
 
   const viewHeader = (() => {
-    let viewHeader = '';
-    if (loadLocalStorage().length === 1) {
-      viewHeader = 'Inbox';
-    }
+    const viewHeader = getActiveProject().activeProject.title;
     const viewHeaderContainer = document.createElement('div');
     viewHeaderContainer.id = 'view-header-container';
   
@@ -50,23 +47,30 @@ const inbox = () => {
 
       const renderTodoListItems = () => {
 
-        const inbox = loadLocalStorage()[0];
+        for (let i=0;i<viewList.children.length;i++) {
+          viewList.children[i].remove();
+        }
 
-        for (let i=0;i<inbox.todoList.length;i++) {
+        const activeProject = getActiveProject().activeProject;
+        
+
+        for (let i=0;i<activeProject.todoList.length;i++) {
           const todoListItem = document.createElement('li');
           todoListItem.classList.value = 'todo-list-item';
           todoListItem.setAttribute('data-list-id', `${i}`);
+          todoListItem.addEventListener('click', expandTodo);
+          
       
           const todoListItemCheckbox = document.createElement('div');
           todoListItemCheckbox.classList.add('checkbox');
           
-          if (inbox.todoList[i].priority === 3) {
+          if (activeProject.todoList[i].priority === 3) {
             todoListItemCheckbox.classList.add('priority-3');
           }
-          if (inbox.todoList[i].priority === 2) {
+          if (activeProject.todoList[i].priority === 2) {
             todoListItemCheckbox.classList.add('priority-2');
           }
-          if (inbox.todoList[i].priority === 1) {
+          if (activeProject.todoList[i].priority === 1) {
             todoListItemCheckbox.classList.add('priority-1');
           } 
 
@@ -77,12 +81,12 @@ const inbox = () => {
 
       
           const todoListItemTitle = document.createElement('p');
-          todoListItemTitle.textContent = `${inbox.todoList[i].title}`;
+          todoListItemTitle.textContent = `${activeProject.todoList[i].title}`;
     
           todoListItemContent.appendChild(todoListItemTitle);
 
           const todoListItemDescription = document.createElement('p');
-          todoListItemDescription.textContent = `${inbox.todoList[i].description}`;
+          todoListItemDescription.textContent = `${activeProject.todoList[i].description}`;
           todoListItemDescription.classList.add('list-item-description');
 
           todoListItemContent.appendChild(todoListItemDescription);
@@ -224,8 +228,7 @@ const inbox = () => {
 
           const taskProjectText = document.createElement('p');
           taskProjectText.id = 'task-project-text';
-          taskProjectText.textContent = 'Inbox';
-          // 'Inbox' will be replaced with current project in view
+          taskProjectText.textContent = getActiveProject().activeProject.title;
 
           taskProjectLabel.appendChild(taskProjectText);
 
@@ -300,6 +303,7 @@ const inbox = () => {
   viewList.getAddTaskContent.addEventListener('click', openAddTaskMenu);
 
   content.appendChild(viewContainer);
+  return {viewList};
 }
 
 export default inbox;

@@ -1,9 +1,13 @@
+import inbox from "./pages/inbox";
 import sidebarDiv from "./pages/sidebar";
+import { render } from "./functions/firstLoad";
+import closeImage from "./assets/imgs/close.png";
 
-const createProject = (title, description) => {
+const createProject = (title, description, selected = false) => {
     const newProject = {
         title,
         description,
+        selected,
         todoList: [],
     }
 
@@ -19,33 +23,26 @@ const createProject = (title, description) => {
 
 const storageFirstLoad = () => {
     if (localStorage.length > 0) return;
-    const inbox = createProject('inbox', 'the default');
-    const projectList = loadLocalStorage();
+    const inbox = createProject('inbox', 'the default', true);
+    const projectList = [];
 
     projectList.push(inbox.getProject());
     localStorage.setItem('projectList', JSON.stringify(projectList));
 }
 
 const loadLocalStorage = () => {
-    if (localStorage.length === 0) {
-        const projectList = [];
-        localStorage.setItem('projectList', JSON.stringify(projectList));
-        return projectList;
-    }
-    else {
-        const projectList = JSON.parse(localStorage.getItem('projectList'));
-        return projectList;
-    }
+    const projectList = JSON.parse(localStorage.getItem('projectList'));
+    return projectList;
 }
 
-const createTodo = (title, description = "", dueDate = "", priority = 4, project = loadLocalStorage()[0].title) => {
+const createTodo = (title, description = "", project = loadLocalStorage()[0].title, dueDate = "", priority = 4) => {
     const newTodo = {
         title,
         description,
+        project,
         dueDate,
         priority,
         notes: "",
-        project,
     }
 
     return newTodo;
@@ -60,12 +57,12 @@ const addTask = () => {
     }
 
     const projectList = loadLocalStorage();
-    const inbox = projectList[0];
+    const activeProject = projectList[getActiveProject().id];
 
-    const newTodo = createTodo(taskName, taskDescription);
-    inbox.todoList.push(newTodo);
+    const newTodo = createTodo(taskName, taskDescription, activeProject.title);
+    activeProject.todoList.push(newTodo);
 
-    localStorage.setItem('projectList', JSON.stringify(projectList));
+    updateLocalStorage(projectList);
 
     return true;
 }
@@ -75,15 +72,219 @@ const updateLocalStorage = (projectList) => {
 }
 
 const removeTask = (e) => {
-    const listId = e.target.parentElement.dataset.listId;
+    const taskId = e.target.parentElement.dataset.listId;
     const projectList = loadLocalStorage();
-    const inbox = projectList[0];
 
-    inbox.todoList.splice(listId, 1);
-    console.log(inbox.todoList);
+    projectList[getActiveProject().id].todoList.splice(taskId, 1);
     updateLocalStorage(projectList);
 
     e.target.parentElement.remove();
+}
+
+const expandTodo = (e) => {
+    if (e.target.className === 'checkbox') return;
+    
+    const projectList = loadLocalStorage();
+    const activeProject = projectList[getActiveProject().id];
+    const listId = e.currentTarget.dataset.listId;
+    const selectedTodo = activeProject.todoList[listId];
+
+    const container = (() => {
+        const container = document.createElement('div');
+        container.id = 'expanded-todo-container';
+        
+        const bodyContent = document.querySelector('#content');
+        bodyContent.appendChild(container);
+        
+        return container;
+    })();
+
+    const content = document.createElement('div');
+    content.id = 'expanded-todo-content';
+    content.todoListId = listId;
+    container.appendChild(content);
+
+    const close = new Image();
+    close.src = closeImage;
+    close.width = 30;
+    close.height = 30;
+    close.id = 'close';
+    close.addEventListener('click', closeExpandedTodo);
+    content.appendChild(close);
+
+    const headerContent = document.createElement('div');
+    headerContent.id = 'expanded-todo-header-content';
+    content.appendChild(headerContent);
+
+    const header = document.createElement('div');
+    header.id = 'expanded-todo-header';
+    header.textContent = `${selectedTodo.title}`;
+    header.addEventListener('click', editTodoHeader);
+    headerContent.appendChild(header);
+
+    const description = document.createElement('div');
+    description.id = 'expanded-todo-description';
+    description.textContent = `${selectedTodo.description}`;
+    description.addEventListener('click', editTodoDescription);
+    content.appendChild(description);
+}
+
+const closeExpandedTodo = () => {
+    while (content.children.length > 0) {
+        content.children[0].remove();
+    }
+    render();
+}
+
+const editTodoHeader = () => {
+    const content = document.querySelector('#expanded-todo-header-content');
+
+    const header = document.querySelector('#expanded-todo-header');
+    const previousHeaderText = header.textContent;
+    content.prevHeaderText = previousHeaderText;
+
+
+    const headerEditBox = document.createElement('input');
+    headerEditBox.id = 'expanded-todo-header-edit';
+    headerEditBox.type = 'textarea';
+    headerEditBox.maxLength = '30';
+    headerEditBox.minLength = '1';
+    headerEditBox.value = `${previousHeaderText}`;
+
+    content.appendChild(headerEditBox);
+
+    const buttonContainer = document.createElement('div');
+    buttonContainer.id = 'header-button-content';
+    content.appendChild(buttonContainer);
+
+    const headerCancelBtn = document.createElement('button');
+    headerCancelBtn.id = 'header-cancel-button';
+    headerCancelBtn.textContent = 'Cancel';
+    headerCancelBtn.addEventListener('click', cancelTodoEdit);
+    buttonContainer.appendChild(headerCancelBtn);
+
+    const headerAddBtn = document.createElement('button');
+    headerAddBtn.id = 'header-add-button';
+    headerAddBtn.textContent = 'Submit';
+    headerAddBtn.addEventListener('click', finishTodoEdit);
+    buttonContainer.appendChild(headerAddBtn);
+
+
+    header.remove();
+}
+
+const finishTodoEdit = (e) => {
+    const headerEditBox = document.querySelector('#expanded-todo-header-edit');
+    if (headerEditBox === null) return;
+    const newTodoTitle = headerEditBox.value; 
+    if (newTodoTitle === "") return;
+
+    const content = document.querySelector('#expanded-todo-header-content');
+
+    const parentContent = document.querySelector('#expanded-todo-content');
+
+    const projectList = loadLocalStorage();
+    const activeProject = projectList[getActiveProject().id]
+    const listId = parentContent.todoListId;
+    const selectedTodo = activeProject.todoList[listId];
+
+
+    selectedTodo.title = `${newTodoTitle}`;
+
+    updateLocalStorage(projectList);
+    
+    headerEditBox.remove();
+
+    const headerBtnContent = document.querySelector('#header-button-content');
+    headerBtnContent.remove();
+
+    const newHeader = document.createElement('div');
+    newHeader.id = 'expanded-todo-header';
+    newHeader.textContent = `${newTodoTitle}`;
+    newHeader.addEventListener('click', editTodoHeader);
+
+    content.appendChild(newHeader);
+}
+
+const cancelTodoEdit = () => {
+    const headerBtnContent = document.querySelector('#header-button-content');
+    headerBtnContent.remove();
+    
+    const headerEditBox = document.querySelector('#expanded-todo-header-edit');
+    headerEditBox.remove();
+
+    const headerContent = document.querySelector('#expanded-todo-header-content');
+
+    const header = document.createElement('div');
+    header.id = 'expanded-todo-header';
+    header.textContent = headerContent.prevHeaderText;
+    header.addEventListener('click', editTodoHeader);
+    headerContent.appendChild(header);
+}
+
+const editTodoDescription = (e) => {
+
+}
+
+const removeProject = (e) => {
+    const listId = e.target.parentElement.dataset.listId;
+    const projectList = loadLocalStorage();
+    projectList.splice(listId, 1);
+    updateLocalStorage(projectList);
+
+    e.target.parentElement.remove();
+}
+
+const selectProject = (e) => {
+    if (e.target.className === "trash-image") return;
+    const listId = e.target.dataset.listId;
+    const projectList = loadLocalStorage();
+
+    if (projectList[listId].selected === true) return;
+    e.target.classList.add('stone-200');
+
+    projectList[getActiveProject().id].selected = false;
+    projectList[listId].selected = true;
+    
+    updateLocalStorage(projectList);
+
+    const content = document.querySelector('#content');
+
+    while (content.children.length > 0) {
+        content.children[0].remove();
+    }
+    render();
+
+    
+}
+
+const getActiveProject = () => {
+    const projectList = loadLocalStorage();
+
+    const getActiveProjectId = () => {
+        const inboxId = 0;
+
+        for (let i=0;i<projectList.length;i++) {
+            if (projectList[i].selected === false) continue;
+      
+            const activeProjectId = i;
+            return activeProjectId;
+          }
+          projectList[inboxId].selected = true;
+          updateLocalStorage(projectList);
+          return inboxId;
+    }
+
+    const id = getActiveProjectId();
+
+    const getActiveProject = () => {
+        const activeProject = projectList[id];
+        return activeProject;
+    }
+
+    const activeProject = getActiveProject();
+
+    return {activeProject, id};
 }
 
 const projectMenu = (e) => {
@@ -133,15 +334,12 @@ const projectMenu = (e) => {
         const newProject = createProject(projectName.value);
         projectList.push(newProject.getProject());
         updateLocalStorage(projectList);
-        console.log(projectList);
         container.remove();
-        
-        const projectListDomElement = document.querySelector('#project-list');
-        while (projectListDomElement.children.length > 0) {
-            projectListDomElement.children[0].remove();
-          }
-        sidebarDiv().bottomMenu.renderProjectList();
-          
+        const projectListElement = document.querySelector('#project-list');
+        while (projectListElement.children.length > 0) {
+            projectListElement.children[0].remove();
+        }
+        sidebarDiv().bottomMenu.renderProjectList(projectListElement);
     }
 
     const buttons = (() => {
@@ -175,6 +373,6 @@ const projectMenu = (e) => {
 
 
 export {
-    addTask, storageFirstLoad, loadLocalStorage, removeTask, projectMenu
+    addTask, storageFirstLoad, loadLocalStorage, removeTask, projectMenu, removeProject, selectProject, getActiveProject, expandTodo
 };
 

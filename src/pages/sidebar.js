@@ -1,5 +1,7 @@
 import plusImage from '../assets/imgs/plus.png';
-import { loadLocalStorage, projectMenu } from '../todo';
+import trashImage from '../assets/imgs/trash.png';
+import { getActiveProject, loadLocalStorage, projectMenu } from '../todo';
+import { removeProject, selectProject } from '../todo';
 
 const sidebarDiv = () => {
   const sidebarContainer = document.createElement('div');
@@ -15,6 +17,12 @@ const sidebarDiv = () => {
     const inboxLi = document.createElement('li');
     inboxLi.id = 'filter-inbox';
     inboxLi.classList.add('hover-stone-200');
+    if (getActiveProject().activeProject.title === "inbox") {
+      inboxLi.classList.add('stone-200');
+    }
+    inboxLi.setAttribute('data-list-id', '0');
+
+    inboxLi.addEventListener('click', selectProject);
 
     const inboxImage = document.createElement('div');
     inboxImage.classList.value = 'inbox-image';
@@ -57,18 +65,38 @@ const sidebarDiv = () => {
     projectList.id = 'project-list';
     bottomMenuContent.appendChild(projectList);
 
-    const renderProjectList = () => {
+    const renderProjectList = (projectListElement = projectList) => {
 
     const projectListArray = loadLocalStorage();
 
     for (let i=1;i<projectListArray.length;i++) {
       const projectListItem = document.createElement('li');
-      projectListItem.textContent = projectListArray[i].title;
+
+      const projectListItemText = document.createElement('p');
+      projectListItemText.textContent = projectListArray[i].title;
+      projectListItem.appendChild(projectListItemText);
+
+      const projectListItemTrashImage = new Image();
+      projectListItemTrashImage.src = trashImage;
+      projectListItemTrashImage.width = 20;
+      projectListItemTrashImage.height = 20;
+      projectListItemTrashImage.classList.add('trash-image');
+      projectListItem.appendChild(projectListItemTrashImage);
+      projectListItemTrashImage.addEventListener('click', removeProject);
+      
       projectListItem.classList.add('project-list-item', 'hover-stone-200');
-  
-      projectList.appendChild(projectListItem);
+      const projectList = loadLocalStorage();
+      if (getActiveProject().id === i) {
+        projectListItem.classList.add('stone-200');
+      }
+
+
+      projectListItem.setAttribute('data-list-id', [i]);
+      projectListItem.addEventListener('click', selectProject);
+      
+
+      projectListElement.appendChild(projectListItem);
     }
-    console.log('rendered');
   }
   renderProjectList();
 

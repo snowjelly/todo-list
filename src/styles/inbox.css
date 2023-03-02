@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
 html, body, #content{
   height: 100%;
@@ -69,7 +70,6 @@ body, ul, li, p{
   display: flex;
   gap: 1rem;
   padding: 5px;
-  background-color: var(--stone-200);
   border-radius: 5px;
 }
 
@@ -204,20 +204,24 @@ body, ul, li, p{
   gap: 1rem;
 }
 
-#cancel-btn, .cancel-btn{
+#cancel-btn, .cancel-btn, #header-cancel-button{
   width: 70px;
   height: 30px;
   border: 0;
   border-radius: 5px;
 }
 
-#add-task-btn, .add-btn{
+#add-task-btn, .add-btn, #header-add-button{
   width: 80px;
   height: 30px;
   background-color: #be123c;
   color: white;
   border: 0;
   border-radius: 5px;
+}
+
+#header-cancel-button, #header-add-button{
+  cursor: pointer;
 }
 
 .cancel-btn{
@@ -240,6 +244,24 @@ body, ul, li, p{
   height: 24px;
 }
 
+#expanded-todo-header{
+  cursor: text;
+}
+
+#expanded-todo-header-edit{
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 1rem 1rem 0.5rem;
+}
+
+#header-button-content {
+  display: flex;
+  justify-content: end;
+  margin: 0.5rem 1rem 0.5rem;
+  gap: 1rem;
+}
+
+
 #bottom-menu-header-content:hover{
   cursor: pointer;
 }
@@ -253,7 +275,7 @@ body, ul, li, p{
   color: #be123c;
 }
 
-#project-menu-container{
+#project-menu-container, #expanded-todo-container {
   isolation: isolate;
   position: absolute;
   top: 0;
@@ -265,7 +287,7 @@ body, ul, li, p{
   justify-content: center;
 }
 
-#project-menu-content{
+#project-menu-content, #expanded-todo-content {
   width: 450px;
   height: 200px;
   background-color: white;
@@ -275,7 +297,32 @@ body, ul, li, p{
   flex-direction: column;
 }
 
-#project-menu-header{
+#expanded-todo-content{
+  display: grid;
+  grid-template-areas:  'header right-sidebar'
+                        'description right-sidebar';
+  grid-template-columns: 1fr min-content;
+  grid-template-rows: min-content min-content;
+}
+
+#expanded-todo-header-content{
+  display: flex;
+  flex-direction: column;
+  grid-area: header;
+}
+
+#close{
+  grid-area: right-sidebar;
+  cursor: pointer;
+}
+
+#expanded-todo-description{
+  grid-area: description;
+  margin: 0rem 1rem 0.5rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+#project-menu-header, #expanded-todo-header {
   font-size: 1.5rem;
   font-weight: 700;
   margin: 1rem 1rem 0.5rem;
@@ -302,12 +349,24 @@ body, ul, li, p{
 .project-list-item{
   border-radius: 5px;
   padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.project-list-item:hover .trash-image{
+  visibility: visible;
+}
+
+.trash-image{
+  visibility: collapse;
 }
 
 .todo-list-item{
   display: flex;
   border-bottom: 1px solid var(--stone-200);
   padding: 1rem;
+  cursor: pointer;
 }
 
 .list-item-description{
@@ -358,4 +417,8 @@ body, ul, li, p{
 .hover-stone-200:hover{
   background-color: var(--stone-200);
   cursor: pointer;
+}
+
+.stone-200{
+  background-color: var(--stone-200);
 }
