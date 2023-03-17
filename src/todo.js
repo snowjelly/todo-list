@@ -75,23 +75,20 @@ const removeTask = (e) => {
     const taskId = e.target.parentElement.dataset.listId;
     const projectList = loadLocalStorage();
     const expandedTodoContainer = document.querySelector('#expanded-todo-container');
-
-    projectList[getActiveProject().id].todoList.splice(taskId, 1);
-    updateLocalStorage(projectList);
-
-    const viewContent = document.querySelector('#view-content');
-    while (viewContent.children.length > 0) {
-        viewContent.children[0].remove();
-    }
-    inbox().viewList.todoListItems.renderTodoListItems();
+    const rootContent = document.querySelector('#content');
 
     if (e.target.parentElement.id === 'checkbox-container') {
-        expandedTodoContainer.remove();
-        
+        projectList[getActiveProject().id].todoList.splice(expandedTodoContainer.todoListId, 1);
     }
-    else if (e.target.parentElement.id === 'todo-list-item') {
-        e.target.parentElement.remove();
+    else if (e.target.parentElement.className === 'todo-list-item') {
+        projectList[getActiveProject().id].todoList.splice(taskId, 1);
     }
+    updateLocalStorage(projectList);
+
+    while (rootContent.children.length > 0) {
+        rootContent.children[0].remove();
+    }
+    render();
 }
 
 const expandTodo = (e) => {
