@@ -112,15 +112,26 @@ const expandTodo = (e) => {
     close.addEventListener('click', closeExpandedTodo);
     content.appendChild(close);
 
-    const headerContent = document.createElement('div');
-    headerContent.id = 'expanded-todo-header-content';
-    content.appendChild(headerContent);
+    const checkboxContainer = document.createElement('div');
+    checkboxContainer.id = 'checkbox-container';
+    content.appendChild(checkboxContainer);
 
-    const header = document.createElement('div');
-    header.id = 'expanded-todo-header';
-    header.textContent = `${selectedTodo.title}`;
-    header.addEventListener('click', editTodo);
-    headerContent.appendChild(header);
+    const checkboxDiv = document.createElement('div');
+    checkboxDiv.classList.add('checkbox');
+    checkboxDiv.width = 24;
+    checkboxDiv.height = 24;
+    checkboxDiv.addEventListener('click', removeTask);
+    checkboxContainer.appendChild(checkboxDiv);
+
+    const titleContent = document.createElement('div');
+    titleContent.id = 'expanded-todo-title-content';
+    content.appendChild(titleContent);
+
+    const title = document.createElement('div');
+    title.id = 'expanded-todo-title';
+    title.textContent = `${selectedTodo.title}`;
+    title.addEventListener('click', editTodoTitle);
+    titleContent.appendChild(title);
 
     const description = document.createElement('div');
     description.id = 'expanded-todo-description';
@@ -136,12 +147,12 @@ const closeExpandedTodo = () => {
     render();
 }
 
-const editTodo = () => {
-    const content = document.querySelector('#expanded-todo-content');
+const editTodoTitle = () => {
+    const content = document.querySelector('#expanded-todo-title-content');
 
-    const header = document.querySelector('#expanded-todo-header');
-    const previousHeaderText = header.textContent;
-    content.prevHeaderText = previousHeaderText;
+    const title = document.querySelector('#expanded-todo-title');
+    const previousTitleText = title.textContent;
+    content.prevTitleText = previousTitleText;
 
     const description = document.querySelector('#expanded-todo-description');
     const previousDescriptionText = description.textContent;
@@ -153,48 +164,42 @@ const editTodo = () => {
     content.appendChild(editContainer);
     
 
-    const headerEditBox = document.createElement('input');
-    headerEditBox.id = 'expanded-todo-header-edit';
-    headerEditBox.type = 'textarea';
-    headerEditBox.maxLength = '30';
-    headerEditBox.minLength = '1';
-    headerEditBox.value = `${previousHeaderText}`;
-    editContainer.appendChild(headerEditBox);
+    const titleEditBox = document.createElement('input');
+    titleEditBox.id = 'expanded-todo-title-edit';
+    titleEditBox.type = 'textarea';
+    titleEditBox.maxLength = '30';
+    titleEditBox.minLength = '1';
+    titleEditBox.value = `${previousTitleText}`;
 
-    const descriptionEditBox = document.createElement('input');
-    descriptionEditBox.id = 'expanded-todo-description-edit';
-    descriptionEditBox.type = 'textarea';
-    descriptionEditBox.maxLength = '200';
-    descriptionEditBox.value = `${previousDescriptionText}`;
-    editContainer.appendChild(descriptionEditBox);
+    content.appendChild(titleEditBox);
 
     const buttonContainer = document.createElement('div');
-    buttonContainer.id = 'header-button-content';
+    buttonContainer.id = 'title-button-content';
     content.appendChild(buttonContainer);
 
-    const headerCancelBtn = document.createElement('button');
-    headerCancelBtn.id = 'header-cancel-button';
-    headerCancelBtn.textContent = 'Cancel';
-    headerCancelBtn.addEventListener('click', cancelTodoEdit);
-    buttonContainer.appendChild(headerCancelBtn);
+    const titleCancelBtn = document.createElement('button');
+    titleCancelBtn.id = 'title-cancel-button';
+    titleCancelBtn.textContent = 'Cancel';
+    titleCancelBtn.addEventListener('click', cancelTodoEdit);
+    buttonContainer.appendChild(titleCancelBtn);
 
-    const headerAddBtn = document.createElement('button');
-    headerAddBtn.id = 'header-add-button';
-    headerAddBtn.textContent = 'Submit';
-    headerAddBtn.addEventListener('click', finishTodoEdit);
-    buttonContainer.appendChild(headerAddBtn);
+    const titleAddBtn = document.createElement('button');
+    titleAddBtn.id = 'title-add-button';
+    titleAddBtn.textContent = 'Submit';
+    titleAddBtn.addEventListener('click', finishTodoEdit);
+    buttonContainer.appendChild(titleAddBtn);
 
 
-    header.remove();
+    title.remove();
 }
 
 const finishTodoEdit = (e) => {
-    const headerEditBox = document.querySelector('#expanded-todo-header-edit');
-    if (headerEditBox === null) return;
-    const newTodoTitle = headerEditBox.value; 
+    const titleEditBox = document.querySelector('#expanded-todo-title-edit');
+    if (titleEditBox === null) return;
+    const newTodoTitle = titleEditBox.value; 
     if (newTodoTitle === "") return;
 
-    const content = document.querySelector('#expanded-todo-header-content');
+    const content = document.querySelector('#expanded-todo-title-content');
 
     const parentContent = document.querySelector('#expanded-todo-content');
 
@@ -208,33 +213,33 @@ const finishTodoEdit = (e) => {
 
     updateLocalStorage(projectList);
     
-    headerEditBox.remove();
+    titleEditBox.remove();
 
-    const headerBtnContent = document.querySelector('#header-button-content');
-    headerBtnContent.remove();
+    const titleBtnContent = document.querySelector('#title-button-content');
+    titleBtnContent.remove();
 
-    const newHeader = document.createElement('div');
-    newHeader.id = 'expanded-todo-header';
-    newHeader.textContent = `${newTodoTitle}`;
-    newHeader.addEventListener('click', editTodo);
+    const newTitle = document.createElement('div');
+    newTitle.id = 'expanded-todo-title';
+    newTitle.textContent = `${newTodoTitle}`;
+    newTitle.addEventListener('click', editTodoTitle);
 
-    content.appendChild(newHeader);
+    content.appendChild(newTitle);
 }
 
 const cancelTodoEdit = () => {
-    const headerBtnContent = document.querySelector('#header-button-content');
-    headerBtnContent.remove();
+    const titleBtnContent = document.querySelector('#title-button-content');
+    titleBtnContent.remove();
     
-    const headerEditBox = document.querySelector('#expanded-todo-header-edit');
-    headerEditBox.remove();
+    const titleEditBox = document.querySelector('#expanded-todo-title-edit');
+    titleEditBox.remove();
 
-    const headerContent = document.querySelector('#expanded-todo-header-content');
+    const titleContent = document.querySelector('#expanded-todo-title-content');
 
-    const header = document.createElement('div');
-    header.id = 'expanded-todo-header';
-    header.textContent = headerContent.prevHeaderText;
-    header.addEventListener('click', editTodo);
-    headerContent.appendChild(header);
+    const title = document.createElement('div');
+    title.id = 'expanded-todo-title';
+    title.textContent = titleContent.prevTitleText;
+    title.addEventListener('click', editTodoTitle);
+    titleContent.appendChild(title);
 }
 
 const editTodoDescription = (e) => {
