@@ -117,22 +117,11 @@ body, ul, li, p{
   height: 24px;
 }
 
-#add-task-menu-container{
-  height: 100px;
-  border: #d6d3d1 solid 1px;
-  border-radius: 5px;
-  margin-top: 10px;
-  display: flex;
-  height: fit-content;
-}
-
 #task-due-date-text, #task-project-text{
   margin-right: 2px;
 }
 
 #add-task-menu-content{
-  display: flex;
-  flex: 1;
   padding: 1rem;
 }
 
@@ -290,7 +279,7 @@ body, ul, li, p{
   color: #be123c;
 }
 
-#project-menu-container, #expanded-todo-container {
+.isolated-container {
   isolation: isolate;
   position: absolute;
   top: 0;
@@ -302,7 +291,7 @@ body, ul, li, p{
   justify-content: center;
 }
 
-#project-menu-content, #expanded-todo-content {
+.isolated-content {
   width: 450px;
   height: 200px;
   background-color: white;

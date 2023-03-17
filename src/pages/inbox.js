@@ -139,9 +139,11 @@ const inbox = () => {
     const addTaskMenu = (() => {
       const container = document.createElement('div');
       container.id = 'add-task-menu-container';
+      container.classList.add('isolated-container');
 
       const content = document.createElement('div');
       content.id = 'add-task-menu-content';
+      content.classList.add('isolated-content');
 
       const form = document.createElement('form');
       form.id = 'add-task-menu-form';
@@ -254,6 +256,8 @@ const inbox = () => {
     })();
 
     const addTaskActionButtons = (() => {
+      const addTaskMenuContainer = document.querySelector('#add-task-menu-container');
+      const addTaskMenuContent = document.querySelector('#add-task-menu-content');
       const container = document.createElement('div');
       container.id = 'add-task-action-buttons-container';
 
@@ -271,7 +275,7 @@ const inbox = () => {
 
         cancelBtn.addEventListener('click', (e) => {
           container.remove();
-          document.querySelector('#add-task-menu-container').remove();
+          addTaskMenuContainer.remove();
           viewList.viewListContainer.appendChild(viewList.getAddTaskContent);
         });
       })();
@@ -286,7 +290,7 @@ const inbox = () => {
         addTaskBtn.addEventListener('click', (e) => {
           if (addTask() !== true) return;
           container.remove();
-          document.querySelector('#add-task-menu-container').remove();
+          addTaskMenuContainer.remove();
           viewList.viewListContainer.appendChild(viewList.getAddTaskContent);
           const getViewList = document.querySelector('#view-list');
           while (getViewList.children.length > 0) {
@@ -296,7 +300,7 @@ const inbox = () => {
         });
       })();
 
-      viewContent.appendChild(container);
+      addTaskMenuContent.appendChild(container);
     })();
   }
 

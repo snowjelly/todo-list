@@ -75,7 +75,6 @@ const removeTask = (e) => {
     const taskId = e.target.parentElement.dataset.listId;
     const projectList = loadLocalStorage();
     const expandedTodoContainer = document.querySelector('#expanded-todo-container');
-    //const taskToBeRemoved = document.querySelector('#todo-list-item').dataset.listId;
 
     projectList[getActiveProject().id].todoList.splice(taskId, 1);
     updateLocalStorage(projectList);
@@ -106,6 +105,7 @@ const expandTodo = (e) => {
     const container = (() => {
         const container = document.createElement('div');
         container.id = 'expanded-todo-container';
+        container.classList.add('isolated-container');
         
         const bodyContent = document.querySelector('#content');
         bodyContent.appendChild(container);
@@ -115,6 +115,7 @@ const expandTodo = (e) => {
 
     const content = document.createElement('div');
     content.id = 'expanded-todo-content';
+    content.classList.add('isolated-content');
     content.todoListId = listId;
     container.appendChild(content);
 
@@ -329,6 +330,7 @@ const projectMenu = (e) => {
     const container = (() => {
         const container = document.createElement('div');
         container.id = 'project-menu-container';
+        container.classList.add('isolated-container');
         
         const bodyContent = document.querySelector('#content');
         bodyContent.appendChild(container);
@@ -338,6 +340,7 @@ const projectMenu = (e) => {
 
     const content = document.createElement('form');
     content.id = 'project-menu-content';
+    content.classList.add('isolated-content');
     container.appendChild(content);
 
     const header = document.createElement('div');
