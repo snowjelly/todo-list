@@ -74,11 +74,25 @@ const updateLocalStorage = (projectList) => {
 const removeTask = (e) => {
     const taskId = e.target.parentElement.dataset.listId;
     const projectList = loadLocalStorage();
+    const expandedTodoContainer = document.querySelector('#expanded-todo-container');
+    //const taskToBeRemoved = document.querySelector('#todo-list-item').dataset.listId;
 
     projectList[getActiveProject().id].todoList.splice(taskId, 1);
     updateLocalStorage(projectList);
 
-    e.target.parentElement.remove();
+    const viewContent = document.querySelector('#view-content');
+    while (viewContent.children.length > 0) {
+        viewContent.children[0].remove();
+    }
+    inbox().viewList.todoListItems.renderTodoListItems();
+
+    if (e.target.parentElement.id === 'checkbox-container') {
+        expandedTodoContainer.remove();
+        
+    }
+    else if (e.target.parentElement.id === 'todo-list-item') {
+        e.target.parentElement.remove();
+    }
 }
 
 const expandTodo = (e) => {
@@ -148,6 +162,7 @@ const closeExpandedTodo = () => {
 }
 
 const editTodoTitle = () => {
+    /*
     const content = document.querySelector('#expanded-todo-title-content');
 
     const title = document.querySelector('#expanded-todo-title');
@@ -191,9 +206,11 @@ const editTodoTitle = () => {
 
 
     title.remove();
+    */
 }
 
 const finishTodoEdit = (e) => {
+    /*
     const titleEditBox = document.querySelector('#expanded-todo-title-edit');
     if (titleEditBox === null) return;
     const newTodoTitle = titleEditBox.value; 
@@ -224,6 +241,7 @@ const finishTodoEdit = (e) => {
     newTitle.addEventListener('click', editTodoTitle);
 
     content.appendChild(newTitle);
+    */
 }
 
 const cancelTodoEdit = () => {
