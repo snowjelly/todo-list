@@ -103,6 +103,11 @@ const expandTodo = (e) => {
         const container = document.createElement('div');
         container.id = 'expanded-todo-container';
         container.classList.add('isolated-container');
+        container.addEventListener('click', (e) => {
+            if (e.currentTarget.id === e.target.id) {
+                closeExpandedTodo();
+            }
+        });
         
         const bodyContent = document.querySelector('#content');
         bodyContent.appendChild(container);
@@ -290,8 +295,6 @@ const selectProject = (e) => {
         content.children[0].remove();
     }
     render();
-
-    
 }
 
 const getActiveProject = () => {
@@ -328,6 +331,11 @@ const projectMenu = (e) => {
         const container = document.createElement('div');
         container.id = 'project-menu-container';
         container.classList.add('isolated-container');
+        container.addEventListener('click', (e) => {
+            if (e.currentTarget.id === e.target.id) {
+                container.remove();
+            }
+        });
         
         const bodyContent = document.querySelector('#content');
         bodyContent.appendChild(container);

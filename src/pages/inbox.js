@@ -140,6 +140,12 @@ const inbox = () => {
       const container = document.createElement('div');
       container.id = 'add-task-menu-container';
       container.classList.add('isolated-container');
+      container.addEventListener('click', (e)=> {
+        if (e.currentTarget.id === e.target.id) {
+          container.remove();
+          viewList.viewListContainer.appendChild(viewList.getAddTaskContent);
+        }
+      });
 
       const content = document.createElement('div');
       content.id = 'add-task-menu-content';
