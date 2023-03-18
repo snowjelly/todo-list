@@ -164,6 +164,10 @@ const closeExpandedTodo = () => {
     render();
 }
 
+const addDueDate = () => {
+    
+}
+
 const editTodoTitle = () => {
     /*
     const content = document.querySelector('#expanded-todo-title-content');
@@ -419,6 +423,6 @@ const projectMenu = (e) => {
 
 
 export {
-    addTask, storageFirstLoad, loadLocalStorage, removeTask, projectMenu, removeProject, selectProject, getActiveProject, expandTodo
+    addTask, storageFirstLoad, loadLocalStorage, removeTask, projectMenu, removeProject, selectProject, getActiveProject, expandTodo, addDueDate
 };
 
