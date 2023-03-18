@@ -307,11 +307,8 @@ body, ul, li, p{
                         'checkbox description right-sidebar';
   grid-template-columns: min-content 1fr min-content;
   grid-template-rows: min-content min-content;
-  width: auto;
-  height: auto;
-  flex: 1;
-  margin-left: 30%;
-  margin-right: 30%;
+  width: max(300px, 40%);
+  height: max(300px, 40%);
 }
 
 #expanded-todo-title-content{
