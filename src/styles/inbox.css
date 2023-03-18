@@ -320,6 +320,7 @@ body, ul, li, p{
 #close{
   grid-area: right-sidebar;
   cursor: pointer;
+  margin: 3px;
 }
 
 #expanded-todo-description{
