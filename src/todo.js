@@ -74,11 +74,11 @@ const updateLocalStorage = (projectList) => {
 const removeTask = (e) => {
     const taskId = e.target.parentElement.dataset.listId;
     const projectList = loadLocalStorage();
-    const expandedTodoContainer = document.querySelector('#expanded-todo-container');
+    const expandedTodoContent = document.querySelector('#expanded-todo-content');
     const rootContent = document.querySelector('#content');
 
     if (e.target.parentElement.id === 'checkbox-container') {
-        projectList[getActiveProject().id].todoList.splice(expandedTodoContainer.todoListId, 1);
+        projectList[getActiveProject().id].todoList.splice(expandedTodoContent.todoListId, 1);
     }
     else if (e.target.parentElement.className === 'todo-list-item') {
         projectList[getActiveProject().id].todoList.splice(taskId, 1);
