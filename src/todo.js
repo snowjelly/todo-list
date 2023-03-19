@@ -51,20 +51,27 @@ const createTodo = (title, description = "", project = loadLocalStorage()[0].tit
 const addTask = () => {
     const taskName = document.querySelector('#task-name-input').value;
     const taskDescription = document.querySelector('#task-description-input').value;
+    const taskDueDate = document.querySelector('#due-date-input');
+    let taskDueDateValue = '';
 
     if (taskName === "") {
         return;
     }
 
+    if (taskDueDate !== null) {
+        const year = taskDueDate.value.slice(0, 4);
+        const month = taskDueDate.value.slice(5, 7) - 1;
+        const day = taskDueDate.value.slice(8);
+        taskDueDateValue = new Date(year, month, day);
+    }
+
     const projectList = loadLocalStorage();
     const activeProject = projectList[getActiveProject().id];
 
-    const newTodo = createTodo(taskName, taskDescription, activeProject.title);
+    const newTodo = createTodo(taskName, taskDescription, activeProject.title, taskDueDateValue);
     activeProject.todoList.push(newTodo);
 
     updateLocalStorage(projectList);
-
-    return true;
 }
 
 const updateLocalStorage = (projectList) => {
