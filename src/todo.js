@@ -164,8 +164,14 @@ const closeExpandedTodo = () => {
     render();
 }
 
-const addDueDate = () => {
-    
+const addDueDateInput = (e) => {
+    if (e.target.id === 'due-date-input') return;
+    const container = document.querySelector('#due-date-btn');
+    const dueDateText = document.createElement('input');
+
+    dueDateText.id = 'due-date-input';
+    dueDateText.type = 'date';
+    container.appendChild(dueDateText);
 }
 
 const editTodoTitle = () => {
@@ -423,6 +429,6 @@ const projectMenu = (e) => {
 
 
 export {
-    addTask, storageFirstLoad, loadLocalStorage, removeTask, projectMenu, removeProject, selectProject, getActiveProject, expandTodo, addDueDate
+    addTask, storageFirstLoad, loadLocalStorage, removeTask, projectMenu, removeProject, selectProject, getActiveProject, expandTodo, addDueDateInput
 };
 

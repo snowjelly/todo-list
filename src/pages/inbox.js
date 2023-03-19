@@ -1,6 +1,6 @@
 import taskDueDateImage from '../assets/imgs/due-date.png';
 import taskProjectImage from '../assets/imgs/inbox.png';
-import { addTask, getActiveProject, expandTodo, removeTask, addDueDate} from "../todo";
+import { addTask, getActiveProject, expandTodo, removeTask, addDueDateInput} from "../todo";
 
 const inbox = () => {
   const content = document.querySelector('#content');
@@ -207,7 +207,8 @@ const inbox = () => {
           const taskDueDateLabel = document.createElement('label');
           taskDueDateLabel.classList.add('left-side-btn');
           taskDueDateLabel.id = 'due-date-btn';
-          taskDueDateLabel.addEventListener('click', addDueDate);
+          taskDueDateLabel.setAttribute('for', 'due-date-input');
+          taskDueDateLabel.addEventListener('click', addDueDateInput, {once: true});
 
           const taskDueDateImg = new Image();
           taskDueDateImg.src = taskDueDateImage;
