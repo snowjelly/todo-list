@@ -52,23 +52,38 @@ const inbox = () => {
 
 
         for (let i=0;i<activeProject.todoList.length;i++) {
-          const todoListItemTitleP = document.createElement('p');
-          const todoListItemDescriptionP = document.createElement('p');
-
 
           const todoListItemCheckbox = () => {
-            const todoListItemCheckboxDiv = document.createElement('div');
-            todoListItemCheckboxDiv.classList.add('checkbox');
-            todoListItemCheckboxDiv.addEventListener('click', removeTask);
-            return todoListItemCheckboxDiv;
+            const div = document.createElement('div');
+            div.classList.add('checkbox');
+            div.addEventListener('click', removeTask);
+            return div;
           }
 
           const todoListItemContent = () => {
-            const todoListItemContentDiv = document.createElement('div');
-            todoListItemContentDiv.classList.add('list-item-content');
-            todoListItemContentDiv.appendChild(todoListItemTitleP);
-            todoListItemContentDiv.appendChild(todoListItemDescriptionP);
-            return todoListItemContentDiv;
+            
+            const getElement = () => {
+              const div = document.createElement('div');
+              div.classList.add('list-item-content');
+              div.appendChild(todoListItemTitle());
+              div.appendChild(todoListItemDescription());
+              return div;
+            }
+
+            const todoListItemTitle = () => {
+              const p = document.createElement('p');
+              p.textContent = `${activeProject.todoList[i].title}`;
+              return p;
+            }
+
+            const todoListItemDescription = () => {
+              const p = document.createElement('p');
+              p.textContent = `${activeProject.todoList[i].description}`;
+              p.classList.add('list-item-description');
+              return p;
+            }
+
+            return { getElement };
           }
 
           const todoListItem = () => {
@@ -77,18 +92,13 @@ const inbox = () => {
             todoListItemLi.setAttribute('data-list-id', `${i}`);
             todoListItemLi.addEventListener('click', expandTodo);
             todoListItemLi.appendChild(todoListItemCheckbox());
-            todoListItemLi.appendChild(todoListItemContent());
+            todoListItemLi.appendChild(todoListItemContent().getElement());
             return todoListItemLi;
           }
 
-          const todoListItemTitle = (() => {
-            todoListItemTitleP.textContent = `${activeProject.todoList[i].title}`;
-          })();
 
-          const todoListItemDescription = (() => {
-            todoListItemDescriptionP.textContent = `${activeProject.todoList[i].description}`;
-            todoListItemDescriptionP.classList.add('list-item-description');
-          })();
+
+
           
           viewList.appendChild(todoListItem());
         }
