@@ -3,12 +3,20 @@ import taskProjectImage from '../assets/imgs/inbox.png';
 import { addTask, getActiveProject, expandTodo, removeTask, addDueDateInput} from "../todo";
 
 const inbox = () => {
-  const content = document.querySelector('#content');
+
+  const contentDiv = () => {
+    const get = () => {
+      const div = document.querySelector('#content');
+      return div;
+    }
+    return { get };
+  }
+
   
 
   const viewContainer = document.createElement('div');
   viewContainer.id = `view-container`;
-  content.appendChild(viewContainer);
+  contentDiv().get().appendChild(viewContainer);
 
   const viewContent = document.createElement('div');
   viewContent.id = 'view-content';
