@@ -7,21 +7,44 @@ const inbox = () => {
   const contentDiv = () => {
     const get = () => {
       const div = document.querySelector('#content');
+      div.appendChild(viewContainerDiv().get());
       return div;
     }
+
+    const viewContainerDiv = () => {
+      const get = () => {
+        const div = document.createElement('div');
+        div.id = `view-container`;
+        div.appendChild(viewContentDiv().get());
+        return div;
+      }
+
+      const viewContentDiv = () => {
+        const get = () => {
+          const div = document.createElement('div');
+          div.id = 'view-content';
+          return div;
+        }
+
+
+        
+        return { get };
+
+      }
+
+      return { get };
+    }
+
     return { get };
   }
 
-  
+  contentDiv().get();
 
-  const viewContainer = document.createElement('div');
-  viewContainer.id = `view-container`;
-  contentDiv().get().appendChild(viewContainer);
 
-  const viewContent = document.createElement('div');
-  viewContent.id = 'view-content';
 
-  viewContainer.appendChild(viewContent);
+
+
+/*
 
   const viewHeader = (() => {
     const viewHeader = getActiveProject().activeProject.title;
@@ -348,6 +371,7 @@ const inbox = () => {
   viewList.getAddTaskContent.addEventListener('click', openAddTaskMenu);
 
   return {viewList};
+  */
 }
 
 export default inbox;
