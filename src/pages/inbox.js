@@ -24,6 +24,7 @@ const inbox = () => {
           const div = document.createElement('div');
           div.id = 'view-content';
           div.appendChild(viewHeaderContainerDiv().get());
+          div.appendChild(viewListContainerDiv().get());
           return div;
         }
 
@@ -48,10 +49,21 @@ const inbox = () => {
             return { get };
 
           }
-
           return { get };
 
         }
+
+        const viewListContainerDiv = () => {
+          const get = () => {
+            const viewListContainer = document.createElement('div');
+            viewListContainer.id = 'view-list-container';
+            return viewListContainer;
+          }
+          return { get };
+
+        }
+
+
         
         return { get };
 
@@ -72,13 +84,13 @@ const inbox = () => {
 /*
 
   const viewList = (() => {
-    const viewListContainer = document.createElement('div');
+
     const viewListContent = document.createElement('div');
     const viewList = document.createElement('ul');
     
-    viewListContainer.id = 'view-list-container';
 
-    viewContent.appendChild(viewListContainer);
+
+
 
     
     viewListContent.id = 'view-list-content';
