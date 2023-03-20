@@ -4,9 +4,11 @@ import { addTask, getActiveProject, expandTodo, removeTask, addDueDateInput} fro
 
 const inbox = () => {
   const content = document.querySelector('#content');
+  
 
   const viewContainer = document.createElement('div');
   viewContainer.id = `view-container`;
+  content.appendChild(viewContainer);
 
   const viewContent = document.createElement('div');
   viewContent.id = 'view-content';
@@ -31,14 +33,17 @@ const inbox = () => {
 
   const viewList = (() => {
     const viewListContainer = document.createElement('div');
+    const viewListContent = document.createElement('div');
+    const viewList = document.createElement('ul');
+    
     viewListContainer.id = 'view-list-container';
 
     viewContent.appendChild(viewListContainer);
 
-    const viewListContent = document.createElement('div');
+    
     viewListContent.id = 'view-list-content';
 
-    const viewList = document.createElement('ul');
+    
     viewList.id = 'view-list';
 
     const todoListItems = (() => {
@@ -334,7 +339,6 @@ const inbox = () => {
 
   viewList.getAddTaskContent.addEventListener('click', openAddTaskMenu);
 
-  content.appendChild(viewContainer);
   return {viewList};
 }
 
