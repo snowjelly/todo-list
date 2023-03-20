@@ -44,56 +44,51 @@ const inbox = () => {
     const todoListItems = (() => {
 
       const renderTodoListItems = () => {
+        const activeProject = getActiveProject().activeProject;
 
         for (let i=0;i<viewList.children.length;i++) {
           viewList.children[i].remove();
         }
 
-        const activeProject = getActiveProject().activeProject;
-        
 
         for (let i=0;i<activeProject.todoList.length;i++) {
-          const todoListItem = document.createElement('li');
-          todoListItem.classList.value = 'todo-list-item';
-          todoListItem.setAttribute('data-list-id', `${i}`);
-          todoListItem.addEventListener('click', expandTodo);
+          const todoListItemLi = document.createElement('li');
+          const todoListItemCheckboxDiv = document.createElement('div');
+          const todoListItemContentDiv = document.createElement('div');
+          const todoListItemTitleP = document.createElement('p');
+          const todoListItemDescriptionP = document.createElement('p');
+
+
+          const todoListItem = (() => {
+            todoListItemLi.classList.value = 'todo-list-item';
+            todoListItemLi.setAttribute('data-list-id', `${i}`);
+            todoListItemLi.addEventListener('click', expandTodo);
+            todoListItemLi.appendChild(todoListItemCheckboxDiv);
+            todoListItemLi.appendChild(todoListItemContentDiv);
+          })();
+
+          const todoListItemCheckbox = (() => {
+            todoListItemCheckboxDiv.classList.add('checkbox');
+            todoListItemCheckboxDiv.addEventListener('click', removeTask);
+          })();
+
+          const todoListItemContent = (() => {
+            todoListItemContentDiv.classList.add('list-item-content');
+            todoListItemContentDiv.appendChild(todoListItemTitleP);
+            todoListItemContentDiv.appendChild(todoListItemDescriptionP);
+
+          })();
+
+          const todoListItemTitle = (() => {
+            todoListItemTitleP.textContent = `${activeProject.todoList[i].title}`;
+          })();
+
+          const todoListItemDescription = (() => {
+            todoListItemDescriptionP.textContent = `${activeProject.todoList[i].description}`;
+            todoListItemDescriptionP.classList.add('list-item-description');
+          })();
           
-      
-          const todoListItemCheckbox = document.createElement('div');
-          todoListItemCheckbox.classList.add('checkbox');
-          
-          if (activeProject.todoList[i].priority === 3) {
-            todoListItemCheckbox.classList.add('priority-3');
-          }
-          if (activeProject.todoList[i].priority === 2) {
-            todoListItemCheckbox.classList.add('priority-2');
-          }
-          if (activeProject.todoList[i].priority === 1) {
-            todoListItemCheckbox.classList.add('priority-1');
-          } 
-
-          todoListItem.appendChild(todoListItemCheckbox);
-
-          const todoListItemContent = document.createElement('div');
-          todoListItemContent.classList.add('list-item-content');
-
-      
-          const todoListItemTitle = document.createElement('p');
-          todoListItemTitle.textContent = `${activeProject.todoList[i].title}`;
-    
-          todoListItemContent.appendChild(todoListItemTitle);
-
-          const todoListItemDescription = document.createElement('p');
-          todoListItemDescription.textContent = `${activeProject.todoList[i].description}`;
-          todoListItemDescription.classList.add('list-item-description');
-
-          todoListItemContent.appendChild(todoListItemDescription);
-
-          todoListItem.appendChild(todoListItemContent);
-      
-          viewList.appendChild(todoListItem);
-  
-          todoListItemCheckbox.addEventListener('click', removeTask);
+          viewList.appendChild(todoListItemLi);
         }
       };
       renderTodoListItems();
