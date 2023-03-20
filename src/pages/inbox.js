@@ -74,30 +74,121 @@ const inbox = () => {
               const get = () => {
                 const ul = document.createElement('ul');
                 ul.id = 'view-list';
+                todoListItems().render(ul);
                 return ul;
               }
-              return { get };
+
+              const todoListItems = () => {
+                const render = (viewList) => {
+                  const activeProject = getActiveProject().activeProject;
+                  const ul = viewList;
+
+                  
+                  for (let i=0;i<ul.children.length;i++) {
+                    ul.children[i].remove();
+                  }
+                  
+
+                  for (let i=0;i<activeProject.todoList.length;i++) {
+          
+                    const todoListItemLi = () => {
+          
+                      const get = () => {
+                        const li = document.createElement('li');
+                        li.classList.value = 'todo-list-item';
+                        li.setAttribute('data-list-id', `${i}`);
+                        li.addEventListener('click', expandTodo);
+                        li.appendChild(todoListItemCheckboxDiv().get());
+                        li.appendChild(todoListItemContent().get());
+                        return li;
+                      }
+          
+                      const todoListItemCheckboxDiv = () => {
+                        const get = () => {
+                          const div = document.createElement('div');
+                          div.classList.add('checkbox');
+                          div.addEventListener('click', removeTask);
+                          return div;
+                        }
+                        return { get };
+                      }
+          
+                      const todoListItemContent = () => {
+          
+                        const get = () => {
+                          const div = document.createElement('div');
+                          div.classList.add('list-item-content');
+                          div.appendChild(todoListItemTitleP().get());
+                          div.appendChild(todoListItemDescriptionP().get());
+                          return div;
+                        }
+            
+                        const todoListItemTitleP = () => {
+          
+                          const get = () => {
+                            const p = document.createElement('p');
+                            p.textContent = `${activeProject.todoList[i].title}`;
+                            return p;
+                          }
+                          return { get };
+                        }
+            
+                        const todoListItemDescriptionP = () => {
+                          
+                          const get = () => {
+                            const p = document.createElement('p');
+                            p.textContent = `${activeProject.todoList[i].description}`;
+                            p.classList.add('list-item-description');
+                            return p;
+                          }
+                          return { get };
+                        }
+                        return { get };
+                      }
+                      return { get }
+                    }
+
+                    ul.appendChild(todoListItemLi().get());
+                  }
+                }
+                return { render };
+              }
+
+
+
+              return { get, todoListItems };
             }
 
-            return { get };
+            return { get, viewListUl };
           }
 
-          return { get };
+          return { get, viewListContentDiv };
         }
 
 
         
-        return { get };
+        return { get, viewListContainerDiv };
       }
 
-      return { get };
+      return { get, viewContentDiv };
     }
 
-    return { get };
+    return { get, viewContainerDiv };
   }
 
+  
+/*
+  const todoListItems = () => {
+    const render = () => {
+      contentDiv().viewContainerDiv().viewContentDiv().viewListContainerDiv().viewListContentDiv().viewListUl().todoListItems().render();
+    }
+    return { render };
+  }
+*/
   contentDiv().get();
+  //todoListItems().render();
 
+  
 
 
 
