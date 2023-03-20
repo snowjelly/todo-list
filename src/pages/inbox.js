@@ -58,9 +58,9 @@ const inbox = () => {
             const div = document.createElement('div');
             div.id = 'view-list-container';
             div.appendChild(viewListContentDiv().get());
+            div.appendChild(addTaskContentDiv().get());
             return div;
-          }
-          
+          }       
 
           const viewListContentDiv = () => {
             const get = () => {
@@ -153,151 +153,55 @@ const inbox = () => {
                 }
                 return { render };
               }
-
-
-
-              return { get, todoListItems };
+              return { get };
             }
-
-            return { get, viewListUl };
+            return { get };
           }
 
-          return { get, viewListContentDiv };
+          const addTaskContentDiv = () => {
+            const get = () => {
+              const div = document.createElement('div');
+              div.id = 'add-task-content';
+              div.appendChild(addTaskImageDiv().get());
+              div.appendChild(addTaskTextP().get());
+              return div;
+            }
+
+            const addTaskImageDiv = () => {
+              const get = () => {
+                const div = document.createElement('div');
+                div.id = 'add-task-image';
+                return div;
+              }
+              return { get };
+            }
+
+            const addTaskTextP = () => {
+              const get = () => {
+                const p = document.createElement('p');
+                p.id = 'add-task-text';
+                p.textContent = 'Add task';
+                return p;
+              }
+              return { get };
+            }
+
+            return { get };
+          }
+          
+          return { get };
         }
-
-
-        
-        return { get, viewListContainerDiv };
+        return { get };
       }
-
-      return { get, viewContentDiv };
+      return { get };
     }
-
-    return { get, viewContainerDiv };
+    return { get };
   }
 
   contentDiv().get();
 
-  
-
-
-
 
 /*
-
-  const viewList = (() => {
-
-    const todoListItems = (() => {
-
-      const renderTodoListItems = () => {
-        const activeProject = getActiveProject().activeProject;
-
-        for (let i=0;i<viewList.children.length;i++) {
-          viewList.children[i].remove();
-        }
-
-
-        for (let i=0;i<activeProject.todoList.length;i++) {
-
-          const todoListItemLi = () => {
-
-            const get = () => {
-              const li = document.createElement('li');
-              li.classList.value = 'todo-list-item';
-              li.setAttribute('data-list-id', `${i}`);
-              li.addEventListener('click', expandTodo);
-              li.appendChild(todoListItemCheckboxDiv().get());
-              li.appendChild(todoListItemContent().get());
-              return li;
-            }
-
-            const todoListItemCheckboxDiv = () => {
-              const get = () => {
-                const div = document.createElement('div');
-                div.classList.add('checkbox');
-                div.addEventListener('click', removeTask);
-                return div;
-              }
-              return { get };
-            }
-
-            const todoListItemContent = () => {
-
-              const get = () => {
-                const div = document.createElement('div');
-                div.classList.add('list-item-content');
-                div.appendChild(todoListItemTitleP().get());
-                div.appendChild(todoListItemDescriptionP().get());
-                return div;
-              }
-  
-              const todoListItemTitleP = () => {
-
-                const get = () => {
-                  const p = document.createElement('p');
-                  p.textContent = `${activeProject.todoList[i].title}`;
-                  return p;
-                }
-                return { get };
-              }
-  
-              const todoListItemDescriptionP = () => {
-                
-                const get = () => {
-                  const p = document.createElement('p');
-                  p.textContent = `${activeProject.todoList[i].description}`;
-                  p.classList.add('list-item-description');
-                  return p;
-                }
-                return { get };
-              }
-              return { get };
-            }
-            return { get }
-          }
-
-
-
-
-          
-          viewList.appendChild(todoListItemLi().get());
-        }
-      };
-      renderTodoListItems();
-
-      return {renderTodoListItems};
-
-    })();
-
-    
-    viewListContent.appendChild(viewList);
-
-    
-
-    const getAddTaskContent = (() => {
-      const addTaskContent = document.createElement('div');
-      addTaskContent.id = 'add-task-content';
-      
-      const addTaskImage = document.createElement('div');
-      addTaskImage.id = 'add-task-image';
-    
-      addTaskContent.appendChild(addTaskImage);
-    
-      const addTaskText = document.createElement('p');
-      addTaskText.id = 'add-task-text';
-      addTaskText.textContent = 'Add task';
-    
-      addTaskContent.appendChild(addTaskText);
-
-      viewListContainer.appendChild(addTaskContent);
-      
-      return addTaskContent;
-    })();
-
-    return {getAddTaskContent, viewListContainer, todoListItems};
-  })();
-
-  
   const openAddTaskMenu = () => {
     viewList.getAddTaskContent.remove();
 
