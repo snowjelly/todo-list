@@ -58,7 +58,7 @@ const addTask = () => {
         return;
     }
 
-    if (taskDueDate !== null) {
+    if (taskDueDate !== null && taskDueDate.value !== '') {
         const year = taskDueDate.value.slice(0, 4);
         const month = taskDueDate.value.slice(5, 7) - 1;
         const day = taskDueDate.value.slice(8);
@@ -72,6 +72,7 @@ const addTask = () => {
     activeProject.todoList.push(newTodo);
 
     updateLocalStorage(projectList);
+    resetHTML();
 }
 
 const updateLocalStorage = (projectList) => {
@@ -82,7 +83,6 @@ const removeTask = (e) => {
     const taskId = e.target.parentElement.dataset.listId;
     const projectList = loadLocalStorage();
     const expandedTodoContent = document.querySelector('#expanded-todo-content');
-    const rootContent = document.querySelector('#content');
 
     if (e.target.parentElement.id === 'checkbox-container') {
         projectList[getActiveProject().id].todoList.splice(expandedTodoContent.todoListId, 1);
@@ -91,7 +91,11 @@ const removeTask = (e) => {
         projectList[getActiveProject().id].todoList.splice(taskId, 1);
     }
     updateLocalStorage(projectList);
+    resetHTML();
+}
 
+const resetHTML = () => {
+    const rootContent = document.querySelector('#content');
     while (rootContent.children.length > 0) {
         rootContent.children[0].remove();
     }
