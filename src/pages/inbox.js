@@ -46,27 +46,38 @@ const inbox = () => {
               `;
               return div;
             }
+            
             return { get };
-
           }
-          return { get };
 
+          return { get };
         }
 
         const viewListContainerDiv = () => {
           const get = () => {
-            const viewListContainer = document.createElement('div');
-            viewListContainer.id = 'view-list-container';
-            return viewListContainer;
+            const div = document.createElement('div');
+            div.id = 'view-list-container';
+            div.appendChild(viewListContentDiv().get());
+            return div;
           }
-          return { get };
+          
 
+          const viewListContentDiv = () => {
+            const get = () => {
+              const div = document.createElement('div');
+              div.id = 'view-list-content';
+              return div;
+            }
+
+            return { get };
+          }
+
+          return { get };
         }
 
 
         
         return { get };
-
       }
 
       return { get };
@@ -85,7 +96,7 @@ const inbox = () => {
 
   const viewList = (() => {
 
-    const viewListContent = document.createElement('div');
+
     const viewList = document.createElement('ul');
     
 
@@ -93,7 +104,6 @@ const inbox = () => {
 
 
     
-    viewListContent.id = 'view-list-content';
 
     
     viewList.id = 'view-list';
@@ -183,7 +193,7 @@ const inbox = () => {
     
     viewListContent.appendChild(viewList);
 
-    viewListContainer.appendChild(viewListContent);
+    
 
     const getAddTaskContent = (() => {
       const addTaskContent = document.createElement('div');
