@@ -66,7 +66,17 @@ const inbox = () => {
             const get = () => {
               const div = document.createElement('div');
               div.id = 'view-list-content';
+              div.appendChild(viewListUl().get());
               return div;
+            }
+
+            const viewListUl = () => {
+              const get = () => {
+                const ul = document.createElement('ul');
+                ul.id = 'view-list';
+                return ul;
+              }
+              return { get };
             }
 
             return { get };
@@ -95,18 +105,6 @@ const inbox = () => {
 /*
 
   const viewList = (() => {
-
-
-    const viewList = document.createElement('ul');
-    
-
-
-
-
-    
-
-    
-    viewList.id = 'view-list';
 
     const todoListItems = (() => {
 
