@@ -53,24 +53,27 @@ const inbox = () => {
 
         for (let i=0;i<activeProject.todoList.length;i++) {
           const todoListItemLi = document.createElement('li');
-          const todoListItemCheckboxDiv = document.createElement('div');
           const todoListItemContentDiv = document.createElement('div');
           const todoListItemTitleP = document.createElement('p');
           const todoListItemDescriptionP = document.createElement('p');
 
 
+          const todoListItemCheckbox = () => {
+            const todoListItemCheckboxDiv = document.createElement('div');
+            todoListItemCheckboxDiv.classList.add('checkbox');
+            todoListItemCheckboxDiv.addEventListener('click', removeTask);
+            return todoListItemCheckboxDiv;
+          }
+
           const todoListItem = (() => {
             todoListItemLi.classList.value = 'todo-list-item';
             todoListItemLi.setAttribute('data-list-id', `${i}`);
             todoListItemLi.addEventListener('click', expandTodo);
-            todoListItemLi.appendChild(todoListItemCheckboxDiv);
+            todoListItemLi.appendChild(todoListItemCheckbox());
             todoListItemLi.appendChild(todoListItemContentDiv);
           })();
 
-          const todoListItemCheckbox = (() => {
-            todoListItemCheckboxDiv.classList.add('checkbox');
-            todoListItemCheckboxDiv.addEventListener('click', removeTask);
-          })();
+
 
           const todoListItemContent = (() => {
             todoListItemContentDiv.classList.add('list-item-content');
