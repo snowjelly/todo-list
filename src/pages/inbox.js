@@ -52,7 +52,6 @@ const inbox = () => {
 
 
         for (let i=0;i<activeProject.todoList.length;i++) {
-          const todoListItemLi = document.createElement('li');
           const todoListItemTitleP = document.createElement('p');
           const todoListItemDescriptionP = document.createElement('p');
 
@@ -72,13 +71,15 @@ const inbox = () => {
             return todoListItemContentDiv;
           }
 
-          const todoListItem = (() => {
+          const todoListItem = () => {
+            const todoListItemLi = document.createElement('li');
             todoListItemLi.classList.value = 'todo-list-item';
             todoListItemLi.setAttribute('data-list-id', `${i}`);
             todoListItemLi.addEventListener('click', expandTodo);
             todoListItemLi.appendChild(todoListItemCheckbox());
             todoListItemLi.appendChild(todoListItemContent());
-          })();
+            return todoListItemLi;
+          }
 
           const todoListItemTitle = (() => {
             todoListItemTitleP.textContent = `${activeProject.todoList[i].title}`;
@@ -89,7 +90,7 @@ const inbox = () => {
             todoListItemDescriptionP.classList.add('list-item-description');
           })();
           
-          viewList.appendChild(todoListItemLi);
+          viewList.appendChild(todoListItem());
         }
       };
       renderTodoListItems();
