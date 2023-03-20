@@ -23,10 +23,35 @@ const inbox = () => {
         const get = () => {
           const div = document.createElement('div');
           div.id = 'view-content';
+          div.appendChild(viewHeaderContainerDiv().get());
           return div;
         }
 
+        const viewHeaderContainerDiv = () => {
+          const get = () => {
+            const div = document.createElement('div');
+            div.id = 'view-header-container';
+            div.appendChild(viewHeaderContentDiv().get());
+            return div;
+          }
+          const viewHeader = getActiveProject().activeProject.title;
 
+          const viewHeaderContentDiv = () => {
+            const get = () => {
+              const div = document.createElement('div');
+              div.id = 'view-header-content';
+              div.innerHTML = `
+              <h1>${viewHeader}</h1>
+              `;
+              return div;
+            }
+            return { get };
+
+          }
+
+          return { get };
+
+        }
         
         return { get };
 
@@ -45,22 +70,6 @@ const inbox = () => {
 
 
 /*
-
-  const viewHeader = (() => {
-    const viewHeader = getActiveProject().activeProject.title;
-    const viewHeaderContainer = document.createElement('div');
-    viewHeaderContainer.id = 'view-header-container';
-  
-    viewContent.appendChild(viewHeaderContainer);
-  
-    const viewHeaderContent = document.createElement('div');
-    viewHeaderContent.id = 'view-header-content';
-    viewHeaderContent.innerHTML = `
-    <h1>${viewHeader}</h1>
-    `;
-  
-    viewHeaderContainer.appendChild(viewHeaderContent);
-  })();
 
   const viewList = (() => {
     const viewListContainer = document.createElement('div');
