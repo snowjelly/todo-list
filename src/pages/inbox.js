@@ -176,17 +176,7 @@ const inbox = () => {
     return { get, viewContainerDiv };
   }
 
-  
-/*
-  const todoListItems = () => {
-    const render = () => {
-      contentDiv().viewContainerDiv().viewContentDiv().viewListContainerDiv().viewListContentDiv().viewListUl().todoListItems().render();
-    }
-    return { render };
-  }
-*/
   contentDiv().get();
-  //todoListItems().render();
 
   
 
