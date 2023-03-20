@@ -53,54 +53,68 @@ const inbox = () => {
 
         for (let i=0;i<activeProject.todoList.length;i++) {
 
-          const todoListItemCheckbox = () => {
-            const div = document.createElement('div');
-            div.classList.add('checkbox');
-            div.addEventListener('click', removeTask);
-            return div;
-          }
+          const todoListItemLi = () => {
 
-          const todoListItemContent = () => {
-            
-            const getElement = () => {
-              const div = document.createElement('div');
-              div.classList.add('list-item-content');
-              div.appendChild(todoListItemTitle());
-              div.appendChild(todoListItemDescription());
-              return div;
+            const get = () => {
+              const li = document.createElement('li');
+              li.classList.value = 'todo-list-item';
+              li.setAttribute('data-list-id', `${i}`);
+              li.addEventListener('click', expandTodo);
+              li.appendChild(todoListItemCheckboxDiv().get());
+              li.appendChild(todoListItemContent().get());
+              return li;
             }
 
-            const todoListItemTitle = () => {
-              const p = document.createElement('p');
-              p.textContent = `${activeProject.todoList[i].title}`;
-              return p;
+            const todoListItemCheckboxDiv = () => {
+              const get = () => {
+                const div = document.createElement('div');
+                div.classList.add('checkbox');
+                div.addEventListener('click', removeTask);
+                return div;
+              }
+              return { get };
             }
 
-            const todoListItemDescription = () => {
-              const p = document.createElement('p');
-              p.textContent = `${activeProject.todoList[i].description}`;
-              p.classList.add('list-item-description');
-              return p;
+            const todoListItemContent = () => {
+
+              const get = () => {
+                const div = document.createElement('div');
+                div.classList.add('list-item-content');
+                div.appendChild(todoListItemTitleP().get());
+                div.appendChild(todoListItemDescriptionP().get());
+                return div;
+              }
+  
+              const todoListItemTitleP = () => {
+
+                const get = () => {
+                  const p = document.createElement('p');
+                  p.textContent = `${activeProject.todoList[i].title}`;
+                  return p;
+                }
+                return { get };
+              }
+  
+              const todoListItemDescriptionP = () => {
+                
+                const get = () => {
+                  const p = document.createElement('p');
+                  p.textContent = `${activeProject.todoList[i].description}`;
+                  p.classList.add('list-item-description');
+                  return p;
+                }
+                return { get };
+              }
+              return { get };
             }
-
-            return { getElement };
-          }
-
-          const todoListItem = () => {
-            const todoListItemLi = document.createElement('li');
-            todoListItemLi.classList.value = 'todo-list-item';
-            todoListItemLi.setAttribute('data-list-id', `${i}`);
-            todoListItemLi.addEventListener('click', expandTodo);
-            todoListItemLi.appendChild(todoListItemCheckbox());
-            todoListItemLi.appendChild(todoListItemContent().getElement());
-            return todoListItemLi;
+            return { get }
           }
 
 
 
 
           
-          viewList.appendChild(todoListItem());
+          viewList.appendChild(todoListItemLi().get());
         }
       };
       renderTodoListItems();
