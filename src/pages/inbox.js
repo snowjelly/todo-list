@@ -452,4 +452,4 @@ const contentDiv = () => {
   return { get };
 }
 
-export default inbox;
+export { inbox };

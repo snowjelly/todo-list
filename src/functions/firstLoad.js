@@ -1,5 +1,5 @@
 import headerDiv from '../pages/header';
-import inbox from '../pages/inbox';
+import { inbox } from '../pages/inbox';
 import sidebarDiv from '../pages/sidebar';
 import { storageFirstLoad } from '../todo';
 

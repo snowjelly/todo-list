@@ -1,4 +1,3 @@
-import inbox from "./pages/inbox";
 import sidebarDiv from "./pages/sidebar";
 import { render } from "./functions/firstLoad";
 import closeImage from "./assets/imgs/close.png";
@@ -294,12 +293,12 @@ const removeProject = (e) => {
     projectList.splice(listId, 1);
     updateLocalStorage(projectList);
 
-    e.target.parentElement.remove();
+    resetHTML();
 }
 
 const selectProject = (e) => {
     if (e.target.className === "trash-image") return;
-    const listId = e.target.dataset.listId;
+    const listId = e.currentTarget.dataset.listId;
     const projectList = loadLocalStorage();
 
     if (projectList[listId].selected === true) return;
