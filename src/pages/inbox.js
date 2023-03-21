@@ -199,6 +199,7 @@ const inbox = () => {
                 const div = document.createElement('div');
                 div.id = 'add-task-menu-container';
                 div.classList.add('isolated-container');
+                div.appendChild(addTaskMenuContentDiv().get());
                 div.addEventListener('click', remove);
                 return div;
               }
@@ -210,6 +211,186 @@ const inbox = () => {
                 }
               }
 
+              const addTaskMenuContentDiv = () => {
+                const get = () => {
+                  const div = document.createElement('div');
+                  div.id = 'add-task-menu-content';
+                  div.classList.add('isolated-content');
+                  div.appendChild(addTaskMenuForm().get());
+                  return div;
+                }
+
+                const addTaskMenuForm = () => {
+                  const get = () => {
+                    const form = document.createElement('form');
+                    form.id = 'add-task-menu-form';
+                    form.appendChild(formTextAreaContentDiv().get());
+                    form.appendChild(formBtnContentDiv().get());
+                    return form;
+                  }
+
+                  const formTextAreaContentDiv = () => {
+                    const get = () => {
+                      const div = document.createElement('div');
+                      div.id = 'form-textarea-content';
+                      div.appendChild(taskNameLabel().get());
+                      div.appendChild(taskDescriptionLabel().get());
+                      return div;
+                    }
+
+                    const taskNameLabel = () => {
+                      const get = () => {
+                        const label = document.createElement('label');
+                        label.id = 'task-name';
+                        label.appendChild(taskNameInput().get());
+                        return label;
+                      }
+
+                      const taskNameInput = () => {
+                        const get = () => {
+                          const input = document.createElement('input');
+                          input.setAttribute('type', 'textarea');
+                          input.setAttribute('name', 'task-name');
+                          input.setAttribute('placeholder', 'Task name');
+                          input.setAttribute('maxlength', '500');
+                          input.setAttribute('minlength', '1');
+                          input.id = 'task-name-input';
+                          return input;
+                        }
+                        return { get };
+                      }
+
+                      return { get };
+                    }
+
+                    const taskDescriptionLabel = () => {
+                      const get = () => {
+                        const label = document.createElement('label');
+                        label.id = 'task-description';
+                        label.appendChild(taskDescriptionInput().get());
+                        return label;
+                      }
+
+                      const taskDescriptionInput = () => {
+                        const get = () => {
+                          const input = document.createElement('input');
+                          input.setAttribute('type', 'textarea');
+                          input.setAttribute('name', 'task-description');
+                          input.setAttribute('placeholder', 'Description');
+                          input.setAttribute('maxlength', '500');
+                          input.setAttribute('minlength', '1');
+                          input.id = 'task-description-input';
+                          return input;
+                        }
+                        return { get };
+                      }
+
+                      return { get };
+                    }
+
+                    return { get };
+                  }
+
+                  const formBtnContentDiv = () => {
+                    const get = () => {
+                      const div = document.createElement('div');
+                      div.id = 'form-btn-content';
+                      div.appendChild(leftSideBtnsContent().get());
+                      return div;
+                    }
+
+                    const leftSideBtnsContent = () => {
+                      const get = () => {
+                        const div = document.createElement('div');
+                        div.id = 'form-btn-content-left-side';
+                        div.appendChild(dueDateBtnLabel().get());
+                        div.appendChild(projectBtnLabel().get());
+                        return div;
+                      }
+
+                      const dueDateBtnLabel = () => {
+                        const get = () => {
+                          const label = document.createElement('label');
+                          label.classList.add('left-side-btn');
+                          label.id = 'due-date-btn';
+                          label.setAttribute('for', 'due-date-input');
+                          label.appendChild(dueDateImage().get());
+                          label.appendChild(dueDateText().get());
+                          label.addEventListener('click', addDueDateInput, {once: true});
+                          return label;
+                        }
+
+                        const dueDateImage = () => {
+                          const get = () => {
+                            const image = new Image();
+                            image.src = taskDueDateImage;
+                            image.width = '20';
+                            image.height = '20';
+                            return image;
+                          }
+                          return { get };
+                        }
+
+                        const dueDateText = () => {
+                          const get = () => {
+                            const p = document.createElement('p');
+                            p.id = 'task-due-date-text';
+                            p.textContent = 'Due date';
+                            return p;
+                          }
+                          return { get };
+                        }
+
+
+                        return { get };
+                      }
+
+                      const projectBtnLabel = () => {
+                        const get = () => {
+                          const label = document.createElement('label');
+                          label.classList.add('left-side-btn');
+                          label.appendChild(projectBtnImage().get());
+                          label.appendChild(projectBtnText().get());
+                          return label;
+                        }
+
+                        const projectBtnImage = () => {
+                          const get = () => {
+                            const image = new Image();
+                            image.src = taskProjectImage;
+                            image.width = '20';
+                            image.height = '20';
+                            return image;
+                          }
+                          return { get };
+                        }
+
+                        const projectBtnText = () => {
+                          const get = () => {
+                            const p = document.createElement('p');
+                            p.id = 'task-project-text';
+                            p.textContent = getActiveProject().activeProject.title;
+                            return p;
+                          }
+                          return { get };
+                        }
+
+                        return { get };
+                      }
+
+                      return { get };
+                    }
+
+                    
+
+                    return { get };
+                  }
+
+                  return { get };
+                }
+
+                return { get };
+              }
 
               return { get };
             }
@@ -232,107 +413,12 @@ const inbox = () => {
 
 /*
   const openAddTaskMenu = () => {
-
     const addTaskMenu = (() => {
-      const container = document.createElement('div');
-      container.id = 'add-task-menu-container';
-      container.classList.add('isolated-container');
-      container.addEventListener('click', (e)=> {
-        if (e.currentTarget.id === e.target.id) {
-          container.remove();
-          viewList.viewListContainer.appendChild(viewList.getAddTaskContent);
-        }
-      });
-
-      const content = document.createElement('div');
-      content.id = 'add-task-menu-content';
-      content.classList.add('isolated-content');
-
-      const form = document.createElement('form');
-      form.id = 'add-task-menu-form';
-
-      content.appendChild(form);
-
-      const formTextArea = (() => {
-        const formTextAreaContent = document.createElement('div');
-        formTextAreaContent.id = 'form-textarea-content';
-        
-        form.appendChild(formTextAreaContent);
-
-        const taskNameLabel = document.createElement('label');
-        taskNameLabel.id = 'task-name';
-
-        formTextAreaContent.appendChild(taskNameLabel);
-
-        const taskNameInput = document.createElement('input');
-        taskNameInput.setAttribute('type', 'textarea');
-        taskNameInput.setAttribute('name', 'task-name');
-        taskNameInput.setAttribute('placeholder', 'Task name');
-        taskNameInput.setAttribute('maxlength', '500');
-        taskNameInput.setAttribute('minlength', '1');
-        taskNameInput.id = 'task-name-input';
-
-        
-        taskNameLabel.appendChild(taskNameInput);
-
-        const taskDescriptionLabel = document.createElement('label');
-        taskDescriptionLabel.id = 'task-description';
-
-        formTextAreaContent.appendChild(taskDescriptionLabel);
-
-        const taskDescriptionInput = document.createElement('input');
-        taskDescriptionInput.setAttribute('type', 'textarea');
-        taskDescriptionInput.setAttribute('name', 'task-description');
-        taskDescriptionInput.setAttribute('placeholder', 'Description');
-        taskDescriptionInput.setAttribute('maxlength', '500');
-        taskDescriptionInput.setAttribute('minlength', '1');
-        taskDescriptionInput.id = 'task-description-input';
-
-        taskDescriptionLabel.appendChild(taskDescriptionInput);
-      })();
 
       const formBtns = (() => {
-        const formBtnContent = document.createElement('div');
-        formBtnContent.id = 'form-btn-content';
-
-        form.appendChild(formBtnContent);
 
         const leftSideBtns = (() => {
-          const leftContent = document.createElement('div');
-          leftContent.id = 'form-btn-content-left-side';
 
-          formBtnContent.appendChild(leftContent);
-
-          const taskDueDateLabel = document.createElement('label');
-          taskDueDateLabel.classList.add('left-side-btn');
-          taskDueDateLabel.id = 'due-date-btn';
-          taskDueDateLabel.setAttribute('for', 'due-date-input');
-          taskDueDateLabel.addEventListener('click', addDueDateInput, {once: true});
-
-          const taskDueDateImg = new Image();
-          taskDueDateImg.src = taskDueDateImage;
-          taskDueDateImg.width = '20';
-          taskDueDateImg.height = '20';
-
-          taskDueDateLabel.appendChild(taskDueDateImg);
-
-          const taskDueDateText = document.createElement('p');
-          taskDueDateText.id = 'task-due-date-text';
-          taskDueDateText.textContent = 'Due date';
-
-          taskDueDateLabel.appendChild(taskDueDateText);
-
-          leftContent.appendChild(taskDueDateLabel);
-
-          const taskProjectLabel = document.createElement('label');
-          taskProjectLabel.classList.add('left-side-btn');
-
-          const taskProjectImg = new Image();
-          taskProjectImg.src = taskProjectImage;
-          taskProjectImg.width = '20';
-          taskProjectImg.height = '20';
-
-          taskProjectLabel.appendChild(taskProjectImg);
 
           const taskProjectText = document.createElement('p');
           taskProjectText.id = 'task-project-text';
@@ -358,7 +444,6 @@ const inbox = () => {
       
 
       container.appendChild(content);
-      viewContent.appendChild(container);
     })();
 
     const addTaskActionButtons = (() => {
