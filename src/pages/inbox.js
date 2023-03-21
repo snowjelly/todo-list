@@ -164,6 +164,7 @@ const inbox = () => {
               div.id = 'add-task-content';
               div.appendChild(addTaskImageDiv().get());
               div.appendChild(addTaskTextP().get());
+              div.addEventListener('click', openAddTaskMenu);
               return div;
             }
 
@@ -188,8 +189,36 @@ const inbox = () => {
 
             return { get };
           }
-          
-          return { get };
+
+          const openAddTaskMenu = (e) => {
+            const addTaskContentDiv = e.currentTarget;
+            const viewListContainerDiv = document.querySelector('#view-list-container');
+
+            const addTaskMenuContainerDiv = () => {
+              const get = () => {
+                const div = document.createElement('div');
+                div.id = 'add-task-menu-container';
+                div.classList.add('isolated-container');
+                div.addEventListener('click', remove);
+                return div;
+              }
+
+              const remove = (e) => {
+                if (e.currentTarget === e.target) {
+                  e.target.remove();
+                  viewListContainerDiv.appendChild(addTaskContentDiv);
+                }
+              }
+
+
+              return { get };
+            }
+
+            addTaskContentDiv.remove();
+            viewListContainerDiv.appendChild(addTaskMenuContainerDiv().get());
+          }
+
+          return { get };    
         }
         return { get };
       }
@@ -203,7 +232,6 @@ const inbox = () => {
 
 /*
   const openAddTaskMenu = () => {
-    viewList.getAddTaskContent.remove();
 
     const addTaskMenu = (() => {
       const container = document.createElement('div');
@@ -382,7 +410,6 @@ const inbox = () => {
     })();
   }
 
-  viewList.getAddTaskContent.addEventListener('click', openAddTaskMenu);
 
   return {viewList};
   */
