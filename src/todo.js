@@ -48,7 +48,7 @@ const createTodo = (title, description = "", project = loadLocalStorage()[0].tit
     return newTodo;
 }
 
-const addTask = () => {
+const addTaskToStorage = () => {
     const taskName = document.querySelector('#task-name-input').value;
     const taskDescription = document.querySelector('#task-description-input').value;
     const taskDueDate = document.querySelector('#due-date-input');
@@ -440,6 +440,6 @@ const projectMenu = (e) => {
 
 
 export {
-    addTask, storageFirstLoad, loadLocalStorage, removeTask, projectMenu, removeProject, selectProject, getActiveProject, expandTodo, addDueDateInput
+    addTaskToStorage, storageFirstLoad, loadLocalStorage, removeTask, projectMenu, removeProject, selectProject, getActiveProject, expandTodo, addDueDateInput
 };
 
