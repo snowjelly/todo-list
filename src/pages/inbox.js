@@ -1,6 +1,7 @@
 import taskDueDateImage from '../assets/imgs/due-date.png';
 import taskProjectImage from '../assets/imgs/inbox.png';
 import { addTaskToStorage, getActiveProject, expandTodo, removeTask, addDueDateInput, resetHTML } from "../todo";
+import { format, isThisYear, parse } from 'date-fns';
 
 const inbox = () => {
   contentDiv().get();
@@ -149,13 +150,26 @@ const contentDiv = () => {
                         const get = () => {
                           const p = document.createElement('p');
                           p.classList.add('list-item-duedate');
-                          p.textContent = `${activeProject.todoList[i].dueDate}`;
+                          p.textContent = `${'Due: ' + formatDueDate()}`;
                           return p;
                         }
 
+                        const formatDueDate = () => {
+                          const rawDueDate = activeProject.todoList[i].dueDate;
+                          if (rawDueDate === '') return;
+                          const dueDateObject = parse(rawDueDate, 'MM/dd/yyyy', new Date());
+
+                          if (isThisYear(dueDateObject)) {
+                            const dueDateFormatted = format(dueDateObject, 'MMM dd');
+                            return dueDateFormatted;
+                          }
+                          else if (isThisYear(dueDateObject) === false) {
+                            const dueDateFormatted = format(dueDateObject, 'MMM dd yyyy');
+                            return dueDateFormatted;
+                          }
+                        }
                         return { get };
                       }
-
                       return { get };
                     }
                     return { get }
@@ -198,7 +212,6 @@ const contentDiv = () => {
             }
             return { get };
           }
-
           return { get };
         }
 
