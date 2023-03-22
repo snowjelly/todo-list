@@ -1,6 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48
+}
+
 html, body, #content{
   height: 100%;
 }
@@ -389,6 +397,15 @@ body, ul, li, p{
 .list-item-duedate {
   color: grey;
   font-size: 12px;
+}
+
+.list-item-duedate-img {
+  font-size: 17px;
+}
+
+
+.overdue{
+  color: lightcoral;
 }
 
 .list-item-content{

@@ -2,7 +2,7 @@ import taskDueDateImage from '../assets/imgs/due-date.png';
 import taskProjectImage from '../assets/imgs/inbox.png';
 import calendarImage from '../assets/imgs/calendar.png';
 import { addTaskToStorage, getActiveProject, expandTodo, removeTask, addDueDateInput, resetHTML } from "../todo";
-import { format, isThisYear, parse } from 'date-fns';
+import { format, isPast, isThisYear, parse } from 'date-fns';
 
 const inbox = () => {
   contentDiv().get();
@@ -158,12 +158,17 @@ const contentDiv = () => {
 
                         const todoListItemDueDateImage = () => {
                           const get = () => {
-                            const img = new Image();
-                            img.classList.add('list-item-duedate-img');
-                            img.src = calendarImage;
-                            img.width = 17;
-                            img.height = 17;
-                            return img;
+                            const span = document.createElement('span');
+                            span.classList.add('material-symbols-outlined', 'list-item-duedate-img');
+                            span.innerHTML = 'calendar_today';
+                            /*
+                            if (formatDueDate().overdue()) {
+                              span.classList.add('overdue');
+                            }
+                            note: need to move formatDueDate to todo.js and import it
+                            ex: formatDueDate(activeProject.todoList[i].dueDate).overdue()
+                            */
+                            return span;
                           }
                           return { get };
                         }
@@ -172,7 +177,10 @@ const contentDiv = () => {
                           const get = () => {
                             const p = document.createElement('p');
                             p.classList.add('list-item-duedate');
-                            p.textContent = `${formatDueDate()}`;
+                            if (formatDueDate().overdue()) {
+                              p.classList.add('overdue');
+                            }
+                            p.textContent = `${formatDueDate().get()}`;
                             return p;
                           }
   
@@ -180,15 +188,27 @@ const contentDiv = () => {
                             const rawDueDate = activeProject.todoList[i].dueDate;
                             if (rawDueDate === '') return;
                             const dueDateObject = parse(rawDueDate, 'MM/dd/yyyy', new Date());
-  
-                            if (isThisYear(dueDateObject)) {
-                              const dueDateFormatted = format(dueDateObject, 'MMM dd');
-                              return dueDateFormatted;
+
+                            const get = () => {
+                              if (isThisYear(dueDateObject)) {
+                                const dueDateFormatted = format(dueDateObject, 'MMM dd');
+                                return dueDateFormatted;
+                              }
+                              else if (isThisYear(dueDateObject) === false) {
+                                const dueDateFormatted = format(dueDateObject, 'MMM dd yyyy');
+                                return dueDateFormatted;
+                              }
                             }
-                            else if (isThisYear(dueDateObject) === false) {
-                              const dueDateFormatted = format(dueDateObject, 'MMM dd yyyy');
-                              return dueDateFormatted;
+
+                            const overdue = () => {
+                              if (isPast(dueDateObject)) {
+                                return true;
+                              }
+                              else if (isPast(dueDateObject) === false) {
+                                return false;
+                              }
                             }
+                            return { get, overdue };
                           }
                           return { get };
                         }
