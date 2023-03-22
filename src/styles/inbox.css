@@ -381,6 +381,16 @@ body, ul, li, p{
   font-size: 10px;
 }
 
+.list-item-duedate-content {
+  display: flex;
+  column-gap: 3px;
+}
+
+.list-item-duedate {
+  color: grey;
+  font-size: 12px;
+}
+
 .list-item-content{
   display: flex;
   flex-direction: column;

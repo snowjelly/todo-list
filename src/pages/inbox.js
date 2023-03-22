@@ -1,5 +1,6 @@
 import taskDueDateImage from '../assets/imgs/due-date.png';
 import taskProjectImage from '../assets/imgs/inbox.png';
+import calendarImage from '../assets/imgs/calendar.png';
 import { addTaskToStorage, getActiveProject, expandTodo, removeTask, addDueDateInput, resetHTML } from "../todo";
 import { format, isThisYear, parse } from 'date-fns';
 
@@ -121,7 +122,7 @@ const contentDiv = () => {
                         div.classList.add('list-item-content');
                         div.appendChild(todoListItemTitleP().get());
                         div.appendChild(todoListItemDescriptionP().get());
-                        div.appendChild(todoListItemDueDateP().get());
+                        div.appendChild(todoListItemDueDateContentDiv().get());
                         return div;
                       }
           
@@ -146,27 +147,50 @@ const contentDiv = () => {
                         return { get };
                       }
 
-                      const todoListItemDueDateP = () => {
+                      const todoListItemDueDateContentDiv = () => {
                         const get = () => {
-                          const p = document.createElement('p');
-                          p.classList.add('list-item-duedate');
-                          p.textContent = `${'Due: ' + formatDueDate()}`;
-                          return p;
+                          const div = document.createElement('div');
+                          div.classList.add('list-item-duedate-content');
+                          div.appendChild(todoListItemDueDateImage().get());
+                          div.appendChild(todoListItemDueDateP().get());
+                          return div;
                         }
 
-                        const formatDueDate = () => {
-                          const rawDueDate = activeProject.todoList[i].dueDate;
-                          if (rawDueDate === '') return;
-                          const dueDateObject = parse(rawDueDate, 'MM/dd/yyyy', new Date());
+                        const todoListItemDueDateImage = () => {
+                          const get = () => {
+                            const img = new Image();
+                            img.classList.add('list-item-duedate-img');
+                            img.src = calendarImage;
+                            img.width = 17;
+                            img.height = 17;
+                            return img;
+                          }
+                          return { get };
+                        }
 
-                          if (isThisYear(dueDateObject)) {
-                            const dueDateFormatted = format(dueDateObject, 'MMM dd');
-                            return dueDateFormatted;
+                        const todoListItemDueDateP = () => {
+                          const get = () => {
+                            const p = document.createElement('p');
+                            p.classList.add('list-item-duedate');
+                            p.textContent = `${formatDueDate()}`;
+                            return p;
                           }
-                          else if (isThisYear(dueDateObject) === false) {
-                            const dueDateFormatted = format(dueDateObject, 'MMM dd yyyy');
-                            return dueDateFormatted;
+  
+                          const formatDueDate = () => {
+                            const rawDueDate = activeProject.todoList[i].dueDate;
+                            if (rawDueDate === '') return;
+                            const dueDateObject = parse(rawDueDate, 'MM/dd/yyyy', new Date());
+  
+                            if (isThisYear(dueDateObject)) {
+                              const dueDateFormatted = format(dueDateObject, 'MMM dd');
+                              return dueDateFormatted;
+                            }
+                            else if (isThisYear(dueDateObject) === false) {
+                              const dueDateFormatted = format(dueDateObject, 'MMM dd yyyy');
+                              return dueDateFormatted;
+                            }
                           }
+                          return { get };
                         }
                         return { get };
                       }
