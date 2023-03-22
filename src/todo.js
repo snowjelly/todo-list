@@ -34,44 +34,74 @@ const loadLocalStorage = () => {
     return projectList;
 }
 
-const createTodo = (title, description = "", project = loadLocalStorage()[0].title, dueDate = "", priority = 4) => {
+const createTodo = (title = "", description = "", project = loadLocalStorage()[0].title, dueDate) => {
     const newTodo = {
         title,
         description,
         project,
         dueDate,
-        priority,
-        notes: "",
     }
 
     return newTodo;
 }
 
 const addTaskToStorage = () => {
-    const taskName = document.querySelector('#task-name-input').value;
-    const taskDescription = document.querySelector('#task-description-input').value;
-    const taskDueDate = document.querySelector('#due-date-input');
-    let taskDueDateValue = '';
+    const get = () => {
+        const taskName = document.querySelector('#task-name-input').value;
+        const taskDescription = document.querySelector('#task-description-input').value;
 
-    if (taskName === "") {
-        return;
+        if (taskName === "") {
+            return false;
+        }
+
+    
+        const projectList = loadLocalStorage();
+        const activeProject = projectList[getActiveProject().id];
+
+
+        const newTodo = createTodo(taskName, taskDescription, activeProject.title, createNewDate().get());
+        activeProject.todoList.push(newTodo);
+    
+        updateLocalStorage(projectList);
+        resetHTML();
+        return true;
     }
 
-    if (taskDueDate !== null && taskDueDate.value !== '') {
-        const year = taskDueDate.value.slice(0, 4);
-        const month = taskDueDate.value.slice(5, 7) - 1;
-        const day = taskDueDate.value.slice(8);
-        taskDueDateValue = new Date(year, month, day);
+    const createNewDate = () => {
+        const get = () => {
+            if (checkIfNull()) {
+                return '';
+            }
+            else if (checkIfNull() === false)
+            {
+                const taskDueDate = document.querySelector('#due-date-input');
+                const newDate = create(taskDueDate.value);
+                return newDate;
+            }
+        }
+
+        const create = (dueDateInputString) => {
+            const year = dueDateInputString.slice(0, 4);
+            const month = dueDateInputString.slice(5, 7);
+            const day = dueDateInputString.slice(8);
+            const newDate = month + '/' + day + '/' + year;
+            return newDate;
+        }
+
+        const checkIfNull = () => {
+            const taskDueDate = document.querySelector('#due-date-input');
+            if (taskDueDate === null || taskDueDate.value === '') {
+                return true;
+            }
+            else 
+            {
+                return false;
+            }
+        }
+        return { get };
     }
 
-    const projectList = loadLocalStorage();
-    const activeProject = projectList[getActiveProject().id];
-
-    const newTodo = createTodo(taskName, taskDescription, activeProject.title, taskDueDateValue);
-    activeProject.todoList.push(newTodo);
-
-    updateLocalStorage(projectList);
-    resetHTML();
+    return { get };
 }
 
 const updateLocalStorage = (projectList) => {
@@ -439,6 +469,6 @@ const projectMenu = (e) => {
 
 
 export {
-    addTaskToStorage, storageFirstLoad, loadLocalStorage, removeTask, projectMenu, removeProject, selectProject, getActiveProject, expandTodo, addDueDateInput
+    addTaskToStorage, storageFirstLoad, loadLocalStorage, removeTask, projectMenu, removeProject, selectProject, getActiveProject, expandTodo, addDueDateInput, resetHTML
 };
 

@@ -1,6 +1,6 @@
 import taskDueDateImage from '../assets/imgs/due-date.png';
 import taskProjectImage from '../assets/imgs/inbox.png';
-import { addTaskToStorage, getActiveProject, expandTodo, removeTask, addDueDateInput} from "../todo";
+import { addTaskToStorage, getActiveProject, expandTodo, removeTask, addDueDateInput, resetHTML } from "../todo";
 
 const inbox = () => {
   contentDiv().get();
@@ -120,6 +120,7 @@ const contentDiv = () => {
                         div.classList.add('list-item-content');
                         div.appendChild(todoListItemTitleP().get());
                         div.appendChild(todoListItemDescriptionP().get());
+                        div.appendChild(todoListItemDueDateP().get());
                         return div;
                       }
           
@@ -143,6 +144,18 @@ const contentDiv = () => {
                         }
                         return { get };
                       }
+
+                      const todoListItemDueDateP = () => {
+                        const get = () => {
+                          const p = document.createElement('p');
+                          p.classList.add('list-item-duedate');
+                          p.textContent = `${activeProject.todoList[i].dueDate}`;
+                          return p;
+                        }
+
+                        return { get };
+                      }
+
                       return { get };
                     }
                     return { get }
@@ -423,10 +436,8 @@ const contentDiv = () => {
                       }
 
                       const addTask = () => {
-                        if (addTaskToStorage() !== true) return;
-                        const viewList = document.querySelector('#view-list');
-                        removeAddTaskMenu();
-                        viewListContentDiv().viewListUl().todoListItems().render(viewList);
+                        if (addTaskToStorage().get() !== true) return;
+                        resetHTML();
                       }
                       return { get };
                     }
