@@ -169,6 +169,17 @@ body, ul, li, p{
   column-gap: 3px;
 }
 
+#project-dropdown-menu-container{
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background-color: red;
+}
+
+#project-dropdown-menu-select{
+  width: 100%;
+}
+
 #task-description{
   display: flex;
   flex: 1;

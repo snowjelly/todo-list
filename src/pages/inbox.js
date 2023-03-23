@@ -345,7 +345,7 @@ const contentDiv = () => {
                       const div = document.createElement('div');
                       div.id = 'form-btn-content-left-side';
                       div.appendChild(dueDateBtnLabel().get());
-                      div.appendChild(projectBtnLabel().get());
+                      div.appendChild(projectBtnContentDiv().get());
                       return div;
                     }
 
@@ -386,34 +386,114 @@ const contentDiv = () => {
                       return { get };
                     }
 
-                    const projectBtnLabel = () => {
+                    const projectBtnContentDiv = () => {
                       const get = () => {
-                        const label = document.createElement('label');
-                        label.classList.add('left-side-btn');
-                        label.appendChild(projectBtnImage().get());
-                        label.appendChild(projectBtnText().get());
-                        return label;
+                        const div = document.createElement('div');
+                        div.id = 'project-btn-content';
+                        div.appendChild(projectBtnLabel().get());
+                        return div;
                       }
 
-                      const projectBtnImage = () => {
+                      const projectBtnLabel = () => {
                         const get = () => {
-                          const image = new Image();
-                          image.src = taskProjectImage;
-                          image.width = '20';
-                          image.height = '20';
-                          return image;
+                          const label = document.createElement('label');
+                          label.id = 'project-btn';
+                          label.classList.add('left-side-btn');
+                          label.appendChild(projectBtnImage().get());
+                          label.appendChild(projectBtnText().get());
+                          label.addEventListener('click', openProjectDropDownMenu);
+                          return label;
+                        }
+  
+                        const projectBtnImage = () => {
+                          const get = () => {
+                            const image = new Image();
+                            image.src = taskProjectImage;
+                            image.width = '20';
+                            image.height = '20';
+                            return image;
+                          }
+                          return { get };
+                        }
+  
+                        const projectBtnText = () => {
+                          const get = () => {
+                            const p = document.createElement('p');
+                            p.id = 'task-project-text';
+                            p.textContent = getActiveProject().activeProject.title;
+                            return p;
+                          }
+                          return { get };
                         }
                         return { get };
                       }
 
-                      const projectBtnText = () => {
-                        const get = () => {
-                          const p = document.createElement('p');
-                          p.id = 'task-project-text';
-                          p.textContent = getActiveProject().activeProject.title;
-                          return p;
+                      const openProjectDropDownMenu = () => {
+                        const addTaskMenuForm = document.querySelector('#add-task-menu-form');
+                        const projectBtnLabel = document.querySelector('#project-btn');
+                        
+                        const projectDropDownMenuContainerDiv = () => {
+                          const get = () => {
+                            const div = document.createElement('div');
+                            const divHeight = 150;
+                            div.id = 'project-dropdown-menu-container';
+                            div.style.left = projectBtnLabel.offsetLeft - (divHeight/2 - (projectBtnLabel.clientWidth/2)) + 'px';
+                            div.style.top = projectBtnLabel.offsetTop - divHeight + 'px';
+                            div.appendChild(projectDropDownMenuContentDiv().get());
+                            return div;
+                          }
+
+                          const projectDropDownMenuContentDiv = () => {
+                            const get = () => {
+                              const div = document.createElement('div');
+                              div.id = 'project-dropdown-menu-content';
+                              div.appendChild(projectDropDownMenuLabel().get());
+                              return div;
+                            }
+
+                            const projectDropDownMenuLabel = () => {
+                              const get = () => {
+                                const label = document.createElement('label');
+                                label.id = 'project-dropdown-menu-label';
+                                label.setAttribute('for', 'project-dropdown-menu-select')
+                                label.appendChild(projectDropDownMenuSelect().get());
+                                return label;
+                              }
+
+                              const projectDropDownMenuSelect = () => {
+                                const activeProject = getActiveProject().activeProject;
+                                const get = () => {
+                                  const select = document.createElement('select');
+                                  select.id = 'project-dropdown-menu-select';
+                                  select.name = 'projects';
+                                  options().render(select);
+                                  return select;
+                                }
+
+                                const options = () => {
+                                  const render = (select) => {
+                                    select.appendChild(option());
+                                  }
+
+                                  const option = () => {
+                                    const option = document.createElement('option');
+                                    option.value = `${activeProject.title}`;
+                                    option.textContent = `${activeProject.title}`;
+                                    return option;
+                                  }
+                                  return { render };
+                                }
+
+                                return { get };
+                              }
+                              return { get };
+                            }
+                            return { get };
+                          }
+                          return { get };
                         }
-                        return { get };
+
+                        addTaskMenuForm.insertBefore(projectDropDownMenuContainerDiv().get(), addTaskMenuForm.children[1]);
                       }
                       return { get };
                     }
