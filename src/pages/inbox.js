@@ -1,8 +1,6 @@
 import taskDueDateImage from '../assets/imgs/due-date.png';
 import taskProjectImage from '../assets/imgs/inbox.png';
-import calendarImage from '../assets/imgs/calendar.png';
-import { addTaskToStorage, getActiveProject, expandTodo, removeTask, addDueDateInput, resetHTML } from "../todo";
-import { format, isPast, isThisYear, parse } from 'date-fns';
+import { addTaskToStorage, getActiveProject, expandTodo, removeTask, addDueDateInput, resetHTML, formatDueDate } from "../todo";
 
 const inbox = () => {
   contentDiv().get();
@@ -116,13 +114,16 @@ const contentDiv = () => {
                     }
         
                     const todoListItemContent = () => {
+                      const todoListItem = activeProject.todoList[i];
         
                       const get = () => {
                         const div = document.createElement('div');
                         div.classList.add('list-item-content');
                         div.appendChild(todoListItemTitleP().get());
                         div.appendChild(todoListItemDescriptionP().get());
-                        div.appendChild(todoListItemDueDateContentDiv().get());
+                        if (todoListItem.dueDate !== '') {
+                          div.appendChild(todoListItemDueDateContentDiv().get());
+                        }
                         return div;
                       }
           
@@ -130,7 +131,7 @@ const contentDiv = () => {
         
                         const get = () => {
                           const p = document.createElement('p');
-                          p.textContent = `${activeProject.todoList[i].title}`;
+                          p.textContent = `${todoListItem.title}`;
                           return p;
                         }
                         return { get };
@@ -140,7 +141,7 @@ const contentDiv = () => {
                         
                         const get = () => {
                           const p = document.createElement('p');
-                          p.textContent = `${activeProject.todoList[i].description}`;
+                          p.textContent = `${todoListItem.description}`;
                           p.classList.add('list-item-description');
                           return p;
                         }
@@ -161,13 +162,11 @@ const contentDiv = () => {
                             const span = document.createElement('span');
                             span.classList.add('material-symbols-outlined', 'list-item-duedate-img');
                             span.innerHTML = 'calendar_today';
-                            /*
-                            if (formatDueDate().overdue()) {
+
+                            if (formatDueDate(todoListItem.dueDate).overdue()) {
                               span.classList.add('overdue');
                             }
-                            note: need to move formatDueDate to todo.js and import it
-                            ex: formatDueDate(activeProject.todoList[i].dueDate).overdue()
-                            */
+
                             return span;
                           }
                           return { get };
@@ -177,38 +176,13 @@ const contentDiv = () => {
                           const get = () => {
                             const p = document.createElement('p');
                             p.classList.add('list-item-duedate');
-                            if (formatDueDate().overdue()) {
+                            p.textContent = `${formatDueDate(todoListItem.dueDate).get()}`;
+
+                            if (formatDueDate(todoListItem.dueDate).overdue()) {
                               p.classList.add('overdue');
                             }
-                            p.textContent = `${formatDueDate().get()}`;
+                            
                             return p;
-                          }
-  
-                          const formatDueDate = () => {
-                            const rawDueDate = activeProject.todoList[i].dueDate;
-                            if (rawDueDate === '') return;
-                            const dueDateObject = parse(rawDueDate, 'MM/dd/yyyy', new Date());
-
-                            const get = () => {
-                              if (isThisYear(dueDateObject)) {
-                                const dueDateFormatted = format(dueDateObject, 'MMM dd');
-                                return dueDateFormatted;
-                              }
-                              else if (isThisYear(dueDateObject) === false) {
-                                const dueDateFormatted = format(dueDateObject, 'MMM dd yyyy');
-                                return dueDateFormatted;
-                              }
-                            }
-
-                            const overdue = () => {
-                              if (isPast(dueDateObject)) {
-                                return true;
-                              }
-                              else if (isPast(dueDateObject) === false) {
-                                return false;
-                              }
-                            }
-                            return { get, overdue };
                           }
                           return { get };
                         }

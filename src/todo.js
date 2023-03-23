@@ -1,6 +1,7 @@
 import sidebarDiv from "./pages/sidebar";
 import { render } from "./functions/firstLoad";
 import closeImage from "./assets/imgs/close.png";
+import { format, isPast, isThisYear, parse } from 'date-fns';
 
 const createProject = (title, description, selected = false) => {
     const newProject = {
@@ -103,6 +104,31 @@ const addTaskToStorage = () => {
 
     return { get };
 }
+
+const formatDueDate = (rawDueDate) => {
+    const dueDateObject = parse(rawDueDate, 'MM/dd/yyyy', new Date());
+
+    const get = () => {
+      if (isThisYear(dueDateObject)) {
+        const dueDateFormatted = format(dueDateObject, 'MMM dd');
+        return dueDateFormatted;
+      }
+      else if (isThisYear(dueDateObject) === false) {
+        const dueDateFormatted = format(dueDateObject, 'MMM dd yyyy');
+        return dueDateFormatted;
+      }
+    }
+
+    const overdue = () => {
+        if (isPast(dueDateObject)) {
+            return true;
+        }
+        else if (isPast(dueDateObject) === false) {
+            return false;
+        }
+    }
+    return { get, overdue };
+  }
 
 const updateLocalStorage = (projectList) => {
     localStorage.setItem('projectList', JSON.stringify(projectList));
@@ -469,6 +495,6 @@ const projectMenu = (e) => {
 
 
 export {
-    addTaskToStorage, storageFirstLoad, loadLocalStorage, removeTask, projectMenu, removeProject, selectProject, getActiveProject, expandTodo, addDueDateInput, resetHTML
+    addTaskToStorage, storageFirstLoad, loadLocalStorage, removeTask, projectMenu, removeProject, selectProject, getActiveProject, expandTodo, addDueDateInput, resetHTML, formatDueDate
 };
 
