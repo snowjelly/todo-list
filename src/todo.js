@@ -450,7 +450,7 @@ const projectMenu = (e) => {
         const name = document.createElement('input');
         name.id = 'project-menu-name-input';
         name.type = 'textarea';
-        name.maxLength = '300';
+        name.maxLength = '25';
         name.minLength = '1';
         content.appendChild(name);
 

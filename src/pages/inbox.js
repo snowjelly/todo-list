@@ -381,8 +381,6 @@ const contentDiv = () => {
                         }
                         return { get };
                       }
-
-
                       return { get };
                     }
 
@@ -539,12 +537,6 @@ const contentDiv = () => {
     return { get };
   }
   return { get };
-}
-
-const removeCurrentTarget = (e) => {
-  if (e.currentTarget === e.target) {
-    e.currentTarget.remove();
-  }
 }
 
 export { inbox };
