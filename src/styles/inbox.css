@@ -170,6 +170,10 @@ body, ul, li, p{
 }
 
 #project-dropdown-menu-container{
+  background-color: transparent;
+}
+
+#project-dropdown-menu-content{
   position: absolute;
   width: 150px;
 }

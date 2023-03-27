@@ -434,18 +434,19 @@ const contentDiv = () => {
                         const projectDropDownMenuContainerDiv = () => {
                           const get = () => {
                             const div = document.createElement('div');
-                            const projectBtnLabel = document.querySelector('#project-btn');
-
                             div.id = 'project-dropdown-menu-container';
-                            centerDiv(div, projectBtnLabel);
+                            div.classList.add('isolated-container');
                             div.appendChild(projectDropDownMenuContentDiv().get());
+                            div.addEventListener('click', removeCurrentTarget);
                             return div;
                           }
 
                           const projectDropDownMenuContentDiv = () => {
                             const get = () => {
                               const div = document.createElement('div');
+                              const projectBtnLabel = document.querySelector('#project-btn');
                               div.id = 'project-dropdown-menu-content';
+                              centerDiv(div, projectBtnLabel);
                               div.appendChild(projectDropDownMenuLabel().get());
                               return div;
                             }
@@ -467,6 +468,7 @@ const contentDiv = () => {
                                   select.id = 'project-dropdown-menu-select';
                                   select.name = 'projects';
                                   options().render(select);
+                                  select.addEventListener('change', updateProjectBtn);
                                   return select;
                                 }
 
@@ -476,10 +478,11 @@ const contentDiv = () => {
 
                                       const option = () => {
                                         const option = document.createElement('option');
+                                        const taskProjectText = document.querySelector('#task-project-text').textContent;
                                         option.value = `${projectList[i].title}`;
                                         option.textContent = `${projectList[i].title}`;
                                         option.setAttribute('data-list-id', i);
-                                        if (projectList[i].title === activeProject.title) {
+                                        if (projectList[i].title === taskProjectText) {
                                           option.selected = true;
                                         }
                                         return option;
@@ -584,6 +587,21 @@ const centerDiv = (uncenteredDiv, centerOnThisDiv) => {
   const uncenteredDivWidth = 150;
   uncenteredDiv.style.left = centerOnThisDiv.offsetLeft - (uncenteredDivWidth/2 - (centerOnThisDiv.clientWidth/2)) + 'px';
   uncenteredDiv.style.top = centerOnThisDiv.offsetTop - uncenteredDivHeight + 'px';
+}
+
+const removeCurrentTarget = (e) => {
+  if (e.currentTarget === e.target) {
+    e.currentTarget.remove();
+  }
+}
+
+const updateProjectBtn = (e) => {
+  const updatedTaskProjectTitle = e.target.value;
+  const taskProjectText = document.querySelector('#task-project-text');
+  const projectDropDownMenuContainerDiv = document.querySelector('#project-dropdown-menu-container');
+
+  taskProjectText.textContent = updatedTaskProjectTitle;
+  projectDropDownMenuContainerDiv.remove();
 }
 
 export { inbox, centerDiv };

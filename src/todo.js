@@ -54,11 +54,12 @@ const addTaskToStorage = () => {
             return false;
         }
         const taskDescription = document.querySelector('#task-description-input').value;
-        const taskProjectTitle = getTaskProjectTitle().get();
+        const taskProjectTitle = document.querySelector('#task-project-text').textContent;
+        const taskDueDate = createNewDate().get();
         const projectList = loadLocalStorage();
         const taskProject = projectList[searchForProject(taskProjectTitle)];
 
-        const newTodo = createTodo(taskName, taskDescription, taskProject.title, createNewDate().get());
+        const newTodo = createTodo(taskName, taskDescription, taskProject.title, taskDueDate);
         taskProject.todoList.push(newTodo);
     
         updateLocalStorage(projectList);
@@ -272,10 +273,10 @@ const addDueDateInput = (e) => {
     container.appendChild(dueDateText);
 
     const refreshDropDownMenuContainerPosition = (() => {
-        const projectDropDownMenuContainerDiv = document.querySelector('#project-dropdown-menu-container');
+        const projectDropDownMenuContentDiv = document.querySelector('#project-dropdown-menu-content');
         const projectBtnLabel = document.querySelector('#project-btn');
-        if (projectDropDownMenuContainerDiv === null) return;
-        centerDiv(projectDropDownMenuContainerDiv, projectBtnLabel);
+        if (projectDropDownMenuContentDiv === null) return;
+        centerDiv(projectDropDownMenuContentDiv, projectBtnLabel);
       })();
 }
 
