@@ -1,6 +1,6 @@
 import taskDueDateImage from '../assets/imgs/due-date.png';
 import taskProjectImage from '../assets/imgs/inbox.png';
-import { addTaskToStorage, getActiveProject, expandTodo, removeTask, addDueDateInput, resetHTML, formatDueDate } from "../todo";
+import { addTaskToStorage, getActiveProject, expandTodo, removeTask, addDueDateInput, resetHTML, formatDueDate, loadLocalStorage } from "../todo";
 
 const inbox = () => {
   contentDiv().get();
@@ -430,15 +430,14 @@ const contentDiv = () => {
 
                       const openProjectDropDownMenu = () => {
                         const addTaskMenuForm = document.querySelector('#add-task-menu-form');
-                        const projectBtnLabel = document.querySelector('#project-btn');
                         
                         const projectDropDownMenuContainerDiv = () => {
                           const get = () => {
                             const div = document.createElement('div');
-                            const divHeight = 150;
+                            const projectBtnLabel = document.querySelector('#project-btn');
+
                             div.id = 'project-dropdown-menu-container';
-                            div.style.left = projectBtnLabel.offsetLeft - (divHeight/2 - (projectBtnLabel.clientWidth/2)) + 'px';
-                            div.style.top = projectBtnLabel.offsetTop - divHeight + 'px';
+                            centerDiv(div, projectBtnLabel);
                             div.appendChild(projectDropDownMenuContentDiv().get());
                             return div;
                           }
@@ -462,6 +461,7 @@ const contentDiv = () => {
 
                               const projectDropDownMenuSelect = () => {
                                 const activeProject = getActiveProject().activeProject;
+                                const projectList = loadLocalStorage();
                                 const get = () => {
                                   const select = document.createElement('select');
                                   select.id = 'project-dropdown-menu-select';
@@ -472,15 +472,21 @@ const contentDiv = () => {
 
                                 const options = () => {
                                   const render = (select) => {
-                                    select.appendChild(option());
+                                    for (let i=0;i<projectList.length;i++) {
+
+                                      const option = () => {
+                                        const option = document.createElement('option');
+                                        option.value = `${projectList[i].title}`;
+                                        option.textContent = `${projectList[i].title}`;
+                                        option.setAttribute('data-list-id', i);
+                                        return option;
+                                      }
+
+                                      select.appendChild(option());
+                                    }
                                   }
 
-                                  const option = () => {
-                                    const option = document.createElement('option');
-                                    option.value = `${activeProject.title}`;
-                                    option.textContent = `${activeProject.title}`;
-                                    return option;
-                                  }
+
                                   return { render };
                                 }
 
@@ -574,4 +580,11 @@ const contentDiv = () => {
   return { get };
 }
 
-export { inbox };
+const centerDiv = (uncenteredDiv, centerOnThisDiv) => {
+  const uncenteredDivHeight = 28;
+  const uncenteredDivWidth = 150;
+  uncenteredDiv.style.left = centerOnThisDiv.offsetLeft - (uncenteredDivWidth/2 - (centerOnThisDiv.clientWidth/2)) + 'px';
+  uncenteredDiv.style.top = centerOnThisDiv.offsetTop - uncenteredDivHeight + 'px';
+}
+
+export { inbox, centerDiv };

@@ -2,6 +2,7 @@ import sidebarDiv from "./pages/sidebar";
 import { render } from "./functions/firstLoad";
 import closeImage from "./assets/imgs/close.png";
 import { format, isPast, isThisYear, parse } from 'date-fns';
+import { centerDiv } from "./pages/inbox";
 
 const createProject = (title, description, selected = false) => {
     const newProject = {
@@ -238,6 +239,13 @@ const addDueDateInput = (e) => {
     dueDateText.id = 'due-date-input';
     dueDateText.type = 'date';
     container.appendChild(dueDateText);
+
+    const refreshDropDownMenuContainerPosition = (() => {
+        const projectDropDownMenuContainerDiv = document.querySelector('#project-dropdown-menu-container');
+        const projectBtnLabel = document.querySelector('#project-btn');
+        if (projectDropDownMenuContainerDiv === null) return;
+        centerDiv(projectDropDownMenuContainerDiv, projectBtnLabel);
+      })();
 }
 
 const editTodoTitle = () => {

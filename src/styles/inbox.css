@@ -172,8 +172,6 @@ body, ul, li, p{
 #project-dropdown-menu-container{
   position: absolute;
   width: 150px;
-  height: 150px;
-  background-color: red;
 }
 
 #project-dropdown-menu-select{
