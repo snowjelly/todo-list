@@ -2,7 +2,6 @@ import sidebarDiv from "./pages/sidebar";
 import { render } from "./functions/firstLoad";
 import closeImage from "./assets/imgs/close.png";
 import { format, isPast, isThisYear, parse } from 'date-fns';
-import { centerDiv } from "./pages/inbox";
 
 const createProject = (title, description, selected = false) => {
     const newProject = {
@@ -54,9 +53,9 @@ const addTaskToStorage = () => {
             return false;
         }
         const taskDescription = document.querySelector('#task-description-input').value;
-        const taskProjectTitle = document.querySelector('#task-project-text').textContent;
         const taskDueDate = createNewDate().get();
         const projectList = loadLocalStorage();
+        const taskProjectTitle = document.querySelector('#project-dropdown-menu-select').value;
         const taskProject = projectList[searchForProject(taskProjectTitle)];
 
         const newTodo = createTodo(taskName, taskDescription, taskProject.title, taskDueDate);
@@ -65,29 +64,6 @@ const addTaskToStorage = () => {
         updateLocalStorage(projectList);
         resetHTML();
         return true;
-    }
-
-    const getTaskProjectTitle = () => {
-        const taskProjectTitle = document.querySelector('#project-dropdown-menu-select');
-        const activeProject = getActiveProject().activeProject;
-        const get = () => {
-            if (selected()) {
-                return taskProjectTitle.value;
-            }
-            else if (selected() === false) {
-                return activeProject.title;
-            }
-        }
-
-        const selected = () => {
-            if (taskProjectTitle !== null) {
-                return true;
-            }
-            else if (taskProjectTitle === null) {
-                return false;
-            }
-        }
-        return { get };
     }
 
     const createNewDate = () => {
@@ -271,13 +247,6 @@ const addDueDateInput = (e) => {
     dueDateText.id = 'due-date-input';
     dueDateText.type = 'date';
     container.appendChild(dueDateText);
-
-    const refreshDropDownMenuContainerPosition = (() => {
-        const projectDropDownMenuContentDiv = document.querySelector('#project-dropdown-menu-content');
-        const projectBtnLabel = document.querySelector('#project-btn');
-        if (projectDropDownMenuContentDiv === null) return;
-        centerDiv(projectDropDownMenuContentDiv, projectBtnLabel);
-      })();
 }
 
 const editTodoTitle = () => {
@@ -529,12 +498,33 @@ const projectMenu = (e) => {
     content.appendChild(buttons.content);
 }
 
+const getTaskProjectTitle = () => {
+    const taskProjectTitle = document.querySelector('#project-dropdown-menu-select');
+    const activeProject = getActiveProject().activeProject;
+    const get = () => {
+        if (selected()) {
+            return taskProjectTitle.value;
+        }
+        else if (selected() === false) {
+            return activeProject.title;
+        }
+    }
 
+    const selected = () => {
+        if (taskProjectTitle !== null) {
+            return true;
+        }
+        else if (taskProjectTitle === null) {
+            return false;
+        }
+    }
+    return { get };
+}
 
 
 
 
 export {
-    addTaskToStorage, storageFirstLoad, loadLocalStorage, removeTask, projectMenu, removeProject, selectProject, getActiveProject, expandTodo, addDueDateInput, resetHTML, formatDueDate
+    addTaskToStorage, storageFirstLoad, loadLocalStorage, removeTask, projectMenu, removeProject, selectProject, getActiveProject, expandTodo, addDueDateInput, resetHTML, formatDueDate, getTaskProjectTitle
 };
 

@@ -1,6 +1,6 @@
 import taskDueDateImage from '../assets/imgs/due-date.png';
 import taskProjectImage from '../assets/imgs/inbox.png';
-import { addTaskToStorage, getActiveProject, expandTodo, removeTask, addDueDateInput, resetHTML, formatDueDate, loadLocalStorage } from "../todo";
+import { addTaskToStorage, getActiveProject, expandTodo, removeTask, addDueDateInput, resetHTML, formatDueDate, loadLocalStorage, getTaskProjectTitle} from "../todo";
 
 const inbox = () => {
   contentDiv().get();
@@ -390,118 +390,77 @@ const contentDiv = () => {
                       const get = () => {
                         const div = document.createElement('div');
                         div.id = 'project-btn-content';
-                        div.appendChild(projectBtnLabel().get());
+                        div.appendChild(projectDropDownMenuContentDiv().get());
                         return div;
                       }
 
-                      const projectBtnLabel = () => {
+                      const projectDropDownMenuContentDiv = () => {
                         const get = () => {
-                          const label = document.createElement('label');
-                          label.id = 'project-btn';
-                          label.classList.add('left-side-btn');
-                          label.appendChild(projectBtnImage().get());
-                          label.appendChild(projectBtnText().get());
-                          label.addEventListener('click', openProjectDropDownMenu);
-                          return label;
+                          const div = document.createElement('div');
+                          div.id = 'project-dropdown-menu-content';
+                          div.appendChild(projectDropDownMenuLabel().get());
+                          return div;
                         }
-  
-                        const projectBtnImage = () => {
-                          const get = () => {
-                            const image = new Image();
-                            image.src = taskProjectImage;
-                            image.width = '20';
-                            image.height = '20';
-                            return image;
-                          }
-                          return { get };
-                        }
-  
-                        const projectBtnText = () => {
-                          const get = () => {
-                            const p = document.createElement('p');
-                            p.id = 'task-project-text';
-                            p.textContent = getActiveProject().activeProject.title;
-                            return p;
-                          }
-                          return { get };
-                        }
-                        return { get };
-                      }
 
-                      const openProjectDropDownMenu = () => {
-                        const addTaskMenuForm = document.querySelector('#add-task-menu-form');
-                        
-                        const projectDropDownMenuContainerDiv = () => {
+                        const projectDropDownMenuLabel = () => {
                           const get = () => {
-                            const div = document.createElement('div');
-                            div.id = 'project-dropdown-menu-container';
-                            div.classList.add('isolated-container');
-                            div.appendChild(projectDropDownMenuContentDiv().get());
-                            div.addEventListener('click', removeCurrentTarget);
-                            return div;
+                            const label = document.createElement('label');
+                            label.id = 'project-dropdown-menu-label';
+                            label.classList.add('left-side-btn');
+                            label.setAttribute('for', 'project-dropdown-menu-select')
+                            label.appendChild(projectBtnImage().get());
+                            label.appendChild(projectDropDownMenuSelect().get());
+                            return label;
                           }
 
-                          const projectDropDownMenuContentDiv = () => {
+                          const projectDropDownMenuSelect = () => {
+                            const activeProject = getActiveProject().activeProject;
+                            const projectList = loadLocalStorage();
                             const get = () => {
-                              const div = document.createElement('div');
-                              const projectBtnLabel = document.querySelector('#project-btn');
-                              div.id = 'project-dropdown-menu-content';
-                              centerDiv(div, projectBtnLabel);
-                              div.appendChild(projectDropDownMenuLabel().get());
-                              return div;
+                              const select = document.createElement('select');
+                              select.id = 'project-dropdown-menu-select';
+                              select.name = 'projects';
+                              options().render(select);
+                              return select;
                             }
 
-                            const projectDropDownMenuLabel = () => {
-                              const get = () => {
-                                const label = document.createElement('label');
-                                label.id = 'project-dropdown-menu-label';
-                                label.setAttribute('for', 'project-dropdown-menu-select')
-                                label.appendChild(projectDropDownMenuSelect().get());
-                                return label;
-                              }
+                            const options = () => {
+                              const render = (select) => {
+                                for (let i=0;i<projectList.length;i++) {
 
-                              const projectDropDownMenuSelect = () => {
-                                const activeProject = getActiveProject().activeProject;
-                                const projectList = loadLocalStorage();
-                                const get = () => {
-                                  const select = document.createElement('select');
-                                  select.id = 'project-dropdown-menu-select';
-                                  select.name = 'projects';
-                                  options().render(select);
-                                  select.addEventListener('change', updateProjectBtn);
-                                  return select;
-                                }
-
-                                const options = () => {
-                                  const render = (select) => {
-                                    for (let i=0;i<projectList.length;i++) {
-
-                                      const option = () => {
-                                        const option = document.createElement('option');
-                                        const taskProjectText = document.querySelector('#task-project-text').textContent;
-                                        option.value = `${projectList[i].title}`;
-                                        option.textContent = `${projectList[i].title}`;
-                                        option.setAttribute('data-list-id', i);
-                                        if (projectList[i].title === taskProjectText) {
-                                          option.selected = true;
-                                        }
-                                        return option;
-                                      }
-                                      select.appendChild(option());
+                                  const option = () => {
+                                    const option = document.createElement('option');
+                                    const taskProjectText = getTaskProjectTitle().get();
+                                    option.value = `${projectList[i].title}`;
+                                    option.textContent = `${projectList[i].title}`;
+                                    option.setAttribute('data-list-id', i);
+                                    if (projectList[i].title === taskProjectText) {
+                                      option.selected = true;
                                     }
+                                    return option;
                                   }
-                                  return { render };
+                                  select.appendChild(option());
                                 }
-                                return { get };
                               }
-                              return { get };
+                              return { render };
                             }
                             return { get };
                           }
+
+                          const projectBtnImage = () => {
+                            const get = () => {
+                              const image = new Image();
+                              image.src = taskProjectImage;
+                              image.width = '20';
+                              image.height = '20';
+                              return image;
+                            }
+                            return { get };
+                          }
+
                           return { get };
                         }
-
-                        addTaskMenuForm.insertBefore(projectDropDownMenuContainerDiv().get(), addTaskMenuForm.children[1]);
+                        return { get };
                       }
                       return { get };
                     }
@@ -582,26 +541,10 @@ const contentDiv = () => {
   return { get };
 }
 
-const centerDiv = (uncenteredDiv, centerOnThisDiv) => {
-  const uncenteredDivHeight = 28;
-  const uncenteredDivWidth = 150;
-  uncenteredDiv.style.left = centerOnThisDiv.offsetLeft - (uncenteredDivWidth/2 - (centerOnThisDiv.clientWidth/2)) + 'px';
-  uncenteredDiv.style.top = centerOnThisDiv.offsetTop - uncenteredDivHeight + 'px';
-}
-
 const removeCurrentTarget = (e) => {
   if (e.currentTarget === e.target) {
     e.currentTarget.remove();
   }
 }
 
-const updateProjectBtn = (e) => {
-  const updatedTaskProjectTitle = e.target.value;
-  const taskProjectText = document.querySelector('#task-project-text');
-  const projectDropDownMenuContainerDiv = document.querySelector('#project-dropdown-menu-container');
-
-  taskProjectText.textContent = updatedTaskProjectTitle;
-  projectDropDownMenuContainerDiv.remove();
-}
-
-export { inbox, centerDiv };
+export { inbox };

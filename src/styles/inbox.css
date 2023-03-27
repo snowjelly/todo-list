@@ -180,6 +180,13 @@ body, ul, li, p{
 
 #project-dropdown-menu-select{
   width: 100%;
+  appearance: none;
+  background-color: transparent;
+  border: 0;
+}
+
+#project-dropdown-menu-label{
+  display: flex;
 }
 
 #task-description{
