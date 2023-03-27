@@ -50,23 +50,43 @@ const createTodo = (title = "", description = "", project = loadLocalStorage()[0
 const addTaskToStorage = () => {
     const get = () => {
         const taskName = document.querySelector('#task-name-input').value;
-        const taskDescription = document.querySelector('#task-description-input').value;
-
         if (taskName === "") {
             return false;
         }
-
-    
+        const taskDescription = document.querySelector('#task-description-input').value;
+        const taskProjectTitle = getTaskProjectTitle().get();
         const projectList = loadLocalStorage();
-        const activeProject = projectList[getActiveProject().id];
+        const taskProject = projectList[searchForProject(taskProjectTitle)];
 
-
-        const newTodo = createTodo(taskName, taskDescription, activeProject.title, createNewDate().get());
-        activeProject.todoList.push(newTodo);
+        const newTodo = createTodo(taskName, taskDescription, taskProject.title, createNewDate().get());
+        taskProject.todoList.push(newTodo);
     
         updateLocalStorage(projectList);
         resetHTML();
         return true;
+    }
+
+    const getTaskProjectTitle = () => {
+        const taskProjectTitle = document.querySelector('#project-dropdown-menu-select');
+        const activeProject = getActiveProject().activeProject;
+        const get = () => {
+            if (selected()) {
+                return taskProjectTitle.value;
+            }
+            else if (selected() === false) {
+                return activeProject.title;
+            }
+        }
+
+        const selected = () => {
+            if (taskProjectTitle !== null) {
+                return true;
+            }
+            else if (taskProjectTitle === null) {
+                return false;
+            }
+        }
+        return { get };
     }
 
     const createNewDate = () => {
@@ -104,6 +124,17 @@ const addTaskToStorage = () => {
     }
 
     return { get };
+}
+
+const searchForProject = (projectTitle) => {
+    const projectList = loadLocalStorage();
+
+    for (let i=0;i<projectList.length;i++) {
+        if (projectList[i].title === projectTitle) {
+            const foundProjectId = i;
+            return foundProjectId;
+        }
+    }
 }
 
 const formatDueDate = (rawDueDate) => {

@@ -479,17 +479,16 @@ const contentDiv = () => {
                                         option.value = `${projectList[i].title}`;
                                         option.textContent = `${projectList[i].title}`;
                                         option.setAttribute('data-list-id', i);
+                                        if (projectList[i].title === activeProject.title) {
+                                          option.selected = true;
+                                        }
                                         return option;
                                       }
-
                                       select.appendChild(option());
                                     }
                                   }
-
-
                                   return { render };
                                 }
-
                                 return { get };
                               }
                               return { get };
