@@ -393,6 +393,17 @@ textarea{
   cursor: pointer;
 }
 
+.fade:active{
+  transform: scale(0.95);
+}
+
+.fade-in { animation: fadeIn 0.03s; }
+
+@keyframes fadeIn {
+  0% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
 #expanded-todo-content-right-sidebar{
   display: flex;
   align-items: center;

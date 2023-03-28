@@ -198,7 +198,7 @@ const contentDiv = () => {
                         const getDiv = () => {
                           const div = document.createElement('div');
                           div.id = 'expanded-todo-container';
-                          div.classList.add('isolated-container');
+                          div.classList.add('isolated-container', 'fade-in');
                           div.addEventListener('click', (e) => {
                             if (e.currentTarget === e.target) {
                               resetHTML();
