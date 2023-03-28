@@ -1,6 +1,7 @@
 import taskDueDateImage from '../assets/imgs/due-date.png';
 import taskProjectImage from '../assets/imgs/inbox.png';
-import { addTaskToStorage, getActiveProject, expandTodo, removeTask, addDueDateInput, resetHTML, formatDueDate, loadLocalStorage, getTaskProjectTitle} from "../todo";
+import closeImage from "../assets/imgs/close.png";
+import { addTaskToStorage, getActiveProject, removeTask, addDueDateInput, resetHTML, formatDueDate, loadLocalStorage, getTaskProjectTitle, shortenString } from "../todo";
 
 const inbox = () => {
   contentDiv().get();
@@ -128,7 +129,6 @@ const contentDiv = () => {
                       }
           
                       const todoListItemTitleP = () => {
-        
                         const get = () => {
                           const p = document.createElement('p');
                           p.textContent = `${todoListItem.title}`;
@@ -138,10 +138,9 @@ const contentDiv = () => {
                       }
           
                       const todoListItemDescriptionP = () => {
-                        
                         const get = () => {
                           const p = document.createElement('p');
-                          p.textContent = `${todoListItem.description}`;
+                          p.textContent = `${shortenString(todoListItem.description, 130)}`;
                           p.classList.add('list-item-description');
                           return p;
                         }
@@ -189,6 +188,117 @@ const contentDiv = () => {
                         return { get };
                       }
                       return { get };
+                    }
+
+                    const expandTodo = (e) => {
+                      if (e.target.className === 'checkbox') return;
+                      
+
+                      const expandedTodoContainer = () => {
+                        const getDiv = () => {
+                          const div = document.createElement('div');
+                          div.id = 'expanded-todo-container';
+                          div.classList.add('isolated-container');
+                          div.addEventListener('click', (e) => {
+                            if (e.currentTarget === e.target) {
+                              resetHTML();
+                            }
+                          });
+                          div.appendChild(expandedTodoContent().getDiv());
+                          return div;
+                        }
+
+                        const appendToParent = () => {
+                          const bodyContent = document.querySelector('#content');
+                          bodyContent.appendChild(getDiv());
+                          return {'bodyContent': bodyContent};
+                        }
+
+                        const expandedTodoContent = () => {
+                          const listId = e.currentTarget.dataset.listId;
+                          const selectedTodo = activeProject.todoList[listId];
+                          const getDiv = () => {
+                            const div = document.createElement('div');
+                            div.id = 'expanded-todo-content';
+                            div.classList.add('isolated-content');
+                            div.todoListId = listId;
+                            div.appendChild(close().getImg());
+                            div.appendChild(checkboxContainer().getDiv());
+                            div.appendChild(expandedTodoTitleContent().getDiv());
+                            div.appendChild(expandedTodoDescription().getDiv());
+                            return div;
+                          }
+
+                          const close = () => {
+                            const getImg = () => {
+                              const img = new Image();
+                              img.id = 'close';
+                              img.src = closeImage;
+                              img.width = 30;
+                              img.height = 30;
+                              img.addEventListener('click', resetHTML);
+                              return img;
+                            }
+                            return { getImg };
+                          }
+
+                          const checkboxContainer = () => {
+                            const getDiv = () => {
+                              const div = document.createElement('div');
+                              div.id = 'checkbox-container';
+                              div.appendChild(checkbox().getDiv());
+                              return div;
+                            }
+
+                            const checkbox = () => {
+                              const getDiv = () => {
+                                const div = document.createElement('div');
+                                div.classList.add('checkbox');
+                                div.width = 24;
+                                div.height = 24;
+                                div.addEventListener('click', removeTask);
+                                return div;
+                              }
+                              return { getDiv };
+                            }
+                            return { getDiv };
+                          }
+
+                          const expandedTodoTitleContent = () => {
+                            const getDiv = () => {
+                              const div = document.createElement('div');
+                              div.id = 'expanded-todo-title-content';
+                              div.appendChild(expandedTodoTitle().getP());
+                              return div;
+                            }
+
+                            const expandedTodoTitle = () => {
+                              const getP = () => {
+                                const p = document.createElement('p');
+                                p.id = 'expanded-todo-title';
+                                p.textContent = `${selectedTodo.title}`;
+                                return p;
+                              }
+                              return { getP };
+                            }
+
+                            return { getDiv };
+                          }
+
+                          const expandedTodoDescription = () => {
+                            const getDiv = () => {
+                              const p = document.createElement('p');
+                              p.id = 'expanded-todo-description';
+                              p.textContent = `${selectedTodo.description}`;
+                              return p;
+                            }
+                            return { getDiv };
+                          }
+                          return { getDiv };
+                        }
+                        return { appendToParent };
+                      }
+                      expandedTodoContainer().appendToParent();
                     }
                     return { get }
                   }
@@ -292,11 +402,10 @@ const contentDiv = () => {
 
                     const taskNameInput = () => {
                       const get = () => {
-                        const input = document.createElement('input');
-                        input.setAttribute('type', 'textarea');
+                        const input = document.createElement('textarea');
                         input.setAttribute('name', 'task-name');
                         input.setAttribute('placeholder', 'Task name');
-                        input.setAttribute('maxlength', '500');
+                        input.setAttribute('maxlength', '60');
                         input.setAttribute('minlength', '1');
                         input.id = 'task-name-input';
                         return input;
@@ -316,12 +425,13 @@ const contentDiv = () => {
 
                     const taskDescriptionInput = () => {
                       const get = () => {
-                        const input = document.createElement('input');
-                        input.setAttribute('type', 'textarea');
+                        const input = document.createElement('textarea');
                         input.setAttribute('name', 'task-description');
                         input.setAttribute('placeholder', 'Description');
                         input.setAttribute('maxlength', '500');
                         input.setAttribute('minlength', '1');
+                        input.setAttribute('cols', '33');
+                        input.setAttribute('rows', '5');
                         input.id = 'task-description-input';
                         return input;
                       }

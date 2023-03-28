@@ -22,6 +22,10 @@ body, ul, li, p{
   margin: 0;
 }
 
+textarea{
+  resize: none;
+}
+
 :root{
   --stone-200: #e7e5e4;
   font-family: 'Poppins', sans-serif;
@@ -147,7 +151,7 @@ body, ul, li, p{
   flex: 1;
 }
 
-#form-textarea-content input{
+#form-textarea-content textarea{
   border: 0;
   outline: 0;
 }
@@ -196,6 +200,7 @@ body, ul, li, p{
 
 #task-description-input{
   width: 100%;
+  word-break: break-all;
 }
 
 #task-description-hint{

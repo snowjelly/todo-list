@@ -1,6 +1,5 @@
 import sidebarDiv from "./pages/sidebar";
 import { render } from "./functions/firstLoad";
-import closeImage from "./assets/imgs/close.png";
 import { format, isPast, isThisYear, parse } from 'date-fns';
 
 const createProject = (title, description, selected = false) => {
@@ -166,79 +165,6 @@ const resetHTML = () => {
     render();
 }
 
-const expandTodo = (e) => {
-    if (e.target.className === 'checkbox') return;
-    
-    const projectList = loadLocalStorage();
-    const activeProject = projectList[getActiveProject().id];
-    const listId = e.currentTarget.dataset.listId;
-    const selectedTodo = activeProject.todoList[listId];
-
-    const container = (() => {
-        const container = document.createElement('div');
-        container.id = 'expanded-todo-container';
-        container.classList.add('isolated-container');
-        container.addEventListener('click', (e) => {
-            if (e.currentTarget.id === e.target.id) {
-                closeExpandedTodo();
-            }
-        });
-        
-        const bodyContent = document.querySelector('#content');
-        bodyContent.appendChild(container);
-        
-        return container;
-    })();
-
-    const content = document.createElement('div');
-    content.id = 'expanded-todo-content';
-    content.classList.add('isolated-content');
-    content.todoListId = listId;
-    container.appendChild(content);
-
-    const close = new Image();
-    close.src = closeImage;
-    close.width = 30;
-    close.height = 30;
-    close.id = 'close';
-    close.addEventListener('click', closeExpandedTodo);
-    content.appendChild(close);
-
-    const checkboxContainer = document.createElement('div');
-    checkboxContainer.id = 'checkbox-container';
-    content.appendChild(checkboxContainer);
-
-    const checkboxDiv = document.createElement('div');
-    checkboxDiv.classList.add('checkbox');
-    checkboxDiv.width = 24;
-    checkboxDiv.height = 24;
-    checkboxDiv.addEventListener('click', removeTask);
-    checkboxContainer.appendChild(checkboxDiv);
-
-    const titleContent = document.createElement('div');
-    titleContent.id = 'expanded-todo-title-content';
-    content.appendChild(titleContent);
-
-    const title = document.createElement('div');
-    title.id = 'expanded-todo-title';
-    title.textContent = `${selectedTodo.title}`;
-    title.addEventListener('click', editTodoTitle);
-    titleContent.appendChild(title);
-
-    const description = document.createElement('div');
-    description.id = 'expanded-todo-description';
-    description.textContent = `${selectedTodo.description}`;
-    description.addEventListener('click', editTodoDescription);
-    content.appendChild(description);
-}
-
-const closeExpandedTodo = () => {
-    while (content.children.length > 0) {
-        content.children[0].remove();
-    }
-    render();
-}
-
 const addDueDateInput = (e) => {
     if (e.target.id === 'due-date-input') return;
     const container = document.querySelector('#due-date-btn');
@@ -247,109 +173,6 @@ const addDueDateInput = (e) => {
     dueDateText.id = 'due-date-input';
     dueDateText.type = 'date';
     container.appendChild(dueDateText);
-}
-
-const editTodoTitle = () => {
-    /*
-    const content = document.querySelector('#expanded-todo-title-content');
-
-    const title = document.querySelector('#expanded-todo-title');
-    const previousTitleText = title.textContent;
-    content.prevTitleText = previousTitleText;
-
-    const description = document.querySelector('#expanded-todo-description');
-    const previousDescriptionText = description.textContent;
-    content.prevDescText = previousDescriptionText;
-
-
-    const editContainer = document.createElement('div');
-    editContainer.id = 'expanded-todo-edit-container';
-    content.appendChild(editContainer);
-    
-
-    const titleEditBox = document.createElement('input');
-    titleEditBox.id = 'expanded-todo-title-edit';
-    titleEditBox.type = 'textarea';
-    titleEditBox.maxLength = '30';
-    titleEditBox.minLength = '1';
-    titleEditBox.value = `${previousTitleText}`;
-
-    content.appendChild(titleEditBox);
-
-    const buttonContainer = document.createElement('div');
-    buttonContainer.id = 'title-button-content';
-    content.appendChild(buttonContainer);
-
-    const titleCancelBtn = document.createElement('button');
-    titleCancelBtn.id = 'title-cancel-button';
-    titleCancelBtn.textContent = 'Cancel';
-    titleCancelBtn.addEventListener('click', cancelTodoEdit);
-    buttonContainer.appendChild(titleCancelBtn);
-
-    const titleAddBtn = document.createElement('button');
-    titleAddBtn.id = 'title-add-button';
-    titleAddBtn.textContent = 'Submit';
-    titleAddBtn.addEventListener('click', finishTodoEdit);
-    buttonContainer.appendChild(titleAddBtn);
-
-
-    title.remove();
-    */
-}
-
-const finishTodoEdit = (e) => {
-    /*
-    const titleEditBox = document.querySelector('#expanded-todo-title-edit');
-    if (titleEditBox === null) return;
-    const newTodoTitle = titleEditBox.value; 
-    if (newTodoTitle === "") return;
-
-    const content = document.querySelector('#expanded-todo-title-content');
-
-    const parentContent = document.querySelector('#expanded-todo-content');
-
-    const projectList = loadLocalStorage();
-    const activeProject = projectList[getActiveProject().id]
-    const listId = parentContent.todoListId;
-    const selectedTodo = activeProject.todoList[listId];
-
-
-    selectedTodo.title = `${newTodoTitle}`;
-
-    updateLocalStorage(projectList);
-    
-    titleEditBox.remove();
-
-    const titleBtnContent = document.querySelector('#title-button-content');
-    titleBtnContent.remove();
-
-    const newTitle = document.createElement('div');
-    newTitle.id = 'expanded-todo-title';
-    newTitle.textContent = `${newTodoTitle}`;
-    newTitle.addEventListener('click', editTodoTitle);
-
-    content.appendChild(newTitle);
-    */
-}
-
-const cancelTodoEdit = () => {
-    const titleBtnContent = document.querySelector('#title-button-content');
-    titleBtnContent.remove();
-    
-    const titleEditBox = document.querySelector('#expanded-todo-title-edit');
-    titleEditBox.remove();
-
-    const titleContent = document.querySelector('#expanded-todo-title-content');
-
-    const title = document.createElement('div');
-    title.id = 'expanded-todo-title';
-    title.textContent = titleContent.prevTitleText;
-    title.addEventListener('click', editTodoTitle);
-    titleContent.appendChild(title);
-}
-
-const editTodoDescription = (e) => {
-
 }
 
 const removeProject = (e) => {
@@ -411,6 +234,27 @@ const getActiveProject = () => {
     return {activeProject, id};
 }
 
+const shortenString = (unshortenedString, maxLength) => {
+
+    const tooLong = () => {
+      if (unshortenedString.length > maxLength) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+
+    if (tooLong()) {
+      const shortenedString = unshortenedString.slice(0, maxLength) + '...';
+      return shortenedString;
+    }
+    else if (tooLong() === false) {
+      return unshortenedString;
+    }
+
+  }
+
 const projectMenu = (e) => {
     const container = (() => {
         const container = document.createElement('div');
@@ -460,7 +304,7 @@ const projectMenu = (e) => {
 
     const addProject = (e) => {
         const projectName = document.querySelector('#project-menu-name-input');
-        if (projectName === "") return;
+        if (projectName.value === "") return;
         const projectList = loadLocalStorage();
         const newProject = createProject(projectName.value);
         projectList.push(newProject.getProject());
@@ -525,6 +369,6 @@ const getTaskProjectTitle = () => {
 
 
 export {
-    addTaskToStorage, storageFirstLoad, loadLocalStorage, removeTask, projectMenu, removeProject, selectProject, getActiveProject, expandTodo, addDueDateInput, resetHTML, formatDueDate, getTaskProjectTitle
+    addTaskToStorage, storageFirstLoad, loadLocalStorage, removeTask, projectMenu, removeProject, selectProject, getActiveProject, addDueDateInput, resetHTML, formatDueDate, getTaskProjectTitle, shortenString
 };
 
