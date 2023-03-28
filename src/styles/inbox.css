@@ -135,6 +135,7 @@ textarea{
 
 #add-task-menu-content{
   padding: 1rem;
+  height: max(220px,40%);
 }
 
 #add-task-menu-form{
@@ -266,10 +267,6 @@ textarea{
   height: 24px;
 }
 
-#expanded-todo-title{
-  cursor: text;
-}
-
 #expanded-todo-edit-container {
   border: solid grey 0.5px;
   border-radius: 0.2rem;
@@ -326,12 +323,16 @@ textarea{
 
 .isolated-content {
   width: 450px;
-  height: 200px;
+  height: 220px;
   background-color: white;
   margin: 50px;
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
+}
+
+#project-menu-content{
+  height: 184px;
 }
 
 #expanded-todo-content{
@@ -341,7 +342,7 @@ textarea{
   grid-template-columns: min-content 1fr min-content;
   grid-template-rows: min-content min-content;
   width: max(300px, 40%);
-  height: max(300px, 40%);
+  height: max(500px, 40%);
 }
 
 #expanded-todo-title-content{
@@ -351,21 +352,52 @@ textarea{
 }
 
 #close{
-  grid-area: right-sidebar;
   cursor: pointer;
-  margin: 3px;
+  margin: 10px;
 }
 
 #expanded-todo-description{
   grid-area: description;
   margin: 0rem 1rem 0.5rem;
   font-family: 'Montserrat', sans-serif;
+  word-break: break-all;
 }
 
 #project-menu-header, #expanded-todo-title {
   font-size: 1.5rem;
   font-weight: 700;
   margin: 1rem 1rem 0.5rem;
+}
+
+#expanded-todo-title{
+  word-break: break-all;
+  cursor: text;
+}
+
+#more{
+  font-size: 30px;
+  margin: 3px;
+  width: fit-content;
+  height: fit-content;
+}
+
+.fade{
+  border-radius: 0.1rem;
+  background-color: transparent;
+  transition: 0.3s;
+}
+
+.fade:hover{
+  transition: 0.3s;
+  background-color: var(--stone-200);
+  cursor: pointer;
+}
+
+#expanded-todo-content-right-sidebar{
+  display: flex;
+  align-items: center;
+  grid-area: right-sidebar;
+  height: fit-content;
 }
 
 #project-menu-name-content{

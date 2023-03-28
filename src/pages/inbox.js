@@ -222,24 +222,11 @@ const contentDiv = () => {
                             div.id = 'expanded-todo-content';
                             div.classList.add('isolated-content');
                             div.todoListId = listId;
-                            div.appendChild(close().getImg());
                             div.appendChild(checkboxContainer().getDiv());
                             div.appendChild(expandedTodoTitleContent().getDiv());
                             div.appendChild(expandedTodoDescription().getDiv());
+                            div.appendChild(expandedTodoContentRightSidebar().getDiv());
                             return div;
-                          }
-
-                          const close = () => {
-                            const getImg = () => {
-                              const img = new Image();
-                              img.id = 'close';
-                              img.src = closeImage;
-                              img.width = 30;
-                              img.height = 30;
-                              img.addEventListener('click', resetHTML);
-                              return img;
-                            }
-                            return { getImg };
                           }
 
                           const checkboxContainer = () => {
@@ -282,6 +269,42 @@ const contentDiv = () => {
                               return { getP };
                             }
 
+                            return { getDiv };
+                          }
+
+                          const expandedTodoContentRightSidebar = () => {
+                            const getDiv = () => {
+                              const div = document.createElement('div');
+                              div.id = 'expanded-todo-content-right-sidebar';
+                              div.appendChild(moreGoogleIcon().getSpan());
+                              div.appendChild(close().getImg());
+                              return div;
+                            }
+
+                            const moreGoogleIcon = () => {
+                              const getSpan = () => {
+                                const span = document.createElement('span');
+                                span.classList.add('material-symbols-outlined', 'fade');
+                                span.innerText = 'more_horiz';
+                                span.id = 'more';
+                                return span;
+                              }
+                              return { getSpan };
+                            }
+  
+                            const close = () => {
+                              const getImg = () => {
+                                const img = new Image();
+                                img.id = 'close';
+                                img.src = closeImage;
+                                img.width = 30;
+                                img.height = 30;
+                                img.classList.add('fade');
+                                img.addEventListener('click', resetHTML);
+                                return img;
+                              }
+                              return { getImg };
+                            }
                             return { getDiv };
                           }
 
@@ -405,7 +428,7 @@ const contentDiv = () => {
                         const input = document.createElement('textarea');
                         input.setAttribute('name', 'task-name');
                         input.setAttribute('placeholder', 'Task name');
-                        input.setAttribute('maxlength', '60');
+                        input.setAttribute('maxlength', '92');
                         input.setAttribute('minlength', '1');
                         input.id = 'task-name-input';
                         return input;
