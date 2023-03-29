@@ -294,6 +294,7 @@ const contentDiv = () => {
                               const openMoreOptions = (e) => {
                                 const moreOptionsIcon = document.querySelector('#more-options-icon');
                                 moreOptionsIcon.classList.add('increase-z-index-by-1');
+                                moreOptionsIcon.classList.add('stone-200');
 
                                 const moreOptionsIsolatedContainer = () => {
                                   const getDiv = () => {
@@ -308,7 +309,7 @@ const contentDiv = () => {
                                   const removeContainer = (e) => {
                                     if (e.currentTarget === e.target) {
                                       e.target.remove();
-                                      moreOptionsIcon.addEventListener('click', openMoreOptions, {once:true});
+                                      resetMoreOptionsBehavior();
                                     }
                                   }
 
@@ -337,6 +338,7 @@ const contentDiv = () => {
                                         const getDiv = () => {
                                           const div = document.createElement('div');
                                           div.id = 'delete-option-content';
+                                          div.addEventListener('click', openDeletionConfirmationMenu);
                                           div.appendChild(deleteOptionIcon().getSpan());
                                           div.appendChild(deleteOptionText().getP());
                                           return div;
@@ -364,6 +366,16 @@ const contentDiv = () => {
                                         }
                                         return { getDiv };
                                       }
+
+                                      const openDeletionConfirmationMenu = () => {
+                                        const deleteOptionContent = document.querySelector('#delete-option-content');
+                                        deleteOptionContent.classList.add('confirm-deletion');
+
+                                        deleteOptionContent.addEventListener('click', (e) => {
+                                          console.log('deleted');
+                                        });
+                                      }
+
                                       return { getDiv };
                                     }
                                     return { getDiv }
@@ -375,9 +387,13 @@ const contentDiv = () => {
                                 const closeMoreOptions = () => {
                                   const moreOptionsIsolatedContainer = document.querySelector('#more-options-isolated-container');
                                   if (moreOptionsIsolatedContainer === null) return;
-                                  
-                                  moreOptionsIcon.addEventListener('click', openMoreOptions, {once:true});
                                   moreOptionsIsolatedContainer.remove();
+                                  resetMoreOptionsBehavior();
+                                }
+
+                                const resetMoreOptionsBehavior = () => {
+                                  moreOptionsIcon.classList.remove('stone-200');
+                                  moreOptionsIcon.addEventListener('click', openMoreOptions, {once:true});
                                 }
 
                                 moreOptionsIcon.addEventListener('click', closeMoreOptions, {once:true});
