@@ -276,18 +276,111 @@ const contentDiv = () => {
                             const getDiv = () => {
                               const div = document.createElement('div');
                               div.id = 'expanded-todo-content-right-sidebar';
-                              div.appendChild(moreGoogleIcon().getSpan());
+                              div.appendChild(moreOptionsIcon().getSpan());
                               div.appendChild(close().getImg());
                               return div;
                             }
 
-                            const moreGoogleIcon = () => {
+                            const moreOptionsIcon = () => {
                               const getSpan = () => {
                                 const span = document.createElement('span');
                                 span.classList.add('material-symbols-outlined', 'fade');
                                 span.innerText = 'more_horiz';
-                                span.id = 'more';
+                                span.id = 'more-options-icon';
+                                span.addEventListener('click', openMoreOptions, {once:true});
                                 return span;
+                              }
+
+                              const openMoreOptions = (e) => {
+                                const moreOptionsIcon = document.querySelector('#more-options-icon');
+                                moreOptionsIcon.classList.add('increase-z-index-by-1');
+
+                                const moreOptionsIsolatedContainer = () => {
+                                  const getDiv = () => {
+                                    const div = document.createElement('div');
+                                    div.id = 'more-options-isolated-container';
+                                    div.classList.add('isolated-container');
+                                    div.addEventListener('click', removeContainer);
+                                    div.appendChild(moreOptionsContainer().getDiv());
+                                    return div;
+                                  }
+
+                                  const removeContainer = (e) => {
+                                    if (e.currentTarget === e.target) {
+                                      e.target.remove();
+                                      moreOptionsIcon.addEventListener('click', openMoreOptions, {once:true});
+                                    }
+                                  }
+
+                                  const appendToParent = () => {
+                                    const parent = document.querySelector('#expanded-todo-content-right-sidebar');
+                                    parent.appendChild(getDiv());
+                                  }
+
+                                  const moreOptionsContainer = () => {
+                                    const getDiv = () => {
+                                      const div = document.createElement('div');
+                                      div.id = 'more-options-container';
+                                      div.appendChild(moreOptionsContent().getDiv());
+                                      return div;
+                                    }
+  
+                                    const moreOptionsContent = () => {
+                                      const getDiv = () => {
+                                        const div = document.createElement('div');
+                                        div.id = 'more-options-content';
+                                        div.appendChild(deleteOptionContent().getDiv());
+                                        return div;
+                                      }
+  
+                                      const deleteOptionContent = () => {
+                                        const getDiv = () => {
+                                          const div = document.createElement('div');
+                                          div.id = 'delete-option-content';
+                                          div.appendChild(deleteOptionIcon().getSpan());
+                                          div.appendChild(deleteOptionText().getP());
+                                          return div;
+                                        }
+  
+                                        const deleteOptionIcon = () => {
+                                          const getSpan = () => {
+                                            const span = document.createElement('span');
+                                            span.id = 'delete-option-icon';
+                                            span.classList.add('material-symbols-outlined');
+                                            span.innerText = 'delete';
+                                            return span;
+                                          }
+                                          return { getSpan };
+                                        }
+  
+                                        const deleteOptionText = () => {
+                                          const getP = () => {
+                                            const p = document.createElement('p');
+                                            p.id = 'delete-option-text';
+                                            p.textContent = 'Delete task';
+                                            return p;
+                                          }
+                                          return { getP };
+                                        }
+                                        return { getDiv };
+                                      }
+                                      return { getDiv };
+                                    }
+                                    return { getDiv }
+                                  }
+                                  return { appendToParent };
+                                }
+                                moreOptionsIsolatedContainer().appendToParent();
+
+                                const closeMoreOptions = () => {
+                                  const moreOptionsIsolatedContainer = document.querySelector('#more-options-isolated-container');
+                                  if (moreOptionsIsolatedContainer === null) return;
+                                  
+                                  moreOptionsIcon.addEventListener('click', openMoreOptions, {once:true});
+                                  moreOptionsIsolatedContainer.remove();
+                                }
+
+                                moreOptionsIcon.addEventListener('click', closeMoreOptions, {once:true});
                               }
                               return { getSpan };
                             }

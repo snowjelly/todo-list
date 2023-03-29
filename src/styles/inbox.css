@@ -356,6 +356,39 @@ textarea{
   margin: 10px;
 }
 
+#more-options-isolated-container{
+  background-color: transparent;
+}
+
+.increase-z-index-by-1{
+  z-index: 1;
+}
+
+#more-options-container{
+  position: absolute;
+  left: 1147px;
+  bottom: 550px;
+  background-color: white;
+}
+
+#delete-option-content{
+  display: flex;
+  border: 1px solid black;
+  border-radius: 3px;
+  align-items: center;
+}
+
+#delete-option-icon{
+  font-size: 1.2rem;
+  margin-left: 5px;
+}
+
+#delete-option-text{
+  font-size: 0.8rem;
+  margin: 5px;
+}
+
+
 #expanded-todo-description{
   grid-area: description;
   margin: 0rem 1rem 0.5rem;
