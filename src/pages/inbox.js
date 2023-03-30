@@ -370,6 +370,117 @@ const contentDiv = () => {
                                       const openDeletionConfirmationMenu = () => {
                                         const deleteOptionContent = document.querySelector('#delete-option-content');
                                         deleteOptionContent.classList.add('confirm-deletion');
+                                        moreOptionsIcon.classList.remove('increase-z-index-by-1');
+
+                                        const confirmDeletionIsolatedContainer = () => {
+                                          const getDiv = () => {
+                                            const div = document.createElement('div');
+                                            div.id = 'confirm-deletion-isolated-container';
+                                            div.classList.add('isolated-container');
+                                            div.appendChild(confirmDeletionIsolatedContent().getDiv());
+                                            return div;
+                                          }
+
+                                          const appendToParent = () => {
+                                            const parent = document.querySelector('#expanded-todo-content-right-sidebar');
+                                            parent.appendChild(getDiv());
+                                          }
+
+                                          const confirmDeletionIsolatedContent = () => {
+                                            const getDiv = () => {
+                                              const div = document.createElement('div');
+                                              div.id = 'confirm-deletion-isolated-content';
+                                              div.classList.add('isolated-content');
+                                              div.appendChild(confirmDeletionTop().getDiv());
+                                              div.appendChild(confirmDeletionText().getP());
+                                              div.appendChild(confirmDeletionBottom().getDiv());
+                                              return div;
+                                            }
+                                            
+                                            const confirmDeletionTop = () => {
+                                              const getDiv = () => {
+                                                const div = document.createElement('div');
+                                                div.id = 'confirm-deletion-isolated-content-top';
+                                                div.appendChild(confirmDeletionInfoIcon().getSpan());
+                                                div.appendChild(confirmDeletionCloseIcon().getSpan());
+                                                return div;
+                                              }
+
+                                              const confirmDeletionInfoIcon = () => {
+                                                const getSpan = () => {
+                                                  const span = document.createElement('span');
+                                                  span.id = 'confirm-deletion-info-icon';
+                                                  span.classList.add('material-symbols-outlined');
+                                                  span.innerText = 'info';
+                                                  return span;
+                                                }
+                                                return { getSpan };
+                                              }
+
+                                              const confirmDeletionCloseIcon = () => {
+                                                const getSpan = () => {
+                                                  const span = document.createElement('span');
+                                                  span.id = 'confirm-deletion-close-icon';
+                                                  span.classList.add('material-symbols-outlined');
+                                                  span.innerText = 'close';
+                                                  return span;
+                                                }
+                                                return { getSpan };
+                                              }
+
+                                              return { getDiv };
+                                            }
+
+                                            const confirmDeletionText = () => {
+                                              const getP = () => {
+                                                const p = document.createElement('p');
+                                                p.id = 'confirm-deletion-text';
+                                                p.innerHTML = `Are you sure you want to delete <strong>${selectedTodo.title}</strong>?`;
+                                                return p;
+                                              }
+                                              return { getP };
+                                            }
+
+                                            const confirmDeletionBottom = () => {
+                                              const getDiv = () => {
+                                                const div = document.createElement('div');
+                                                div.id = 'confirm-deletion-bottom';
+                                                div.appendChild(confirmDeletionCancelBtn().getButton());
+                                                div.appendChild(confirmDeletionBtn().getButton());
+                                                return div;
+                                              }
+
+                                              const confirmDeletionCancelBtn = () => {
+                                                const getButton = () => {
+                                                  const button = document.createElement('button');
+                                                  button.id = 'confirm-deletion-cancel-btn';
+                                                  button.classList.add('cancel-btn');
+                                                  button.textContent = 'Cancel';
+                                                  return button;
+                                                }
+                                                return { getButton };
+                                              }
+
+                                              const confirmDeletionBtn = () => {
+                                                const getButton = () => {
+                                                  const button = document.createElement('button');
+                                                  button.id = 'confirm-deletion-btn';
+                                                  button.classList.add('add-btn');
+                                                  button.textContent = 'Delete';
+                                                  return button;
+                                                }
+                                                return { getButton };
+                                              }
+
+                                              return { getDiv };
+                                            }
+
+                                            return { getDiv };
+                                          }
+
+                                          return { appendToParent };
+                                        }
+                                        confirmDeletionIsolatedContainer().appendToParent();
 
                                         deleteOptionContent.addEventListener('click', (e) => {
                                           console.log('deleted');
