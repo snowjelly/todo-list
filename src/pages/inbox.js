@@ -222,11 +222,71 @@ const contentDiv = () => {
                             div.id = 'expanded-todo-content';
                             div.classList.add('isolated-content');
                             div.todoListId = listId;
+                            div.appendChild(expandedTodoTopContent().getDiv());
                             div.appendChild(checkboxContainer().getDiv());
                             div.appendChild(expandedTodoTitleContent().getDiv());
                             div.appendChild(expandedTodoDescription().getDiv());
-                            div.appendChild(expandedTodoContentRightSidebar().getDiv());
                             return div;
+                          }
+
+                          const expandedTodoTopContent = () => {
+                            const getDiv = () => {
+                              const div = document.createElement('div');
+                              div.id = 'expanded-todo-top-content';
+                              div.appendChild(projectTitleHeaderContent().getDiv());
+                              div.appendChild(expandedTodoContentRightSidebar().getDiv());
+                              return div;
+                            }
+
+                            const projectTitleHeaderContent = () => {
+                              const getDiv = () => {
+                                const div = document.createElement('div');
+                                div.id = 'expanded-todo-top-project-title-header-content';
+                                div.appendChild(projectTitleHeader().getDiv());
+                                return div;
+                              }
+
+                              const projectTitleHeader = () => {
+                                const getDiv = () => {
+                                  const div = document.createElement('div');
+                                  div.id = 'expanded-todo-top-project-title-header';
+                                  div.appendChild(projectTitleHeaderIcon().getSpan());
+                                  div.appendChild(projectTitleHeaderText().getP());
+                                  return div;
+                                }
+
+                                const projectTitleHeaderIcon = () => {
+                                  const getSpan = () => {
+                                    const span = document.createElement('span');
+                                    span.id = 'expanded-todo-top-project-title-header-icon'
+                                    span.classList.add('material-symbols-outlined');
+                                    if (activeProject.title === 'inbox') {
+                                      span.classList.add('expanded-todo-top-project-title-header-icon-inbox');
+                                      span.innerText = 'inbox';
+                                    }
+                                    else {
+                                      span.innerText = 'radio_button_unchecked';
+                                      span.classList.add('material-symbols-outlined-filled');
+                                    }
+                                    return span;
+                                  }
+                                  return { getSpan };
+                                }
+  
+                                const projectTitleHeaderText = () => {
+                                  const getP = () => {
+                                    const p = document.createElement('p');
+                                    p.id ='expanded-todo-top-project-title-header-text';
+                                    p.textContent = `${activeProject.title}`;
+                                    return p;
+                                  }
+                                  return { getP };
+                                }
+                                return { getDiv };
+                              }
+                              return { getDiv };
+                            }
+                            return { getDiv };
                           }
 
                           const checkboxContainer = () => {
