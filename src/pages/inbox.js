@@ -311,7 +311,7 @@ const contentDiv = () => {
                                       e.target.remove();
                                       resetMoreOptionsBehavior();
                                     }
-                                    if (e.currentTarget.id === 'confirm-deletion-cancel-btn') {
+                                    if (e.currentTarget.id === 'confirm-deletion-cancel-btn' || e.target.id === 'confirm-deletion-isolated-container' || e.currentTarget.id === 'confirm-deletion-close-icon') {
                                       document.querySelector('#confirm-deletion-isolated-container').remove();
                                     }
                                   }
@@ -381,6 +381,7 @@ const contentDiv = () => {
                                             const div = document.createElement('div');
                                             div.id = 'confirm-deletion-isolated-container';
                                             div.classList.add('isolated-container');
+                                            div.addEventListener('click', removeContainer);
                                             div.appendChild(confirmDeletionIsolatedContent().getDiv());
                                             return div;
                                           }
@@ -427,6 +428,7 @@ const contentDiv = () => {
                                                   span.id = 'confirm-deletion-close-icon';
                                                   span.classList.add('material-symbols-outlined');
                                                   span.innerText = 'close';
+                                                  span.addEventListener('click', removeContainer);
                                                   return span;
                                                 }
                                                 return { getSpan };
@@ -472,6 +474,7 @@ const contentDiv = () => {
                                                   button.id = 'confirm-deletion-btn';
                                                   button.classList.add('add-btn');
                                                   button.textContent = 'Delete';
+                                                  button.addEventListener('click', removeTask);
                                                   return button;
                                                 }
                                                 return { getButton };

@@ -147,12 +147,21 @@ const removeTask = (e) => {
     const projectList = loadLocalStorage();
     const expandedTodoContent = document.querySelector('#expanded-todo-content');
 
-    if (e.target.parentElement.id === 'checkbox-container') {
+    const expandedContentTaskRemoval = () => {
         projectList[getActiveProject().id].todoList.splice(expandedTodoContent.todoListId, 1);
     }
-    else if (e.target.parentElement.className === 'todo-list-item') {
+
+    const viewListTaskRemoval = () => {
         projectList[getActiveProject().id].todoList.splice(taskId, 1);
     }
+
+    if (e.target.parentElement.id === 'checkbox-container' || e.currentTarget.id === 'confirm-deletion-btn') {
+        expandedContentTaskRemoval();
+    }
+    else if (e.target.parentElement.className === 'todo-list-item') {
+        viewListTaskRemoval();
+    }
+
     updateLocalStorage(projectList);
     resetHTML();
 }
