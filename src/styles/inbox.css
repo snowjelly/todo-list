@@ -80,6 +80,8 @@ textarea{
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  overflow-y: scroll;
+  max-height: 90vh;
 }
 
 #sidebar-container{
@@ -364,10 +366,6 @@ textarea{
   flex: 1;
   align-items: center;
   cursor: default;
-}
-
-#expanded-todo-top-project-title-header:hover #expanded-todo-top-project-title-header-text{
-  text-decoration: underline;
 }
 
 #expanded-todo-top-project-title-header-content{
