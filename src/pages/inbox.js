@@ -313,8 +313,6 @@ const contentDiv = () => {
                                     }
                                     if (e.currentTarget.id === 'confirm-deletion-cancel-btn') {
                                       document.querySelector('#confirm-deletion-isolated-container').remove();
-                                      document.querySelector('#more-options-isolated-container').remove();
-                                      resetMoreOptionsBehavior();
                                     }
                                   }
 
@@ -374,7 +372,8 @@ const contentDiv = () => {
 
                                       const openDeletionConfirmationMenu = () => {
                                         const deleteOptionContent = document.querySelector('#delete-option-content');
-                                        deleteOptionContent.classList.add('confirm-deletion');
+                                        document.querySelector('#more-options-isolated-container').remove();
+                                        resetMoreOptionsBehavior();
                                         moreOptionsIcon.classList.remove('increase-z-index-by-1');
 
                                         const confirmDeletionIsolatedContainer = () => {

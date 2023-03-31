@@ -377,10 +377,6 @@ textarea{
   cursor: pointer;
 }
 
-.confirm-deletion{
-  color: red;
-}
-
 #delete-option-content.confirm-deletion{
   border-color: red;
 }
