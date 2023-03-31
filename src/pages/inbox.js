@@ -307,8 +307,13 @@ const contentDiv = () => {
                                   }
 
                                   const removeContainer = (e) => {
-                                    if (e.currentTarget === e.target) {
+                                    if (e.target.id === 'more-options-isolated-container') {
                                       e.target.remove();
+                                      resetMoreOptionsBehavior();
+                                    }
+                                    if (e.currentTarget.id === 'confirm-deletion-cancel-btn') {
+                                      document.querySelector('#confirm-deletion-isolated-container').remove();
+                                      document.querySelector('#more-options-isolated-container').remove();
                                       resetMoreOptionsBehavior();
                                     }
                                   }
@@ -456,6 +461,7 @@ const contentDiv = () => {
                                                   button.id = 'confirm-deletion-cancel-btn';
                                                   button.classList.add('cancel-btn');
                                                   button.textContent = 'Cancel';
+                                                  button.addEventListener('click', removeContainer);
                                                   return button;
                                                 }
                                                 return { getButton };
