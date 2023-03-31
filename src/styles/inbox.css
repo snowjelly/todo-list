@@ -204,6 +204,14 @@ textarea{
   display: flex;
 }
 
+#project-dropdown-menu-label::after{
+  content:'\25BC';
+  display:inline-block;
+  color:#000;
+  background-color:#fff;
+  pointer-events:none;
+}
+
 #task-description{
   display: flex;
   flex: 1;
@@ -403,10 +411,10 @@ textarea{
 }
 
 #more-options-container{
-  position: absolute;
-  left: 1161px;
-  bottom: 499px;
+  position: relative;
   background-color: white;
+  top: 25px;
+  z-index: 1;
 }
 
 #delete-option-content{

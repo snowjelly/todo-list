@@ -356,30 +356,37 @@ const contentDiv = () => {
                                 moreOptionsIcon.classList.add('increase-z-index-by-1');
                                 moreOptionsIcon.classList.add('stone-200');
 
+                                const closeMoreOptions = () => {
+                                  const moreOptionsIsolatedContainer = document.querySelector('#more-options-isolated-container');
+                                  if (moreOptionsIsolatedContainer === null) return;
+                                  moreOptionsIsolatedContainer.remove();
+                                  document.querySelector('#more-options-container').remove();
+                                  resetMoreOptionsBehavior();
+                                }
+
+                                
                                 const moreOptionsIsolatedContainer = () => {
                                   const getDiv = () => {
                                     const div = document.createElement('div');
                                     div.id = 'more-options-isolated-container';
                                     div.classList.add('isolated-container');
-                                    div.addEventListener('click', removeContainer);
-                                    div.appendChild(moreOptionsContainer().getDiv());
+                                    div.addEventListener('click', closeMoreOptions);
                                     return div;
-                                  }
-
-                                  const removeContainer = (e) => {
-                                    if (e.target.id === 'more-options-isolated-container') {
-                                      e.target.remove();
-                                      resetMoreOptionsBehavior();
-                                    }
-                                    if (e.currentTarget.id === 'confirm-deletion-cancel-btn' || e.target.id === 'confirm-deletion-isolated-container' || e.currentTarget.id === 'confirm-deletion-close-icon') {
-                                      document.querySelector('#confirm-deletion-isolated-container').remove();
-                                    }
                                   }
 
                                   const appendToParent = () => {
                                     const parent = document.querySelector('#expanded-todo-content-right-sidebar');
                                     parent.appendChild(getDiv());
                                   }
+                                  return { appendToParent };
+                                }
+
+                                  const removeContainer = (e) => {
+                                    if (e.currentTarget.id === 'confirm-deletion-cancel-btn' || e.target.id === 'confirm-deletion-isolated-container' || e.currentTarget.id === 'confirm-deletion-close-icon') {
+                                      document.querySelector('#confirm-deletion-isolated-container').remove();
+                                    }
+                                  }
+
 
                                   const moreOptionsContainer = () => {
                                     const getDiv = () => {
@@ -432,7 +439,9 @@ const contentDiv = () => {
 
                                       const openDeletionConfirmationMenu = () => {
                                         const deleteOptionContent = document.querySelector('#delete-option-content');
+
                                         document.querySelector('#more-options-isolated-container').remove();
+                                        document.querySelector('#more-options-container').remove();
                                         resetMoreOptionsBehavior();
                                         moreOptionsIcon.classList.remove('increase-z-index-by-1');
 
@@ -559,16 +568,9 @@ const contentDiv = () => {
                                     }
                                     return { getDiv }
                                   }
-                                  return { appendToParent };
-                                }
                                 moreOptionsIsolatedContainer().appendToParent();
-
-                                const closeMoreOptions = () => {
-                                  const moreOptionsIsolatedContainer = document.querySelector('#more-options-isolated-container');
-                                  if (moreOptionsIsolatedContainer === null) return;
-                                  moreOptionsIsolatedContainer.remove();
-                                  resetMoreOptionsBehavior();
-                                }
+                                const sidebar = document.querySelector('#expanded-todo-content-right-sidebar');
+                                sidebar.insertBefore(moreOptionsContainer().getDiv(), sidebar.children[0]);
 
                                 const resetMoreOptionsBehavior = () => {
                                   moreOptionsIcon.classList.remove('stone-200');
