@@ -1,7 +1,7 @@
 import plusImage from '../assets/imgs/plus.png';
 import trashImage from '../assets/imgs/trash.png';
 import { enableAddBtn, getActiveProject, loadLocalStorage } from '../todo';
-import { addProject, removeProject, selectProject } from '../todo';
+import { addProject, openRemoveProjectConfirmationMenu, selectProject } from '../todo';
 
 const projectMenu = (e) => {
   const container = () => {
@@ -206,7 +206,7 @@ const sidebarDiv = () => {
       projectListItemTrashImage.height = 20;
       projectListItemTrashImage.classList.add('trash-image');
       projectListItem.appendChild(projectListItemTrashImage);
-      projectListItemTrashImage.addEventListener('click', removeProject);
+      projectListItemTrashImage.addEventListener('click', openRemoveProjectConfirmationMenu);
       
       projectListItem.classList.add('project-list-item', 'hover-stone-200');
       const projectList = loadLocalStorage();

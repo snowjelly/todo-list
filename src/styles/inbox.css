@@ -359,10 +359,10 @@ textarea{
 
 #expanded-todo-content{
   display: grid;
-  grid-template-areas:  'top-content top-content'
-                        'checkbox title'
-                        'checkbox description';
-  grid-template-columns: min-content 1fr;
+  grid-template-areas:  'top-content top-content top-content'
+                        'checkbox title right-sidebar'
+                        'checkbox description right-sidebar';
+  grid-template-columns: min-content 3fr 1fr;
   grid-template-rows: min-content min-content;
   width: max(300px, 40%);
   height: max(500px, 40%);
@@ -370,7 +370,7 @@ textarea{
 
 #expanded-todo-top-content{
   display: flex;
-  grid-column: span 2;
+  grid-column: span 3;
   box-shadow: 0 2px 2px -2px grey;
 }
 
@@ -480,6 +480,30 @@ textarea{
   word-break: break-all;
 }
 
+#expanded-todo-right-sidebar{
+  grid-area: right-sidebar;
+  display: flex;
+  flex-direction: column;
+}
+
+#expanded-todo-property-list > li {
+  margin: 1rem;
+  display: flex;
+  row-gap: 1rem;
+  flex-direction: column;
+  cursor: default;
+}
+
+#expanded-todo-property-list > li .project-icon{
+  font-size: 1rem;
+}
+
+.property-content{
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+}
+
 #project-menu-header, #expanded-todo-title {
   font-size: 1.5rem;
   font-weight: 700;
@@ -521,10 +545,9 @@ textarea{
   100% { opacity: 1; }
 }
 
-#expanded-todo-content-right-sidebar{
+#expanded-todo-top-right-content{
   display: flex;
   align-items: center;
-  grid-area: right-sidebar;
   height: fit-content;
 }
 

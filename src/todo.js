@@ -1,6 +1,7 @@
 import { sidebarDiv, removeProjectMenu } from "./pages/sidebar";
 import { render } from "./functions/firstLoad";
 import { format, isPast, isThisYear, parse } from 'date-fns';
+import { confirmDeletionIsolatedContainer } from "./pages/inbox";
 
 const createProject = (title, description, selected = false) => {
     const newProject = {
@@ -185,9 +186,19 @@ const addDueDateInput = (e) => {
     dueDateInput.focus();
 }
 
-const removeProject = (e) => {
+const openRemoveProjectConfirmationMenu = (e) => {
     const listId = e.target.parentElement.dataset.listId;
     const projectList = loadLocalStorage();
+
+
+    confirmDeletionIsolatedContainer(projectList[listId]).appendToParent(`#project-list > li[data-list-id="${listId}"]`);
+}
+
+const removeProject = (e) => {
+    const listId = e.target.parentElement.parentElement.parentElement.parentElement.dataset.listId;
+    const projectList = loadLocalStorage();
+    if (listId === 0) return;
+
     projectList.splice(listId, 1);
     updateLocalStorage(projectList);
 
@@ -199,7 +210,7 @@ const selectProject = (e) => {
     const listId = e.currentTarget.dataset.listId;
     const projectList = loadLocalStorage();
 
-    if (projectList[listId].selected === true) return;
+    if (projectList[listId] === undefined|| projectList[listId].selected === true ) return;
     e.target.classList.add('stone-200');
 
     projectList[getActiveProject().id].selected = false;
@@ -330,6 +341,6 @@ const getTaskProjectTitle = () => {
 
 
 export {
-    addTaskToStorage, storageFirstLoad, loadLocalStorage, removeTask, addProject, removeProject, selectProject, getActiveProject, addDueDateInput, resetHTML, formatDueDate, getTaskProjectTitle, shortenString, enableAddBtn
+    addTaskToStorage, storageFirstLoad, loadLocalStorage, removeTask, addProject, openRemoveProjectConfirmationMenu, removeProject, selectProject, getActiveProject, addDueDateInput, resetHTML, formatDueDate, getTaskProjectTitle, shortenString, enableAddBtn
 };
 

@@ -1,7 +1,7 @@
 import taskDueDateImage from '../assets/imgs/due-date.png';
 import taskProjectImage from '../assets/imgs/inbox.png';
 import closeImage from "../assets/imgs/close.png";
-import { addTaskToStorage, getActiveProject, removeTask, addDueDateInput, resetHTML, formatDueDate, loadLocalStorage, getTaskProjectTitle, shortenString, enableAddBtn } from "../todo";
+import { addTaskToStorage, getActiveProject, removeTask, addDueDateInput, resetHTML, formatDueDate, loadLocalStorage, getTaskProjectTitle, shortenString, enableAddBtn, openRemoveProjectConfirmationMenu, removeProject } from "../todo";
 
 const inbox = () => {
   contentDiv().get();
@@ -226,6 +226,7 @@ const contentDiv = () => {
                             div.appendChild(checkboxContainer().getDiv());
                             div.appendChild(expandedTodoTitleContent().getDiv());
                             div.appendChild(expandedTodoDescription().getDiv());
+                            div.appendChild(expandedTodoRightSidebar().getDiv());
                             return div;
                           }
 
@@ -234,7 +235,7 @@ const contentDiv = () => {
                               const div = document.createElement('div');
                               div.id = 'expanded-todo-top-content';
                               div.appendChild(projectTitleHeaderContent().getDiv());
-                              div.appendChild(expandedTodoContentRightSidebar().getDiv());
+                              div.appendChild(expandedTodoTopRightSidebar().getDiv());
                               return div;
                             }
 
@@ -332,10 +333,10 @@ const contentDiv = () => {
                             return { getDiv };
                           }
 
-                          const expandedTodoContentRightSidebar = () => {
+                          const expandedTodoTopRightSidebar = () => {
                             const getDiv = () => {
                               const div = document.createElement('div');
-                              div.id = 'expanded-todo-content-right-sidebar';
+                              div.id = 'expanded-todo-top-right-content';
                               div.appendChild(moreOptionsIcon().getSpan());
                               div.appendChild(close().getImg());
                               return div;
@@ -375,18 +376,11 @@ const contentDiv = () => {
                                   }
 
                                   const appendToParent = () => {
-                                    const parent = document.querySelector('#expanded-todo-content-right-sidebar');
+                                    const parent = document.querySelector('#expanded-todo-top-right-content');
                                     parent.appendChild(getDiv());
                                   }
                                   return { appendToParent };
                                 }
-
-                                  const removeContainer = (e) => {
-                                    if (e.currentTarget.id === 'confirm-deletion-cancel-btn' || e.target.id === 'confirm-deletion-isolated-container' || e.currentTarget.id === 'confirm-deletion-close-icon') {
-                                      document.querySelector('#confirm-deletion-isolated-container').remove();
-                                    }
-                                  }
-
 
                                   const moreOptionsContainer = () => {
                                     const getDiv = () => {
@@ -438,138 +432,18 @@ const contentDiv = () => {
                                       }
 
                                       const openDeletionConfirmationMenu = () => {
-                                        const deleteOptionContent = document.querySelector('#delete-option-content');
-
                                         document.querySelector('#more-options-isolated-container').remove();
                                         document.querySelector('#more-options-container').remove();
                                         resetMoreOptionsBehavior();
                                         moreOptionsIcon.classList.remove('increase-z-index-by-1');
-
-                                        const confirmDeletionIsolatedContainer = () => {
-                                          const getDiv = () => {
-                                            const div = document.createElement('div');
-                                            div.id = 'confirm-deletion-isolated-container';
-                                            div.classList.add('isolated-container');
-                                            div.addEventListener('click', removeContainer);
-                                            div.appendChild(confirmDeletionIsolatedContent().getDiv());
-                                            return div;
-                                          }
-
-                                          const appendToParent = () => {
-                                            const parent = document.querySelector('#expanded-todo-content-right-sidebar');
-                                            parent.appendChild(getDiv());
-                                          }
-
-                                          const confirmDeletionIsolatedContent = () => {
-                                            const getDiv = () => {
-                                              const div = document.createElement('div');
-                                              div.id = 'confirm-deletion-isolated-content';
-                                              div.classList.add('isolated-content');
-                                              div.appendChild(confirmDeletionTop().getDiv());
-                                              div.appendChild(confirmDeletionText().getP());
-                                              div.appendChild(confirmDeletionBottom().getDiv());
-                                              return div;
-                                            }
-                                            
-                                            const confirmDeletionTop = () => {
-                                              const getDiv = () => {
-                                                const div = document.createElement('div');
-                                                div.id = 'confirm-deletion-isolated-content-top';
-                                                div.appendChild(confirmDeletionInfoIcon().getSpan());
-                                                div.appendChild(confirmDeletionCloseIcon().getSpan());
-                                                return div;
-                                              }
-
-                                              const confirmDeletionInfoIcon = () => {
-                                                const getSpan = () => {
-                                                  const span = document.createElement('span');
-                                                  span.id = 'confirm-deletion-info-icon';
-                                                  span.classList.add('material-symbols-outlined');
-                                                  span.innerText = 'info';
-                                                  return span;
-                                                }
-                                                return { getSpan };
-                                              }
-
-                                              const confirmDeletionCloseIcon = () => {
-                                                const getSpan = () => {
-                                                  const span = document.createElement('span');
-                                                  span.id = 'confirm-deletion-close-icon';
-                                                  span.classList.add('material-symbols-outlined');
-                                                  span.innerText = 'close';
-                                                  span.addEventListener('click', removeContainer);
-                                                  return span;
-                                                }
-                                                return { getSpan };
-                                              }
-
-                                              return { getDiv };
-                                            }
-
-                                            const confirmDeletionText = () => {
-                                              const getP = () => {
-                                                const p = document.createElement('p');
-                                                p.id = 'confirm-deletion-text';
-                                                p.innerHTML = `Are you sure you want to delete <strong>${selectedTodo.title}</strong>?`;
-                                                return p;
-                                              }
-                                              return { getP };
-                                            }
-
-                                            const confirmDeletionBottom = () => {
-                                              const getDiv = () => {
-                                                const div = document.createElement('div');
-                                                div.id = 'confirm-deletion-bottom';
-                                                div.appendChild(confirmDeletionCancelBtn().getButton());
-                                                div.appendChild(confirmDeletionBtn().getButton());
-                                                return div;
-                                              }
-
-                                              const confirmDeletionCancelBtn = () => {
-                                                const getButton = () => {
-                                                  const button = document.createElement('button');
-                                                  button.id = 'confirm-deletion-cancel-btn';
-                                                  button.classList.add('cancel-btn');
-                                                  button.textContent = 'Cancel';
-                                                  button.addEventListener('click', removeContainer);
-                                                  return button;
-                                                }
-                                                return { getButton };
-                                              }
-
-                                              const confirmDeletionBtn = () => {
-                                                const getButton = () => {
-                                                  const button = document.createElement('button');
-                                                  button.id = 'confirm-deletion-btn';
-                                                  button.classList.add('add-btn');
-                                                  button.textContent = 'Delete';
-                                                  button.addEventListener('click', removeTask);
-                                                  return button;
-                                                }
-                                                return { getButton };
-                                              }
-
-                                              return { getDiv };
-                                            }
-
-                                            return { getDiv };
-                                          }
-
-                                          return { appendToParent };
-                                        }
-                                        confirmDeletionIsolatedContainer().appendToParent();
-
-                                        deleteOptionContent.addEventListener('click', (e) => {
-                                          console.log('deleted');
-                                        });
+                                        confirmDeletionIsolatedContainer(selectedTodo).appendToParent('#expanded-todo-top-right-content');
                                       }
-
                                       return { getDiv };
                                     }
                                     return { getDiv }
                                   }
                                 moreOptionsIsolatedContainer().appendToParent();
-                                const sidebar = document.querySelector('#expanded-todo-content-right-sidebar');
+                                const sidebar = document.querySelector('#expanded-todo-top-right-content');
                                 sidebar.insertBefore(moreOptionsContainer().getDiv(), sidebar.children[0]);
 
                                 const resetMoreOptionsBehavior = () => {
@@ -604,6 +478,86 @@ const contentDiv = () => {
                               p.id = 'expanded-todo-description';
                               p.textContent = `${selectedTodo.description}`;
                               return p;
+                            }
+                            return { getDiv };
+                          }
+
+                          const expandedTodoRightSidebar = () => {
+                            const getDiv = () => {
+                              const div = document.createElement('div');
+                              div.id = 'expanded-todo-right-sidebar';
+                              div.appendChild(propertyList().getUl());
+                              return div;
+                            }
+
+                            const propertyList = () => {
+                              const getUl = () => {
+                                const ul = document.createElement('ul');
+                                ul.id = 'expanded-todo-property-list';
+                                ul.appendChild(projectInfo().getLi());
+                                return ul;
+                              }
+
+                              const projectInfo = () => {
+                                const getLi = () => {
+                                  const li = document.createElement('li');
+                                  li.id = 'expanded-todo-property-project-info';
+                                  li.appendChild(header().getP());
+                                  li.appendChild(content().getDiv());
+                                  return li;
+                                }
+
+                                const header = () => {
+                                  const getP = () => {
+                                    const p = document.createElement('p');
+                                    p.id = 'expanded-todo-property-project-info-header';
+                                    p.textContent = 'Project';
+                                    p.classList.add('property-header');
+                                    return p;
+                                  }
+                                  return { getP };
+                                }
+
+                                const content = () => {
+                                  const getDiv = () => {
+                                    const div = document.createElement('div');
+                                    div.id = 'expanded-todo-property-project-info-content';
+                                    div.classList.add('property-content');
+                                    div.appendChild(icon().getSpan());
+                                    div.appendChild(text().getP());
+                                    return div;
+                                  }
+
+                                  const icon = () => {
+                                    const getSpan = () => {
+                                      const span = document.createElement('span');
+                                      span.id = 'expanded-todo-property-project-info-icon';
+                                      span.classList.add('material-symbols-outlined', 'project-icon', determineProjectIcon().getClassList()[0], determineProjectIcon().getClassList()[1]);
+                                      span.innerText = `${determineProjectIcon().getInnerText()}`;
+                                      return span;
+                                    }
+                                    return { getSpan };
+                                  }
+
+                                  const text = () => {
+                                    const getP = () => {
+                                      const activeProject = getActiveProject().activeProject;
+                                      const p = document.createElement('p');
+                                      p.id = 'expanded-todo-property-project-info-text';
+                                      p.textContent = `${activeProject.title}`;
+                                      p.classList.add('property-text');
+                                      return p;
+                                    }
+                                    return { getP };
+                                  }
+
+                                  return { getDiv };
+                                }
+
+                                return { getLi };
+                              }
+
+                              return { getUl };
                             }
                             return { getDiv };
                           }
@@ -968,4 +922,160 @@ const contentDiv = () => {
   return { get };
 }
 
-export { inbox };
+const determineProjectIcon = () => {
+  const activeProject = getActiveProject().activeProject;
+
+  const getInnerText = () => {
+    if (activeProject.title === 'inbox') {
+      return 'inbox';
+    }
+    else {
+      return 'radio_button_unchecked';
+    }
+  }
+
+  const getClassList = () => {
+    if (getInnerText() === 'inbox') {
+      return ['material-symbols-outlined', 'inbox'];
+    }
+    else {
+      return ['material-symbols-outlined-filled', 'project-icon'];
+    }
+  }
+
+  return { getInnerText, getClassList };
+}
+
+const removeContainer = (e) => {
+  if (e.currentTarget.id === 'confirm-deletion-cancel-btn' || e.target.id === 'confirm-deletion-isolated-container' || e.currentTarget.id === 'confirm-deletion-close-icon') {
+    document.querySelector('#confirm-deletion-isolated-container').remove();
+  }
+}
+
+const confirmDeletionIsolatedContainer = (selectedTodoOrProject) => {
+  const getDiv = () => {
+    const div = document.createElement('div');
+    div.id = 'confirm-deletion-isolated-container';
+    div.classList.add('isolated-container');
+    div.addEventListener('click', removeContainer);
+    div.appendChild(confirmDeletionIsolatedContent().getDiv());
+    return div;
+  }
+
+  const checkIfTodoOrProject = () => {
+    if (selectedTodoOrProject.project === undefined) {
+      return 'project';
+    }
+    else {
+      return 'todo';
+    }
+  }
+
+
+
+  const appendToParent = (parentSelector) => {
+    const parentElement = document.querySelector(`${parentSelector}`);
+    parentElement.appendChild(getDiv());
+  }
+
+  const confirmDeletionIsolatedContent = () => {
+    const getDiv = () => {
+      const div = document.createElement('div');
+      div.id = 'confirm-deletion-isolated-content';
+      div.classList.add('isolated-content');
+      div.appendChild(confirmDeletionTop().getDiv());
+      div.appendChild(confirmDeletionText().getP());
+      div.appendChild(confirmDeletionBottom().getDiv());
+      return div;
+    }
+    
+    const confirmDeletionTop = () => {
+      const getDiv = () => {
+        const div = document.createElement('div');
+        div.id = 'confirm-deletion-isolated-content-top';
+        div.appendChild(confirmDeletionInfoIcon().getSpan());
+        div.appendChild(confirmDeletionCloseIcon().getSpan());
+        return div;
+      }
+
+      const confirmDeletionInfoIcon = () => {
+        const getSpan = () => {
+          const span = document.createElement('span');
+          span.id = 'confirm-deletion-info-icon';
+          span.classList.add('material-symbols-outlined');
+          span.innerText = 'info';
+          return span;
+        }
+        return { getSpan };
+      }
+
+      const confirmDeletionCloseIcon = () => {
+        const getSpan = () => {
+          const span = document.createElement('span');
+          span.id = 'confirm-deletion-close-icon';
+          span.classList.add('material-symbols-outlined');
+          span.innerText = 'close';
+          span.addEventListener('click', removeContainer);
+          return span;
+        }
+        return { getSpan };
+      }
+
+      return { getDiv };
+    }
+
+    const confirmDeletionText = () => {
+      const getP = () => {
+        const p = document.createElement('p');
+        p.id = 'confirm-deletion-text';
+        p.innerHTML = `Are you sure you want to delete <strong>${selectedTodoOrProject.title}</strong>?`;
+        return p;
+      }
+      return { getP };
+    }
+
+    const confirmDeletionBottom = () => {
+      const getDiv = () => {
+        const div = document.createElement('div');
+        div.id = 'confirm-deletion-bottom';
+        div.appendChild(confirmDeletionCancelBtn().getButton());
+        div.appendChild(confirmDeletionBtn().getButton());
+        return div;
+      }
+
+      const confirmDeletionCancelBtn = () => {
+        const getButton = () => {
+          const button = document.createElement('button');
+          button.id = 'confirm-deletion-cancel-btn';
+          button.classList.add('cancel-btn');
+          button.textContent = 'Cancel';
+          button.addEventListener('click', removeContainer);
+          return button;
+        }
+        return { getButton };
+      }
+
+      const confirmDeletionBtn = () => {
+        const getButton = () => {
+          const button = document.createElement('button');
+          button.id = 'confirm-deletion-btn';
+          button.classList.add('add-btn');
+          button.textContent = 'Delete';
+          if (checkIfTodoOrProject() === 'todo') {
+            button.addEventListener('click', removeTask);
+          }
+          else if (checkIfTodoOrProject() === 'project') {
+            button.addEventListener('click', removeProject);
+          }
+          return button;
+        }
+        return { getButton };
+      }
+      return { getDiv };
+    }
+    return { getDiv };
+  }
+  return { appendToParent };
+}
+
+export { inbox, confirmDeletionIsolatedContainer };
