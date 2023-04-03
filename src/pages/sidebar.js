@@ -1,7 +1,127 @@
 import plusImage from '../assets/imgs/plus.png';
 import trashImage from '../assets/imgs/trash.png';
-import { getActiveProject, loadLocalStorage, projectMenu } from '../todo';
-import { removeProject, selectProject } from '../todo';
+import { getActiveProject, loadLocalStorage } from '../todo';
+import { addProject, removeProject, selectProject } from '../todo';
+
+const projectMenu = (e) => {
+  const container = () => {
+      const getDiv = () => {
+          const div = document.createElement('div');
+          div.id = 'project-menu-container';
+          div.classList.add('isolated-container');
+          div.addEventListener('click', (e) => {
+              if (e.currentTarget.id === e.target.id) {
+                  div.remove();
+              }
+          });
+          div.appendChild(content().getDiv());
+          return div;
+      }
+
+      const content = () => {
+          const getDiv = () => {
+              const div = document.createElement('form');
+              div.id = 'project-menu-content';
+              div.classList.add('isolated-content');
+              div.appendChild(header().getDiv());
+              div.appendChild(nameContent().getDiv());
+              div.appendChild(buttonContent().getDiv());
+              return div;
+          }
+
+          const header = () => {
+              const getDiv = () => {
+                  const div = document.createElement('div');
+                  div.id = 'project-menu-header';
+                  div.textContent = 'Add project';
+                  return div;
+              }
+              return { getDiv };
+          }
+
+          const nameContent = () => {
+              const getDiv = () => {
+                  const div = document.createElement('div');
+                  div.id = 'project-menu-name-content';
+                  div.appendChild(header().getDiv());
+                  div.appendChild(input().getInput());
+                  return div;
+              }
+
+              const header = () => {
+                  const getDiv = () => {
+                      const div = document.createElement('div');
+                      div.id = 'name-header';
+                      div.textContent = 'Name';
+                      return div;
+                  }
+                  return { getDiv };
+              }
+
+              const input = () => {
+                  const getInput = () => {
+                      const input = document.createElement('input');
+                      input.id = 'project-menu-name-input';
+                      input.type = 'textarea';
+                      input.maxLength = '25';
+                      input.minLength = '1';
+                      return input;
+                  }
+                  return { getInput };
+              }
+              return { getDiv };
+          }
+
+          const buttonContent = () => {
+              const getDiv = () => {
+                  const div = document.createElement('div');
+                  div.id = 'project-menu-button-content';
+                  div.appendChild(cancelBtn().getButton());
+                  div.appendChild(addBtn().getButton());
+                  return div;
+              }
+
+              const cancelBtn = () => {
+                  const getButton = () => {
+                      const button = document.createElement('button');
+                      button.classList.add('cancel-btn');
+                      button.textContent = 'Cancel';
+                      button.type = 'button';
+                      button.addEventListener('click', removeProjectMenu);
+                      return button;
+                  }
+                  return { getButton };
+              }
+
+              const addBtn = () => {
+                  const getButton = () => {
+                      const button = document.createElement('button');
+                      button.classList.add('add-btn');
+                      button.textContent = 'Add';
+                      button.type = 'button';
+                      button.addEventListener('click', addProject);
+                      return button;
+                  }
+                  return { getButton };
+              }
+              return { getDiv };
+          }
+          return { getDiv };
+      }
+
+      const appendToParent = () => {
+          const parent = document.querySelector('#content');
+          parent.appendChild(getDiv());
+      }
+      return { appendToParent };
+  }
+  container().appendToParent();
+}
+
+const removeProjectMenu = () => {
+  const projectMenu = document.querySelector('#project-menu-container');
+  projectMenu.remove();
+}
 
 const sidebarDiv = () => {
   const sidebarContainer = document.createElement('div');
@@ -110,4 +230,4 @@ const sidebarDiv = () => {
   return {sidebarContainer, bottomMenu};
 }
 
-export default sidebarDiv;
+export { sidebarDiv, removeProjectMenu };
