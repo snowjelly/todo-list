@@ -177,11 +177,12 @@ const resetHTML = () => {
 const addDueDateInput = (e) => {
     if (e.target.id === 'due-date-input') return;
     const container = document.querySelector('#due-date-btn');
-    const dueDateText = document.createElement('input');
+    const dueDateInput = document.createElement('input');
 
-    dueDateText.id = 'due-date-input';
-    dueDateText.type = 'date';
-    container.appendChild(dueDateText);
+    dueDateInput.id = 'due-date-input';
+    dueDateInput.type = 'date';
+    container.appendChild(dueDateInput);
+    dueDateInput.focus();
 }
 
 const removeProject = (e) => {

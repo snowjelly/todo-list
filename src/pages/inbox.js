@@ -778,10 +778,12 @@ const contentDiv = () => {
                         const label = document.createElement('label');
                         label.classList.add('left-side-btn');
                         label.id = 'due-date-btn';
+                        label.tabIndex = 0;
                         label.setAttribute('for', 'due-date-input');
                         label.appendChild(dueDateImage().get());
                         label.appendChild(dueDateText().get());
                         label.addEventListener('click', addDueDateInput, {once: true});
+                        label.addEventListener('keydown', addDueDateInput, {once: true});
                         return label;
                       }
 
