@@ -263,6 +263,11 @@ textarea{
   cursor: pointer;
 }
 
+#add-task-btn.disabled{
+  cursor: not-allowed;
+  background-color: #be123d57;
+}
+
 .cancel-btn{
   width: 60px;
 }

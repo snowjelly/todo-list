@@ -351,6 +351,20 @@ const projectMenu = (e) => {
     content.appendChild(buttons.content);
 }
 
+const enableAddTaskBtn = (e) => {
+    const taskNameInput = e.currentTarget;
+    const addTaskbtn = document.querySelector('#add-task-btn')
+
+    if (taskNameInput.value !== "") {
+        addTaskbtn.disabled = false;
+        addTaskbtn.classList.remove('disabled');
+    }
+    else {
+        addTaskbtn.disabled = true;
+        addTaskbtn.classList.add('disabled');
+    }
+}
+
 const getTaskProjectTitle = () => {
     const taskProjectTitle = document.querySelector('#project-dropdown-menu-select');
     const activeProject = getActiveProject().activeProject;
@@ -378,6 +392,6 @@ const getTaskProjectTitle = () => {
 
 
 export {
-    addTaskToStorage, storageFirstLoad, loadLocalStorage, removeTask, projectMenu, removeProject, selectProject, getActiveProject, addDueDateInput, resetHTML, formatDueDate, getTaskProjectTitle, shortenString
+    addTaskToStorage, storageFirstLoad, loadLocalStorage, removeTask, projectMenu, removeProject, selectProject, getActiveProject, addDueDateInput, resetHTML, formatDueDate, getTaskProjectTitle, shortenString, enableAddTaskBtn
 };
 
