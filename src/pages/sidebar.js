@@ -84,6 +84,7 @@ const projectMenu = (e) => {
               const cancelBtn = () => {
                   const getButton = () => {
                       const button = document.createElement('button');
+                      button.id = 'project-menu-cancel-btn';
                       button.classList.add('cancel-btn');
                       button.textContent = 'Cancel';
                       button.type = 'button';
@@ -96,6 +97,7 @@ const projectMenu = (e) => {
               const addBtn = () => {
                   const getButton = () => {
                       const button = document.createElement('button');
+                      button.id = 'project-menu-add-btn';
                       button.classList.add('add-btn');
                       button.textContent = 'Add';
                       button.type = 'button';

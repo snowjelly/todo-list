@@ -245,15 +245,15 @@ textarea{
   gap: 1rem;
 }
 
-#cancel-btn, .cancel-btn, #title-cancel-button{
-  width: 70px;
+.cancel-btn {
+  width: 60px;
   height: 30px;
   border: 0;
   border-radius: 5px;
   cursor: pointer;
 }
 
-#add-task-btn, .add-btn, #title-add-button{
+.add-btn {
   width: 80px;
   height: 30px;
   background-color: #be123c;
@@ -268,11 +268,11 @@ textarea{
   background-color: #be123d57;
 }
 
-.cancel-btn{
-  width: 60px;
+#add-task-cancel-btn{
+  width: 70px;
 }
 
-.add-btn{
+#project-menu-add-btn{
   width: 60px;
 }
 

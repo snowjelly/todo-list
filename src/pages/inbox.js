@@ -914,7 +914,8 @@ const contentDiv = () => {
                       const get = () => {
                         const button = document.createElement('button');
                         button.type = 'button';
-                        button.id = 'cancel-btn';
+                        button.id = 'add-task-cancel-btn';
+                        button.classList.add('cancel-btn');
                         button.textContent = 'Cancel';
                         button.addEventListener('click', removeAddTaskMenu);
                         return button;
@@ -934,7 +935,7 @@ const contentDiv = () => {
                         button.id = 'add-task-btn';
                         button.textContent = 'Add task';
                         button.disabled = true;
-                        button.classList.add('disabled');
+                        button.classList.add('disabled' ,'add-btn');
                         button.addEventListener('click', addTask);
                         return button;
                       }
