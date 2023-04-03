@@ -280,17 +280,26 @@ const addProject = (e) => {
     sidebarDiv().bottomMenu.renderProjectList(projectListElement);
 }
 
-const enableAddTaskBtn = (e) => {
-    const taskNameInput = e.currentTarget;
-    const addTaskbtn = document.querySelector('#add-task-btn')
+const enableAddBtn = (e) => {
+    const textInput = e.currentTarget;
 
-    if (taskNameInput.value !== "") {
-        addTaskbtn.disabled = false;
-        addTaskbtn.classList.remove('disabled');
+    const getAddBtn = () => {
+        for (let i=0;i<textInput.form.length;i++) {
+            if (textInput.form[i].classList.contains('add-btn')) {
+                return textInput.form[i];
+            }
+        }
+    }
+    
+    const addBtn = getAddBtn();
+
+    if (textInput.value !== "") {
+        addBtn.disabled = false;
+        addBtn.classList.remove('disabled');
     }
     else {
-        addTaskbtn.disabled = true;
-        addTaskbtn.classList.add('disabled');
+        addBtn.disabled = true;
+        addBtn.classList.add('disabled');
     }
 }
 
@@ -321,6 +330,6 @@ const getTaskProjectTitle = () => {
 
 
 export {
-    addTaskToStorage, storageFirstLoad, loadLocalStorage, removeTask, addProject, removeProject, selectProject, getActiveProject, addDueDateInput, resetHTML, formatDueDate, getTaskProjectTitle, shortenString, enableAddTaskBtn
+    addTaskToStorage, storageFirstLoad, loadLocalStorage, removeTask, addProject, removeProject, selectProject, getActiveProject, addDueDateInput, resetHTML, formatDueDate, getTaskProjectTitle, shortenString, enableAddBtn
 };
 

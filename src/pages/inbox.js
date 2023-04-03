@@ -1,7 +1,7 @@
 import taskDueDateImage from '../assets/imgs/due-date.png';
 import taskProjectImage from '../assets/imgs/inbox.png';
 import closeImage from "../assets/imgs/close.png";
-import { addTaskToStorage, getActiveProject, removeTask, addDueDateInput, resetHTML, formatDueDate, loadLocalStorage, getTaskProjectTitle, shortenString, enableAddTaskBtn } from "../todo";
+import { addTaskToStorage, getActiveProject, removeTask, addDueDateInput, resetHTML, formatDueDate, loadLocalStorage, getTaskProjectTitle, shortenString, enableAddBtn } from "../todo";
 
 const inbox = () => {
   contentDiv().get();
@@ -721,7 +721,7 @@ const contentDiv = () => {
                         input.setAttribute('maxlength', '92');
                         input.setAttribute('minlength', '1');
                         input.id = 'task-name-input';
-                        input.addEventListener('keyup', enableAddTaskBtn);
+                        input.addEventListener('keyup', enableAddBtn);
                         return input;
                       }
                       return { get };

@@ -263,7 +263,7 @@ textarea{
   cursor: pointer;
 }
 
-#add-task-btn.disabled{
+.add-btn.disabled{
   cursor: not-allowed;
   background-color: #be123d57;
 }

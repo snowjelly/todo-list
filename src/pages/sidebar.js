@@ -1,6 +1,6 @@
 import plusImage from '../assets/imgs/plus.png';
 import trashImage from '../assets/imgs/trash.png';
-import { getActiveProject, loadLocalStorage } from '../todo';
+import { enableAddBtn, getActiveProject, loadLocalStorage } from '../todo';
 import { addProject, removeProject, selectProject } from '../todo';
 
 const projectMenu = (e) => {
@@ -65,6 +65,7 @@ const projectMenu = (e) => {
                       input.type = 'textarea';
                       input.maxLength = '25';
                       input.minLength = '1';
+                      input.addEventListener('keyup', enableAddBtn);
                       return input;
                   }
                   return { getInput };
@@ -98,9 +99,10 @@ const projectMenu = (e) => {
                   const getButton = () => {
                       const button = document.createElement('button');
                       button.id = 'project-menu-add-btn';
-                      button.classList.add('add-btn');
+                      button.classList.add('add-btn', 'disabled');
                       button.textContent = 'Add';
                       button.type = 'button';
+                      button.disabled = true;
                       button.addEventListener('click', addProject);
                       return button;
                   }
