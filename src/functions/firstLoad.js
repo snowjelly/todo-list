@@ -1,6 +1,6 @@
 import headerDiv from '../pages/header';
 import { inbox } from '../pages/inbox';
-import sidebarDiv from '../pages/sidebar';
+import { sidebarDiv } from '../pages/sidebar';
 import { storageFirstLoad } from '../todo';
 
 const firstLoad = () => {

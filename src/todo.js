@@ -1,4 +1,4 @@
-import sidebarDiv from "./pages/sidebar";
+import { sidebarDiv, removeProjectMenu } from "./pages/sidebar";
 import { render } from "./functions/firstLoad";
 import { format, isPast, isThisYear, parse } from 'date-fns';
 
@@ -264,91 +264,19 @@ const shortenString = (unshortenedString, maxLength) => {
 
   }
 
-const projectMenu = (e) => {
-    const container = (() => {
-        const container = document.createElement('div');
-        container.id = 'project-menu-container';
-        container.classList.add('isolated-container');
-        container.addEventListener('click', (e) => {
-            if (e.currentTarget.id === e.target.id) {
-                container.remove();
-            }
-        });
-        
-        const bodyContent = document.querySelector('#content');
-        bodyContent.appendChild(container);
-        
-        return container;
-    })();
-
-    const content = document.createElement('form');
-    content.id = 'project-menu-content';
-    content.classList.add('isolated-content');
-    container.appendChild(content);
-
-    const header = document.createElement('div');
-    header.id = 'project-menu-header';
-    header.textContent = 'Add project';
-    content.appendChild(header);
-
-    const name = (() => {
-        const content = document.createElement('div');
-        content.id = 'project-menu-name-content';
-
-        const nameHeader = document.createElement('div');
-        nameHeader.id = 'name-header';
-        nameHeader.textContent = 'Name';
-        content.appendChild(nameHeader);
-
-        const name = document.createElement('input');
-        name.id = 'project-menu-name-input';
-        name.type = 'textarea';
-        name.maxLength = '25';
-        name.minLength = '1';
-        content.appendChild(name);
-
-        return {content};
-    })();
-    content.appendChild(name.content);
-
-    const addProject = (e) => {
-        const projectName = document.querySelector('#project-menu-name-input');
-        if (projectName.value === "") return;
-        const projectList = loadLocalStorage();
-        const newProject = createProject(projectName.value);
-        projectList.push(newProject.getProject());
-        updateLocalStorage(projectList);
-        container.remove();
-        const projectListElement = document.querySelector('#project-list');
-        while (projectListElement.children.length > 0) {
-            projectListElement.children[0].remove();
-        }
-        sidebarDiv().bottomMenu.renderProjectList(projectListElement);
+const addProject = (e) => {
+    const projectName = document.querySelector('#project-menu-name-input');
+    if (projectName.value === "") return;
+    const projectList = loadLocalStorage();
+    const newProject = createProject(projectName.value);
+    projectList.push(newProject.getProject());
+    updateLocalStorage(projectList);
+    removeProjectMenu();
+    const projectListElement = document.querySelector('#project-list');
+    while (projectListElement.children.length > 0) {
+        projectListElement.children[0].remove();
     }
-
-    const buttons = (() => {
-        const content = document.createElement('div');
-        content.id = 'project-menu-button-content';
-
-        const cancelBtn = document.createElement('button');
-        cancelBtn.classList.add('cancel-btn');
-        cancelBtn.textContent = 'Cancel';
-        cancelBtn.type = 'button';
-        cancelBtn.addEventListener('click', (e) => {
-            container.remove();
-        });
-        content.appendChild(cancelBtn);
-
-        const addBtn = document.createElement('button');
-        addBtn.classList.add('add-btn');
-        addBtn.textContent = 'Add';
-        addBtn.type = 'button';
-        addBtn.addEventListener('click', addProject);
-        content.appendChild(addBtn);
-
-        return {content};
-    })();
-    content.appendChild(buttons.content);
+    sidebarDiv().bottomMenu.renderProjectList(projectListElement);
 }
 
 const enableAddTaskBtn = (e) => {
@@ -392,6 +320,6 @@ const getTaskProjectTitle = () => {
 
 
 export {
-    addTaskToStorage, storageFirstLoad, loadLocalStorage, removeTask, projectMenu, removeProject, selectProject, getActiveProject, addDueDateInput, resetHTML, formatDueDate, getTaskProjectTitle, shortenString, enableAddTaskBtn
+    addTaskToStorage, storageFirstLoad, loadLocalStorage, removeTask, addProject, removeProject, selectProject, getActiveProject, addDueDateInput, resetHTML, formatDueDate, getTaskProjectTitle, shortenString, enableAddTaskBtn
 };
 
