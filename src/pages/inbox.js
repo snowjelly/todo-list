@@ -61,7 +61,7 @@ const contentDiv = () => {
           div.appendChild(viewListContentDiv().get());
           div.appendChild(addTaskContentDiv().get());
           return div;
-        }       
+        }
 
         const viewListContentDiv = () => {
           const get = () => {
@@ -84,16 +84,16 @@ const contentDiv = () => {
                 const activeProject = getActiveProject().activeProject;
                 const ul = viewList;
 
-                
-                for (let i=0;i<ul.children.length;i++) {
+
+                for (let i = 0; i < ul.children.length; i++) {
                   ul.children[i].remove();
                 }
-                
 
-                for (let i=0;i<activeProject.todoList.length;i++) {
-        
+
+                for (let i = 0; i < activeProject.todoList.length; i++) {
+
                   const todoListItemLi = () => {
-        
+
                     const get = () => {
                       const li = document.createElement('li');
                       li.classList.value = 'todo-list-item';
@@ -103,7 +103,7 @@ const contentDiv = () => {
                       li.appendChild(todoListItemContent().get());
                       return li;
                     }
-        
+
                     const todoListItemCheckboxDiv = () => {
                       const get = () => {
                         const div = document.createElement('div');
@@ -113,10 +113,10 @@ const contentDiv = () => {
                       }
                       return { get };
                     }
-        
+
                     const todoListItemContent = () => {
                       const todoListItem = activeProject.todoList[i];
-        
+
                       const get = () => {
                         const div = document.createElement('div');
                         div.classList.add('list-item-content');
@@ -127,7 +127,7 @@ const contentDiv = () => {
                         }
                         return div;
                       }
-          
+
                       const todoListItemTitleP = () => {
                         const get = () => {
                           const p = document.createElement('p');
@@ -136,7 +136,7 @@ const contentDiv = () => {
                         }
                         return { get };
                       }
-          
+
                       const todoListItemDescriptionP = () => {
                         const get = () => {
                           const p = document.createElement('p');
@@ -180,7 +180,7 @@ const contentDiv = () => {
                             if (formatDueDate(todoListItem.dueDate).overdue()) {
                               p.classList.add('overdue');
                             }
-                            
+
                             return p;
                           }
                           return { get };
@@ -192,7 +192,7 @@ const contentDiv = () => {
 
                     const expandTodo = (e) => {
                       if (e.target.className === 'checkbox') return;
-                      
+
 
                       const expandedTodoContainer = () => {
                         const getDiv = () => {
@@ -211,7 +211,7 @@ const contentDiv = () => {
                         const appendToParent = () => {
                           const bodyContent = document.querySelector('#content');
                           bodyContent.appendChild(getDiv());
-                          return {'bodyContent': bodyContent};
+                          return { 'bodyContent': bodyContent };
                         }
 
                         const expandedTodoContent = () => {
@@ -273,11 +273,11 @@ const contentDiv = () => {
                                   }
                                   return { getSpan };
                                 }
-  
+
                                 const projectTitleHeaderText = () => {
                                   const getP = () => {
                                     const p = document.createElement('p');
-                                    p.id ='expanded-todo-top-project-title-header-text';
+                                    p.id = 'expanded-todo-top-project-title-header-text';
                                     p.textContent = `${activeProject.title}`;
                                     return p;
                                   }
@@ -348,7 +348,7 @@ const contentDiv = () => {
                                 span.classList.add('material-symbols-outlined', 'fade');
                                 span.innerText = 'more_horiz';
                                 span.id = 'more-options-icon';
-                                span.addEventListener('click', openMoreOptions, {once:true});
+                                span.addEventListener('click', openMoreOptions, { once: true });
                                 return span;
                               }
 
@@ -365,7 +365,7 @@ const contentDiv = () => {
                                   resetMoreOptionsBehavior();
                                 }
 
-                                
+
                                 const moreOptionsIsolatedContainer = () => {
                                   const getDiv = () => {
                                     const div = document.createElement('div');
@@ -382,80 +382,80 @@ const contentDiv = () => {
                                   return { appendToParent };
                                 }
 
-                                  const moreOptionsContainer = () => {
+                                const moreOptionsContainer = () => {
+                                  const getDiv = () => {
+                                    const div = document.createElement('div');
+                                    div.id = 'more-options-container';
+                                    div.appendChild(moreOptionsContent().getDiv());
+                                    return div;
+                                  }
+
+                                  const moreOptionsContent = () => {
                                     const getDiv = () => {
                                       const div = document.createElement('div');
-                                      div.id = 'more-options-container';
-                                      div.appendChild(moreOptionsContent().getDiv());
+                                      div.id = 'more-options-content';
+                                      div.appendChild(deleteOptionContent().getDiv());
                                       return div;
                                     }
-  
-                                    const moreOptionsContent = () => {
+
+                                    const deleteOptionContent = () => {
                                       const getDiv = () => {
                                         const div = document.createElement('div');
-                                        div.id = 'more-options-content';
-                                        div.appendChild(deleteOptionContent().getDiv());
+                                        div.id = 'delete-option-content';
+                                        div.addEventListener('click', openDeletionConfirmationMenu);
+                                        div.appendChild(deleteOptionIcon().getSpan());
+                                        div.appendChild(deleteOptionText().getP());
                                         return div;
                                       }
-  
-                                      const deleteOptionContent = () => {
-                                        const getDiv = () => {
-                                          const div = document.createElement('div');
-                                          div.id = 'delete-option-content';
-                                          div.addEventListener('click', openDeletionConfirmationMenu);
-                                          div.appendChild(deleteOptionIcon().getSpan());
-                                          div.appendChild(deleteOptionText().getP());
-                                          return div;
+
+                                      const deleteOptionIcon = () => {
+                                        const getSpan = () => {
+                                          const span = document.createElement('span');
+                                          span.id = 'delete-option-icon';
+                                          span.classList.add('material-symbols-outlined');
+                                          span.innerText = 'delete';
+                                          return span;
                                         }
-  
-                                        const deleteOptionIcon = () => {
-                                          const getSpan = () => {
-                                            const span = document.createElement('span');
-                                            span.id = 'delete-option-icon';
-                                            span.classList.add('material-symbols-outlined');
-                                            span.innerText = 'delete';
-                                            return span;
-                                          }
-                                          return { getSpan };
-                                        }
-  
-                                        const deleteOptionText = () => {
-                                          const getP = () => {
-                                            const p = document.createElement('p');
-                                            p.id = 'delete-option-text';
-                                            p.textContent = 'Delete task';
-                                            return p;
-                                          }
-                                          return { getP };
-                                        }
-                                        return { getDiv };
+                                        return { getSpan };
                                       }
 
-                                      const openDeletionConfirmationMenu = () => {
-                                        document.querySelector('#more-options-isolated-container').remove();
-                                        document.querySelector('#more-options-container').remove();
-                                        resetMoreOptionsBehavior();
-                                        moreOptionsIcon.classList.remove('increase-z-index-by-1');
-                                        confirmDeletionIsolatedContainer(selectedTodo).appendToParent('#expanded-todo-top-right-content');
+                                      const deleteOptionText = () => {
+                                        const getP = () => {
+                                          const p = document.createElement('p');
+                                          p.id = 'delete-option-text';
+                                          p.textContent = 'Delete task';
+                                          return p;
+                                        }
+                                        return { getP };
                                       }
                                       return { getDiv };
                                     }
-                                    return { getDiv }
+
+                                    const openDeletionConfirmationMenu = () => {
+                                      document.querySelector('#more-options-isolated-container').remove();
+                                      document.querySelector('#more-options-container').remove();
+                                      resetMoreOptionsBehavior();
+                                      moreOptionsIcon.classList.remove('increase-z-index-by-1');
+                                      confirmDeletionIsolatedContainer(selectedTodo).appendToParent('#expanded-todo-top-right-content');
+                                    }
+                                    return { getDiv };
                                   }
+                                  return { getDiv }
+                                }
                                 moreOptionsIsolatedContainer().appendToParent();
                                 const sidebar = document.querySelector('#expanded-todo-top-right-content');
                                 sidebar.insertBefore(moreOptionsContainer().getDiv(), sidebar.children[0]);
 
                                 const resetMoreOptionsBehavior = () => {
                                   moreOptionsIcon.classList.remove('stone-200');
-                                  moreOptionsIcon.addEventListener('click', openMoreOptions, {once:true});
+                                  moreOptionsIcon.addEventListener('click', openMoreOptions, { once: true });
                                 }
 
-                                moreOptionsIcon.addEventListener('click', closeMoreOptions, {once:true});
+                                moreOptionsIcon.addEventListener('click', closeMoreOptions, { once: true });
                               }
                               return { getSpan };
                             }
-  
+
                             const close = () => {
                               const getImg = () => {
                                 const img = new Image();
@@ -494,69 +494,115 @@ const contentDiv = () => {
                               const getUl = () => {
                                 const ul = document.createElement('ul');
                                 ul.id = 'expanded-todo-property-list';
-                                ul.appendChild(projectInfo().getLi());
+                                render(ul);
                                 return ul;
                               }
 
-                              const projectInfo = () => {
-                                const getLi = () => {
-                                  const li = document.createElement('li');
-                                  li.id = 'expanded-todo-property-project-info';
-                                  li.appendChild(header().getP());
-                                  li.appendChild(content().getDiv());
-                                  return li;
-                                }
+                              const render = (ul) => {
+                                const propertyList = ['Project', 'Due date'];
 
-                                const header = () => {
-                                  const getP = () => {
-                                    const p = document.createElement('p');
-                                    p.id = 'expanded-todo-property-project-info-header';
-                                    p.textContent = 'Project';
-                                    p.classList.add('property-header');
-                                    return p;
-                                  }
-                                  return { getP };
-                                }
+                                for (let i = 0; i < propertyList.length; i++) {
+                                  const getLiInfo = () => {
 
-                                const content = () => {
-                                  const getDiv = () => {
-                                    const div = document.createElement('div');
-                                    div.id = 'expanded-todo-property-project-info-content';
-                                    div.classList.add('property-content');
-                                    div.appendChild(icon().getSpan());
-                                    div.appendChild(text().getP());
-                                    return div;
-                                  }
-
-                                  const icon = () => {
-                                    const getSpan = () => {
-                                      const span = document.createElement('span');
-                                      span.id = 'expanded-todo-property-project-info-icon';
-                                      span.classList.add('material-symbols-outlined', 'project-icon', determineProjectIcon().getClassList()[0], determineProjectIcon().getClassList()[1]);
-                                      span.innerText = `${determineProjectIcon().getInnerText()}`;
-                                      return span;
+                                    const getProperty = () => {
+                                      if (propertyList[i] === 'Project') {
+                                        return 'Project';
+                                      }
+                                      else if (propertyList[i] === 'Due date') {
+                                        return 'Due date';
+                                      }
                                     }
-                                    return { getSpan };
+
+                                    const getPropertyTitle = () => {
+                                      if (getProperty() === 'Project') {
+                                        return 'project-info';
+                                      }
+                                      else if (getProperty() === 'Due date') {
+                                        return 'duedate-info';
+                                      }
+                                    }
+
+                                    const getPropertyIcon = () => {
+                                      if (getProperty() === 'Project') {
+                                        return determineProjectIcon().getInnerText();
+                                      }
+                                      else if (getProperty() === 'Due date') {
+                                        return 'calendar_today';
+                                      }
+                                    }
+
+                                    
+
+                                    return { getPropertyTitle, getProperty, getPropertyIcon };
                                   }
 
-                                  const text = () => {
+                                  const getLi = () => {
+                                    const li = document.createElement('li');
+                                    li.id = `expanded-todo-property-${getLiInfo().getPropertyTitle()}`;
+                                    li.appendChild(header().getP());
+                                    li.appendChild(content().getDiv());
+                                    return li;
+                                  }
+
+                                  const header = () => {
                                     const getP = () => {
-                                      const activeProject = getActiveProject().activeProject;
                                       const p = document.createElement('p');
-                                      p.id = 'expanded-todo-property-project-info-text';
-                                      p.textContent = `${activeProject.title}`;
-                                      p.classList.add('property-text');
+                                      p.id = `expanded-todo-property-${getLiInfo().getPropertyTitle()}-header`;
+                                      p.textContent = getLiInfo().getProperty();
+                                      p.classList.add('property-header');
                                       return p;
                                     }
                                     return { getP };
                                   }
 
-                                  return { getDiv };
+                                  const content = () => {
+                                    const getDiv = () => {
+                                      if (getLiInfo().getProperty() !== 'Due date') {
+                                        const div = document.createElement('div');
+                                        div.id = `expanded-todo-property-${getLiInfo().getPropertyTitle()}-content`;
+                                        div.classList.add('property-content');
+                                        div.appendChild(icon().getSpan());
+                                        div.appendChild(text().getP());
+                                        return div;
+                                      }
+                                      else if (getLiInfo().getProperty() === 'Due date') {
+                                        const dueDateContent = document.querySelector(`.todo-list-item[data-list-id="${listId}"] > .list-item-content > .list-item-duedate-content`);
+                                        if (dueDateContent === null) return document.createElement('div');
+                                        return dueDateContent.cloneNode(true);
+                                      }
+                                    }
+
+                                    const icon = () => {
+                                      const getSpan = () => {
+                                        if (getLiInfo().getProperty() !== 'Due date') {
+                                          const span = document.createElement('span');
+                                          span.id = `expanded-todo-property-${getLiInfo().getPropertyTitle()}-icon`;
+                                          span.classList.add('material-symbols-outlined', 'project-icon', determineProjectIcon().getClassList()[0], determineProjectIcon().getClassList()[1]);
+                                          span.innerText = `${getLiInfo().getPropertyIcon()}`;
+                                          return span;
+                                        }
+                                      }
+                                      return { getSpan };
+                                    }
+
+                                    const text = () => {
+                                      const getP = () => {
+                                        if (getLiInfo().getProperty() !== 'Due date') {
+                                          const activeProject = getActiveProject().activeProject;
+                                          const p = document.createElement('p');
+                                          p.id = `expanded-todo-property-${getLiInfo().getPropertyTitle()}-text`;
+                                          p.textContent = `${activeProject.title}`;
+                                          p.classList.add('property-text');
+                                          return p;
+                                        }
+                                      }
+                                      return { getP };
+                                    }
+                                    return { getDiv };
+                                  }
+                                  ul.appendChild(getLi());
                                 }
-
-                                return { getLi };
                               }
-
                               return { getUl };
                             }
                             return { getDiv };
@@ -736,8 +782,8 @@ const contentDiv = () => {
                         label.setAttribute('for', 'due-date-input');
                         label.appendChild(dueDateImage().get());
                         label.appendChild(dueDateText().get());
-                        label.addEventListener('click', addDueDateInput, {once: true});
-                        label.addEventListener('keydown', addDueDateInput, {once: true});
+                        label.addEventListener('click', addDueDateInput, { once: true });
+                        label.addEventListener('keydown', addDueDateInput, { once: true });
                         return label;
                       }
 
@@ -804,7 +850,7 @@ const contentDiv = () => {
 
                             const options = () => {
                               const render = (select) => {
-                                for (let i=0;i<projectList.length;i++) {
+                                for (let i = 0; i < projectList.length; i++) {
 
                                   const option = () => {
                                     const option = document.createElement('option');
@@ -881,7 +927,7 @@ const contentDiv = () => {
                       document.querySelector('#add-task-menu-container').remove();
                       viewListContainerDiv.appendChild(addTaskContentDiv);
                     }
-                    
+
                     const addTaskBtn = () => {
                       const get = () => {
                         const button = document.createElement('button');
@@ -889,7 +935,7 @@ const contentDiv = () => {
                         button.id = 'add-task-btn';
                         button.textContent = 'Add task';
                         button.disabled = true;
-                        button.classList.add('disabled' ,'add-btn');
+                        button.classList.add('disabled', 'add-btn');
                         button.addEventListener('click', addTask);
                         return button;
                       }
@@ -913,7 +959,7 @@ const contentDiv = () => {
           addTaskContentDiv.remove();
           viewListContainerDiv.appendChild(addTaskMenuContainerDiv().get());
         }
-        return { get };    
+        return { get };
       }
       return { get };
     }
@@ -988,7 +1034,7 @@ const confirmDeletionIsolatedContainer = (selectedTodoOrProject) => {
       div.appendChild(confirmDeletionBottom().getDiv());
       return div;
     }
-    
+
     const confirmDeletionTop = () => {
       const getDiv = () => {
         const div = document.createElement('div');
