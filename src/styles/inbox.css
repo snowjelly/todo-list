@@ -515,6 +515,22 @@ textarea{
   font-size: 0.5rem;
 }
 
+span#expanded-todo-property-priority-info-icon.project-icon{
+  font-size: 1rem;
+}
+
+#expanded-todo-property-duedate-info > .list-item-duedate-content{
+  column-gap: 0.7rem;
+}
+
+.property-icon{
+  font-size: 1rem;
+}
+
+span#expanded-todo-property-project-info-icon.property-icon.material-symbols-outlined-filled{
+  font-size: 0.5rem;
+}
+
 .property-content{
   display: flex;
   gap: 0.7rem;

@@ -587,6 +587,22 @@ const contentDiv = () => {
                                       else if (getLiInfo().getProperty() === 'Due date') {
                                         const dueDateContent = document.querySelector(`.todo-list-item[data-list-id="${listId}"] > .list-item-content > .list-item-duedate-content`);
                                         if (dueDateContent === null) return document.createElement('div');
+
+                                        dueDateContent.id = 'expanded-todo-property-duedate-info-content';
+                                        dueDateContent.classList.remove('list-item-duedate-content');
+                                        dueDateContent.classList.add('property-content');
+
+                                        const dueDateIcon = dueDateContent.children[0];
+                                        const dueDateText = dueDateContent.children[1];
+
+                                        dueDateIcon.id = 'expanded-todo-property-duedate-info-icon';
+                                        dueDateIcon.classList.remove('list-item-duedate-img');
+                                        dueDateIcon.classList.add('property-icon');
+
+                                        dueDateText.id = 'expanded-todo-property-duedate-info-text';
+                                        dueDateText.classList.remove('list-item-duedate');
+                                        dueDateText.classList.add('property-text');
+
                                         return dueDateContent.cloneNode(true);
                                       }
                                     }
@@ -596,9 +612,16 @@ const contentDiv = () => {
                                         if (getLiInfo().getProperty() !== 'Due date') {
                                           const span = document.createElement('span');
                                           span.id = `expanded-todo-property-${getLiInfo().getPropertyTitle()}-icon`;
-                                          span.classList.add('material-symbols-outlined', 'project-icon', determineProjectIcon().getClassList()[0], determineProjectIcon().getClassList()[1]);
+                                          getClassList(span);
                                           span.innerText = `${getLiInfo().getPropertyIcon()}`;
                                           return span;
+                                        }
+                                      }
+
+                                      const getClassList = (span) => {
+                                        span.classList.add('material-symbols-outlined', 'property-icon');
+                                        if (getLiInfo().getProperty() === 'Project') {
+                                          span.classList.add(determineProjectIcon().getClassList());
                                         }
                                       }
                                       return { getSpan };
@@ -1012,10 +1035,10 @@ const determineProjectIcon = () => {
 
   const getClassList = () => {
     if (getInnerText() === 'inbox') {
-      return ['material-symbols-outlined', 'inbox'];
+      return 'inbox';
     }
     else {
-      return ['material-symbols-outlined-filled', 'project-icon'];
+      return 'material-symbols-outlined-filled';
     }
   }
 
