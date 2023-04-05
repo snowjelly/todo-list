@@ -512,7 +512,7 @@ const contentDiv = () => {
                               }
 
                               const render = (ul) => {
-                                const propertyList = ['Project', 'Due date'];
+                                const propertyList = ['Project', 'Due date', 'Priority'];
 
                                 for (let i = 0; i < propertyList.length; i++) {
                                   const getLiInfo = () => {
@@ -524,6 +524,9 @@ const contentDiv = () => {
                                       else if (propertyList[i] === 'Due date') {
                                         return 'Due date';
                                       }
+                                      else if (propertyList[i] === 'Priority') {
+                                        return 'Priority';
+                                      }
                                     }
 
                                     const getPropertyTitle = () => {
@@ -532,6 +535,9 @@ const contentDiv = () => {
                                       }
                                       else if (getProperty() === 'Due date') {
                                         return 'duedate-info';
+                                      }
+                                      else if (getProperty() === 'Priority') {
+                                        return 'priority-info';
                                       }
                                     }
 
@@ -542,10 +548,10 @@ const contentDiv = () => {
                                       else if (getProperty() === 'Due date') {
                                         return 'calendar_today';
                                       }
+                                      else if (getProperty() === 'Priority') {
+                                        return 'flag';
+                                      }
                                     }
-
-                                    
-
                                     return { getPropertyTitle, getProperty, getPropertyIcon };
                                   }
 
@@ -601,14 +607,25 @@ const contentDiv = () => {
                                     const text = () => {
                                       const getP = () => {
                                         if (getLiInfo().getProperty() !== 'Due date') {
-                                          const activeProject = getActiveProject().activeProject;
                                           const p = document.createElement('p');
                                           p.id = `expanded-todo-property-${getLiInfo().getPropertyTitle()}-text`;
-                                          p.textContent = `${activeProject.title}`;
                                           p.classList.add('property-text');
+                                          p.textContent = getTextContent();
                                           return p;
                                         }
                                       }
+
+                                      const getTextContent = () => {
+                                        if (getLiInfo().getProperty() === 'Project') {
+                                          const activeProject = getActiveProject().activeProject;
+                                          return activeProject.title;
+                                        }
+                                        else if (getLiInfo().getProperty() === 'Priority') {
+                                          const projectList = loadLocalStorage();
+                                          return projectList[getActiveProject().id].todoList[listId].priority;
+                                        }
+                                      }
+
                                       return { getP };
                                     }
                                     return { getDiv };
