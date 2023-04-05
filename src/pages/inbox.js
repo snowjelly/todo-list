@@ -223,9 +223,7 @@ const contentDiv = () => {
                             div.classList.add('isolated-content');
                             div.todoListId = listId;
                             div.appendChild(expandedTodoTopContent().getDiv());
-                            div.appendChild(checkboxContainer().getDiv());
-                            div.appendChild(expandedTodoTitleContent().getDiv());
-                            div.appendChild(expandedTodoDescription().getDiv());
+                            div.appendChild(expandedTodoBody().getDiv());
                             div.appendChild(expandedTodoRightSidebar().getDiv());
                             return div;
                           }
@@ -290,48 +288,73 @@ const contentDiv = () => {
                             return { getDiv };
                           }
 
-                          const checkboxContainer = () => {
+                          const expandedTodoBody = () => {
                             const getDiv = () => {
                               const div = document.createElement('div');
-                              div.id = 'checkbox-container';
-                              div.appendChild(checkbox().getDiv());
+                              div.id = 'expanded-todo-body';
+                              div.appendChild(checkboxContainer().getDiv());
+                              div.appendChild(expandedTodoTitleContent().getDiv());
+                              div.appendChild(expandedTodoDescription().getDiv());
                               return div;
                             }
 
-                            const checkbox = () => {
+                            const checkboxContainer = () => {
                               const getDiv = () => {
                                 const div = document.createElement('div');
-                                div.classList.add('checkbox');
-                                div.width = 24;
-                                div.height = 24;
-                                div.addEventListener('click', removeTask);
+                                div.id = 'checkbox-container';
+                                div.appendChild(checkbox().getDiv());
                                 return div;
+                              }
+  
+                              const checkbox = () => {
+                                const getDiv = () => {
+                                  const div = document.createElement('div');
+                                  div.classList.add('checkbox');
+                                  div.width = 24;
+                                  div.height = 24;
+                                  div.addEventListener('click', removeTask);
+                                  return div;
+                                }
+                                return { getDiv };
                               }
                               return { getDiv };
                             }
-                            return { getDiv };
-                          }
 
-                          const expandedTodoTitleContent = () => {
-                            const getDiv = () => {
-                              const div = document.createElement('div');
-                              div.id = 'expanded-todo-title-content';
-                              div.appendChild(expandedTodoTitle().getP());
-                              return div;
+                            const expandedTodoTitleContent = () => {
+                              const getDiv = () => {
+                                const div = document.createElement('div');
+                                div.id = 'expanded-todo-title-content';
+                                div.appendChild(expandedTodoTitle().getP());
+                                return div;
+                              }
+  
+                              const expandedTodoTitle = () => {
+                                const getP = () => {
+                                  const p = document.createElement('p');
+                                  p.id = 'expanded-todo-title';
+                                  p.textContent = `${selectedTodo.title}`;
+                                  return p;
+                                }
+                                return { getP };
+                              }
+  
+                              return { getDiv };
                             }
 
-                            const expandedTodoTitle = () => {
-                              const getP = () => {
+                            const expandedTodoDescription = () => {
+                              const getDiv = () => {
                                 const p = document.createElement('p');
-                                p.id = 'expanded-todo-title';
-                                p.textContent = `${selectedTodo.title}`;
+                                p.id = 'expanded-todo-description';
+                                p.textContent = `${selectedTodo.description}`;
                                 return p;
                               }
-                              return { getP };
+                              return { getDiv };
                             }
 
                             return { getDiv };
                           }
+
+
 
                           const expandedTodoTopRightSidebar = () => {
                             const getDiv = () => {
@@ -468,16 +491,6 @@ const contentDiv = () => {
                                 return img;
                               }
                               return { getImg };
-                            }
-                            return { getDiv };
-                          }
-
-                          const expandedTodoDescription = () => {
-                            const getDiv = () => {
-                              const p = document.createElement('p');
-                              p.id = 'expanded-todo-description';
-                              p.textContent = `${selectedTodo.description}`;
-                              return p;
                             }
                             return { getDiv };
                           }

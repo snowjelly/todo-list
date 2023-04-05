@@ -305,7 +305,7 @@ textarea{
 
 #expanded-todo-description-edit {
   border: 0;
-  margin: 1rem 1rem 0.5rem;
+  margin-left: 10px;
  } 
 
 
@@ -359,11 +359,10 @@ textarea{
 
 #expanded-todo-content{
   display: grid;
-  grid-template-areas:  'top-content top-content top-content'
-                        'checkbox title right-sidebar'
-                        'checkbox description right-sidebar';
-  grid-template-columns: min-content 3fr 1fr;
-  grid-template-rows: min-content min-content;
+  grid-template-areas:  'top-content top-content'
+                        'body right-sidebar';
+  grid-template-columns: 3fr 1fr;
+  grid-template-rows: min-content;
   width: max(300px, 40%);
   height: max(500px, 40%);
 }
@@ -372,6 +371,20 @@ textarea{
   display: flex;
   grid-column: span 3;
   box-shadow: 0 2px 2px -2px grey;
+}
+
+#expanded-todo-body{
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  grid-template-areas: 'checkbox title'
+                       'checkbox description';
+  grid-template-rows: min-content;
+  grid-row-gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+#checkbox-container{
+  align-self: center;
 }
 
 #expanded-todo-top-project-title-header{
@@ -398,8 +411,9 @@ textarea{
 
 #expanded-todo-title-content{
   display: flex;
-  flex-direction: column;
   grid-area: title;
+  height: min-content;
+  align-items: center;
 }
 
 #close{
@@ -475,7 +489,6 @@ textarea{
 
 #expanded-todo-description{
   grid-area: description;
-  margin: 0rem 1rem 0.5rem;
   font-family: 'Montserrat', sans-serif;
   word-break: break-all;
 }
@@ -489,13 +502,17 @@ textarea{
 #expanded-todo-property-list > li {
   margin: 1rem;
   display: flex;
-  row-gap: 1rem;
+  row-gap: 0.5rem;
   flex-direction: column;
   cursor: default;
 }
 
-#expanded-todo-property-list > li .project-icon{
+#expanded-todo-property-list > li .project-icon.inbox{
   font-size: 1rem;
+}
+
+#expanded-todo-property-list > li .project-icon{
+  font-size: 0.5rem;
 }
 
 .property-content{
@@ -507,6 +524,9 @@ textarea{
 #project-menu-header, #expanded-todo-title {
   font-size: 1.5rem;
   font-weight: 700;
+}
+
+#project-menu-header{
   margin: 1rem 1rem 0.5rem;
 }
 
@@ -627,23 +647,11 @@ textarea{
   background-size: contain;
   width: 24px;
   height: 24px;
+  margin-left: 10px;
   margin-right: 5px;
   flex-shrink: 0;
   border-radius: 50%;
   grid-area: checkbox;
-}
-
-#checkbox-container{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  grid-area: checkbox;
-  grid-row: span 1;
-}
-
-#checkbox-container > * {
-  margin-right: 0;
-  margin-left: 10px;
 }
 
 .priority-1{
