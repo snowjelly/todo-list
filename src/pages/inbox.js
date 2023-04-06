@@ -292,6 +292,7 @@ const contentDiv = () => {
                             const getDiv = () => {
                               const div = document.createElement('div');
                               div.id = 'expanded-todo-body';
+                              div.classList.add('grid-template-rows-min-content');
                               div.addEventListener('click', editExpandedTodoBody);
                               div.appendChild(checkboxContainer().getDiv());
                               div.appendChild(expandedTodoTitleContent().getDiv());
@@ -386,6 +387,7 @@ const contentDiv = () => {
 
                                     expandedTodoBody.appendChild(titleContent);
                                     expandedTodoBody.appendChild(description);
+                                    expandedTodoBody.classList.add('grid-template-rows-min-content');
                                     expandedTodoBody.addEventListener('click', editExpandedTodoBody);
                                   }
                                   return { get };
@@ -397,8 +399,7 @@ const contentDiv = () => {
                                     button.type = 'button';
                                     button.id = 'edit-task-save-btn';
                                     button.textContent = 'Save';
-                                    button.disabled = true;
-                                    button.classList.add('disabled', 'add-btn');
+                                    button.classList.add('add-btn');
                                     return button;
                                   }
                                   return { get };
@@ -461,6 +462,7 @@ const contentDiv = () => {
                               expandedTodoBody.appendChild(taskNameLabel().get());
                               expandedTodoBody.appendChild(taskDescriptionLabel().get());
                               expandedTodoBody.appendChild(editTaskActionBtnsContent().get());
+                              expandedTodoBody.classList.remove('grid-template-rows-min-content');
                               titleContent.remove();
                               description.remove();
                             }

@@ -32,6 +32,10 @@ body, ul, li, p{
 
 textarea{
   resize: none;
+  outline:none;
+  font-family: inherit;
+  padding: 0;
+  margin: 0;
 }
 
 :root{
@@ -145,7 +149,7 @@ textarea{
 
 #add-task-menu-content{
   padding: 1rem;
-  height: max(220px,40%);
+  height: max(253px,40%);
 }
 
 #add-task-menu-form{
@@ -379,27 +383,37 @@ textarea{
   grid-template-areas: 'checkbox title'
                        'checkbox description'
                        'checkbox buttons';
-  grid-template-rows: min-content;
-  grid-row-gap: 0.5rem;
   margin-top: 1rem;
+}
+
+.grid-template-rows-min-content{
+  grid-template-rows: min-content;
 }
 
 #edit-task-name{
   grid-area: title;
   display: flex;
+  border-inline: solid 1px black;
+  border-top: solid 1px black;
 }
 
 #edit-task-name-input{
   flex: 1;
+  border: 0;
+  appearance: none;
 }
 
 #edit-task-description{
   grid-area: description;
   display: flex;
+  border-inline: solid 1px black;
+  border-bottom: solid 1px black;
 }
 
 #edit-task-description-input{
   flex: 1;
+  border: 0;
+  appearance: none;
 }
 
 #edit-task-action-buttons-content{
@@ -407,6 +421,7 @@ textarea{
   display: flex;
   justify-content: end;
   gap: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 #checkbox-container{
@@ -517,6 +532,7 @@ textarea{
   grid-area: description;
   font-family: 'Montserrat', sans-serif;
   word-break: break-all;
+  margin-top: 0.5rem;
 }
 
 #expanded-todo-right-sidebar{
