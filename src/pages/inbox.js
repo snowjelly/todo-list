@@ -372,7 +372,15 @@ const contentDiv = () => {
                                     button.id = 'edit-task-cancel-btn';
                                     button.classList.add('cancel-btn');
                                     button.textContent = 'Cancel';
+                                    button.addEventListener('click', closeEditTask);
                                     return button;
+                                  }
+
+                                  const closeEditTask = () => {
+                                    const expandedTodoBody = document.querySelector('#expanded-todo-body');
+                                    while (expandedTodoBody.children.length > 1) {
+                                      expandedTodoBody.children[1].remove();
+                                    }
                                   }
                                   return { get };
                                 }
