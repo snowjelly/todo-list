@@ -292,7 +292,7 @@ const contentDiv = () => {
                             const getDiv = () => {
                               const div = document.createElement('div');
                               div.id = 'expanded-todo-body';
-                              div.addEventListener('click', editExpandedTodoBody,{once:true});
+                              div.addEventListener('click', editExpandedTodoBody);
                               div.appendChild(checkboxContainer().getDiv());
                               div.appendChild(expandedTodoTitleContent().getDiv());
                               div.appendChild(expandedTodoDescription().getDiv());
@@ -352,9 +352,11 @@ const contentDiv = () => {
                               return { getDiv };
                             }
 
-                            const editExpandedTodoBody = () => {
+                            const editExpandedTodoBody = (e) => {
+                              if (e.target.id === 'edit-task-cancel-btn') return;
                               const title = document.querySelector('#expanded-todo-title');
                               const description = document.querySelector('#expanded-todo-description');
+                              const titleContent = document.querySelector('#expanded-todo-title-content');
 
                               const editTaskActionBtnsContent = () => {
                                 const get = () => {
@@ -381,6 +383,10 @@ const contentDiv = () => {
                                     while (expandedTodoBody.children.length > 1) {
                                       expandedTodoBody.children[1].remove();
                                     }
+
+                                    expandedTodoBody.appendChild(titleContent);
+                                    expandedTodoBody.appendChild(description);
+                                    expandedTodoBody.addEventListener('click', editExpandedTodoBody);
                                   }
                                   return { get };
                                 }
@@ -451,12 +457,12 @@ const contentDiv = () => {
                               }
 
                               const expandedTodoBody = document.querySelector('#expanded-todo-body');
+                              expandedTodoBody.removeEventListener('click', editExpandedTodoBody);
                               expandedTodoBody.appendChild(taskNameLabel().get());
                               expandedTodoBody.appendChild(taskDescriptionLabel().get());
                               expandedTodoBody.appendChild(editTaskActionBtnsContent().get());
-                              title.remove();
+                              titleContent.remove();
                               description.remove();
-                              document.querySelector('#expanded-todo-title-content').remove();
                             }
 
                             return { getDiv };
