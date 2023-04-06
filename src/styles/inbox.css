@@ -384,9 +384,6 @@ textarea{
                        'checkbox description'
                        'checkbox buttons';
   margin-top: 1rem;
-}
-
-.grid-template-rows-min-content{
   grid-template-rows: min-content;
 }
 

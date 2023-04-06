@@ -292,7 +292,6 @@ const contentDiv = () => {
                             const getDiv = () => {
                               const div = document.createElement('div');
                               div.id = 'expanded-todo-body';
-                              div.classList.add('grid-template-rows-min-content');
                               div.addEventListener('click', editExpandedTodoBody);
                               div.appendChild(checkboxContainer().getDiv());
                               div.appendChild(expandedTodoTitleContent().getDiv());
@@ -354,10 +353,11 @@ const contentDiv = () => {
                             }
 
                             const editExpandedTodoBody = (e) => {
-                              if (e.target.id === 'edit-task-cancel-btn') return;
+                              if (e.target.id === 'edit-task-cancel-btn' || e.target.id === 'edit-task-save-btn') return;
                               const title = document.querySelector('#expanded-todo-title');
                               const description = document.querySelector('#expanded-todo-description');
                               const titleContent = document.querySelector('#expanded-todo-title-content');
+                              const expandedTodoBody = document.querySelector('#expanded-todo-body');
 
                               const editTaskActionBtnsContent = () => {
                                 const get = () => {
@@ -367,7 +367,17 @@ const contentDiv = () => {
                                   div.appendChild(editTaskSaveBtn().get());
                                   return div;
                                 }
-            
+
+                                const closeEditTask = () => {
+                                  while (expandedTodoBody.children.length > 1) {
+                                    expandedTodoBody.children[1].remove();
+                                  }
+
+                                  expandedTodoBody.appendChild(titleContent);
+                                  expandedTodoBody.appendChild(description);
+                                  expandedTodoBody.addEventListener('click', editExpandedTodoBody);
+                                }
+
                                 const cancelBtn = () => {
                                   const get = () => {
                                     const button = document.createElement('button');
@@ -377,18 +387,6 @@ const contentDiv = () => {
                                     button.textContent = 'Cancel';
                                     button.addEventListener('click', closeEditTask);
                                     return button;
-                                  }
-
-                                  const closeEditTask = () => {
-                                    const expandedTodoBody = document.querySelector('#expanded-todo-body');
-                                    while (expandedTodoBody.children.length > 1) {
-                                      expandedTodoBody.children[1].remove();
-                                    }
-
-                                    expandedTodoBody.appendChild(titleContent);
-                                    expandedTodoBody.appendChild(description);
-                                    expandedTodoBody.classList.add('grid-template-rows-min-content');
-                                    expandedTodoBody.addEventListener('click', editExpandedTodoBody);
                                   }
                                   return { get };
                                 }
@@ -400,7 +398,19 @@ const contentDiv = () => {
                                     button.id = 'edit-task-save-btn';
                                     button.textContent = 'Save';
                                     button.classList.add('add-btn');
+                                    button.addEventListener('click', saveEditTask);
                                     return button;
+                                  }
+
+                                  const saveEditTask = () => {
+                                    const editTaskNameInput = document.querySelector('#edit-task-name-input');
+                                    const editTaskDescriptionInput = document.querySelector('#edit-task-description-input');
+                                    const titleText = titleContent.firstChild;
+
+                                    titleText.textContent = editTaskNameInput.value;
+                                    description.textContent = editTaskDescriptionInput.value;
+
+                                    closeEditTask();
                                   }
                                   return { get };
                                 }
@@ -457,14 +467,19 @@ const contentDiv = () => {
                                 return { get };
                               }
 
-                              const expandedTodoBody = document.querySelector('#expanded-todo-body');
                               expandedTodoBody.removeEventListener('click', editExpandedTodoBody);
                               expandedTodoBody.appendChild(taskNameLabel().get());
                               expandedTodoBody.appendChild(taskDescriptionLabel().get());
                               expandedTodoBody.appendChild(editTaskActionBtnsContent().get());
-                              expandedTodoBody.classList.remove('grid-template-rows-min-content');
                               titleContent.remove();
                               description.remove();
+
+                              if (e.target.id === 'expanded-todo-title-content') {
+                                document.querySelector('#edit-task-name-input').focus();
+                              }
+                              else if (e.target.id === 'expanded-todo-description') {
+                                document.querySelector('#edit-task-description-input').focus();
+                              }
                             }
 
                             return { getDiv };
