@@ -342,6 +342,6 @@ const getTaskProjectTitle = () => {
 
 
 export {
-    addTaskToStorage, storageFirstLoad, loadLocalStorage, removeTask, addProject, openRemoveProjectConfirmationMenu, removeProject, selectProject, getActiveProject, addDueDateInput, resetHTML, formatDueDate, getTaskProjectTitle, shortenString, enableAddBtn
+    addTaskToStorage, storageFirstLoad, loadLocalStorage, removeTask, addProject, openRemoveProjectConfirmationMenu, removeProject, selectProject, getActiveProject, addDueDateInput, resetHTML, formatDueDate, getTaskProjectTitle, shortenString, enableAddBtn, updateLocalStorage
 };
 

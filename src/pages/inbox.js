@@ -1,7 +1,7 @@
 import taskDueDateImage from '../assets/imgs/due-date.png';
 import taskProjectImage from '../assets/imgs/inbox.png';
 import closeImage from "../assets/imgs/close.png";
-import { addTaskToStorage, getActiveProject, removeTask, addDueDateInput, resetHTML, formatDueDate, loadLocalStorage, getTaskProjectTitle, shortenString, enableAddBtn, openRemoveProjectConfirmationMenu, removeProject } from "../todo";
+import { addTaskToStorage, getActiveProject, removeTask, addDueDateInput, resetHTML, formatDueDate, loadLocalStorage, getTaskProjectTitle, shortenString, enableAddBtn, openRemoveProjectConfirmationMenu, removeProject, updateLocalStorage } from "../todo";
 
 const inbox = () => {
   contentDiv().get();
@@ -406,10 +406,16 @@ const contentDiv = () => {
                                     const editTaskNameInput = document.querySelector('#edit-task-name-input');
                                     const editTaskDescriptionInput = document.querySelector('#edit-task-description-input');
                                     const titleText = titleContent.firstChild;
+                                    const projectList = loadLocalStorage();
+
+                                    projectList[getActiveProject().id].todoList[listId].title = editTaskNameInput.value;
+                                    projectList[getActiveProject().id].todoList[listId].description = editTaskDescriptionInput.value;
+                                    
 
                                     titleText.textContent = editTaskNameInput.value;
                                     description.textContent = editTaskDescriptionInput.value;
 
+                                    updateLocalStorage(projectList);
                                     closeEditTask();
                                   }
                                   return { get };
@@ -434,7 +440,22 @@ const contentDiv = () => {
                                     input.setAttribute('minlength', '1');
                                     input.id = 'edit-task-name-input';
                                     input.value = title.textContent;
+                                    input.addEventListener('keyup', checkNameValidity);
                                     return input;
+                                  }
+
+                                  const checkNameValidity = (e) => {
+                                    const textInput = e.currentTarget;
+                                    const saveBtn = document.querySelector('#edit-task-save-btn');
+
+                                    if (textInput.value !== "") {
+                                      saveBtn.disabled = false;
+                                      saveBtn.classList.remove('disabled');
+                                    }
+                                    else {
+                                    saveBtn.disabled = true;
+                                    saveBtn.classList.add('disabled');
+                                    }
                                   }
                                   return { get };
                                 }
