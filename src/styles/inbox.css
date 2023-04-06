@@ -377,10 +377,36 @@ textarea{
   display: grid;
   grid-template-columns: min-content 1fr;
   grid-template-areas: 'checkbox title'
-                       'checkbox description';
+                       'checkbox description'
+                       'checkbox buttons';
   grid-template-rows: min-content;
   grid-row-gap: 0.5rem;
   margin-top: 1rem;
+}
+
+#edit-task-name{
+  grid-area: title;
+  display: flex;
+}
+
+#edit-task-name-input{
+  flex: 1;
+}
+
+#edit-task-description{
+  grid-area: description;
+  display: flex;
+}
+
+#edit-task-description-input{
+  flex: 1;
+}
+
+#edit-task-action-buttons-content{
+  grid-area: buttons;
+  display: flex;
+  justify-content: end;
+  gap: 0.5rem;
 }
 
 #checkbox-container{
@@ -537,7 +563,7 @@ span#expanded-todo-property-project-info-icon.property-icon.material-symbols-out
   align-items: center;
 }
 
-#project-menu-header, #expanded-todo-title {
+#project-menu-header, #expanded-todo-title, #edit-task-name-input {
   font-size: 1.5rem;
   font-weight: 700;
 }

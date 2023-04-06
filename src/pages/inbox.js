@@ -292,6 +292,7 @@ const contentDiv = () => {
                             const getDiv = () => {
                               const div = document.createElement('div');
                               div.id = 'expanded-todo-body';
+                              div.addEventListener('click', editExpandedTodoBody,{once:true});
                               div.appendChild(checkboxContainer().getDiv());
                               div.appendChild(expandedTodoTitleContent().getDiv());
                               div.appendChild(expandedTodoDescription().getDiv());
@@ -349,6 +350,105 @@ const contentDiv = () => {
                                 return p;
                               }
                               return { getDiv };
+                            }
+
+                            const editExpandedTodoBody = () => {
+                              const title = document.querySelector('#expanded-todo-title');
+                              const description = document.querySelector('#expanded-todo-description');
+
+                              const editTaskActionBtnsContent = () => {
+                                const get = () => {
+                                  const div = document.createElement('div');
+                                  div.id = 'edit-task-action-buttons-content';
+                                  div.appendChild(cancelBtn().get());
+                                  div.appendChild(editTaskSaveBtn().get());
+                                  return div;
+                                }
+            
+                                const cancelBtn = () => {
+                                  const get = () => {
+                                    const button = document.createElement('button');
+                                    button.type = 'button';
+                                    button.id = 'edit-task-cancel-btn';
+                                    button.classList.add('cancel-btn');
+                                    button.textContent = 'Cancel';
+                                    return button;
+                                  }
+                                  return { get };
+                                }
+            
+                                const editTaskSaveBtn = () => {
+                                  const get = () => {
+                                    const button = document.createElement('button');
+                                    button.type = 'button';
+                                    button.id = 'edit-task-save-btn';
+                                    button.textContent = 'Save';
+                                    button.disabled = true;
+                                    button.classList.add('disabled', 'add-btn');
+                                    return button;
+                                  }
+                                  return { get };
+                                }
+                                return { get };
+                              }
+
+                              const taskNameLabel = () => {
+                                const get = () => {
+                                  const label = document.createElement('label');
+                                  label.id = 'edit-task-name';
+                                  label.appendChild(taskNameInput().get());
+                                  return label;
+                                }
+            
+                                const taskNameInput = () => {
+                                  const get = () => {
+                                    const input = document.createElement('textarea');
+                                    input.setAttribute('name', 'task-name');
+                                    input.setAttribute('placeholder', 'Task name');
+                                    input.setAttribute('maxlength', '92');
+                                    input.setAttribute('minlength', '1');
+                                    input.id = 'edit-task-name-input';
+                                    input.value = title.textContent;
+                                    return input;
+                                  }
+                                  return { get };
+                                }
+                                return { get };
+                              }
+            
+                              const taskDescriptionLabel = () => {
+                                const get = () => {
+                                  const label = document.createElement('label');
+                                  label.id = 'edit-task-description';
+                                  label.appendChild(taskDescriptionInput().get());
+                                  return label;
+                                }
+            
+                                const taskDescriptionInput = () => {
+                                  const get = () => {
+                                    const input = document.createElement('textarea');
+                                    input.setAttribute('name', 'task-description');
+                                    input.setAttribute('placeholder', 'Description');
+                                    input.setAttribute('maxlength', '500');
+                                    input.setAttribute('minlength', '1');
+                                    input.setAttribute('cols', '33');
+                                    input.setAttribute('rows', '5');
+                                    input.id = 'edit-task-description-input';
+                                    input.value = description.textContent;
+                                    return input;
+                                  }
+                                  return { get };
+                                }
+                                return { get };
+                              }
+
+                              const expandedTodoBody = document.querySelector('#expanded-todo-body');
+                              expandedTodoBody.appendChild(taskNameLabel().get());
+                              expandedTodoBody.appendChild(taskDescriptionLabel().get());
+                              expandedTodoBody.appendChild(editTaskActionBtnsContent().get());
+                              title.remove();
+                              description.remove();
+                              document.querySelector('#expanded-todo-title-content').remove();
                             }
 
                             return { getDiv };
