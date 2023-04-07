@@ -353,7 +353,7 @@ const contentDiv = () => {
                             }
 
                             const editExpandedTodoBody = (e) => {
-                              if (e.target.id === 'edit-task-cancel-btn' || e.target.id === 'edit-task-save-btn') return;
+                              if (e.target.id === 'edit-task-cancel-btn' || e.target.id === 'edit-task-save-btn' || e.target.className === 'checkbox') return;
                               const title = document.querySelector('#expanded-todo-title');
                               const description = document.querySelector('#expanded-todo-description');
                               const titleContent = document.querySelector('#expanded-todo-title-content');
@@ -495,7 +495,7 @@ const contentDiv = () => {
                               titleContent.remove();
                               description.remove();
 
-                              if (e.target.id === 'expanded-todo-title-content') {
+                              if (e.target.id === 'expanded-todo-title-content' || e.target.id === 'expanded-todo-title') {
                                 document.querySelector('#edit-task-name-input').focus();
                               }
                               else if (e.target.id === 'expanded-todo-description') {
@@ -734,6 +734,7 @@ const contentDiv = () => {
                                         div.classList.add('property-content');
                                         div.appendChild(icon().getSpan());
                                         div.appendChild(text().getP());
+                                        //div.addEventListener('click', );
                                         return div;
                                       }
                                       else if (getLiInfo().getProperty() === 'Due date') {
