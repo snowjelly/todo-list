@@ -357,10 +357,26 @@ const getTaskProjectTitle = () => {
     return { get };
 }
 
+const updateProject = (e) => {
+    const projectList = loadLocalStorage();
+    const todoListId = document.querySelector('#expanded-todo-content').todoListId;
 
+    projectList[getActiveProject().id].todoList[todoListId].project = e.target.value;
+
+    const todoBeingMoved = projectList[getActiveProject().id].todoList.splice(todoListId, 1)[0];
+    
+
+    projectList.forEach((project) => {
+        if (project.title === e.target.value) {
+            project.todoList.push(todoBeingMoved);
+        }
+    });
+
+    updateLocalStorage(projectList);
+}
 
 
 export {
-    addTaskToStorage, storageFirstLoad, loadLocalStorage, removeTask, addProject, openRemoveProjectConfirmationMenu, removeProject, selectProject, getActiveProject, addDueDateInput, resetHTML, formatDueDate, getTaskProjectTitle, shortenString, enableAddBtn, updateLocalStorage
+    addTaskToStorage, storageFirstLoad, loadLocalStorage, removeTask, addProject, openRemoveProjectConfirmationMenu, removeProject, selectProject, getActiveProject, addDueDateInput, resetHTML, formatDueDate, getTaskProjectTitle, shortenString, enableAddBtn, updateLocalStorage, updateProject
 };
 

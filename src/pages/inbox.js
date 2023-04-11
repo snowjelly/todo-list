@@ -1,7 +1,7 @@
 import taskDueDateImage from '../assets/imgs/due-date.png';
 import taskProjectImage from '../assets/imgs/inbox.png';
 import closeImage from "../assets/imgs/close.png";
-import { addTaskToStorage, getActiveProject, removeTask, addDueDateInput, resetHTML, formatDueDate, loadLocalStorage, getTaskProjectTitle, shortenString, enableAddBtn, openRemoveProjectConfirmationMenu, removeProject, updateLocalStorage } from "../todo";
+import { addTaskToStorage, getActiveProject, removeTask, addDueDateInput, resetHTML, formatDueDate, loadLocalStorage, getTaskProjectTitle, shortenString, enableAddBtn, openRemoveProjectConfirmationMenu, removeProject, updateLocalStorage, updateProject } from "../todo";
 
 const inbox = () => {
   contentDiv().get();
@@ -140,6 +140,7 @@ const contentDiv = () => {
                       const todoListItemDescriptionP = () => {
                         const get = () => {
                           const p = document.createElement('p');
+                          console.log(todoListItem);
                           p.textContent = `${shortenString(todoListItem.description, 130)}`;
                           p.classList.add('list-item-description');
                           return p;
@@ -729,7 +730,12 @@ const contentDiv = () => {
                                   const content = () => {
                                     const getDiv = () => {
                                       if (getLiInfo().getProperty() === 'Project') {
-                                        return projectDropDownMenuLabel().get();
+                                        const label = projectDropDownMenuLabel().get();
+                                        label.id = `expanded-todo-property-project-content`;
+                                        label.addEventListener('change', (e) => {
+                                          updateProject(e);
+                                        });
+                                        return label;
                                       }
                                       else if (getLiInfo().getProperty() !== 'Due date') {
                                         const div = document.createElement('div');
