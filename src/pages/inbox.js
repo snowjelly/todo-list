@@ -140,7 +140,6 @@ const contentDiv = () => {
                       const todoListItemDescriptionP = () => {
                         const get = () => {
                           const p = document.createElement('p');
-                          console.log(todoListItem);
                           p.textContent = `${shortenString(todoListItem.description, 130)}`;
                           p.classList.add('list-item-description');
                           return p;
