@@ -1,7 +1,7 @@
 import taskDueDateImage from '../assets/imgs/due-date.png';
 import taskProjectImage from '../assets/imgs/inbox.png';
 import closeImage from "../assets/imgs/close.png";
-import { addTaskToStorage, getActiveProject, removeTask, addDueDateInput, resetHTML, formatDueDate, loadLocalStorage, getTaskProjectTitle, shortenString, enableAddBtn, openRemoveProjectConfirmationMenu, removeProject, updateLocalStorage, updateProject } from "../todo";
+import { addTaskToStorage, getActiveProject, removeTask, addDueDateInput, resetHTML, formatDueDate, loadLocalStorage, getTaskProjectTitle, shortenString, enableAddBtn, openRemoveProjectConfirmationMenu, removeProject, updateLocalStorage, updateProject, selectProject } from "../todo";
 
 const inbox = () => {
   contentDiv().get();
@@ -306,7 +306,7 @@ const contentDiv = () => {
                                 div.appendChild(checkbox().getDiv());
                                 return div;
                               }
-  
+
                               const checkbox = () => {
                                 const getDiv = () => {
                                   const div = document.createElement('div');
@@ -328,7 +328,7 @@ const contentDiv = () => {
                                 div.appendChild(expandedTodoTitle().getP());
                                 return div;
                               }
-  
+
                               const expandedTodoTitle = () => {
                                 const getP = () => {
                                   const p = document.createElement('p');
@@ -338,7 +338,7 @@ const contentDiv = () => {
                                 }
                                 return { getP };
                               }
-  
+
                               return { getDiv };
                             }
 
@@ -390,7 +390,7 @@ const contentDiv = () => {
                                   }
                                   return { get };
                                 }
-            
+
                                 const editTaskSaveBtn = () => {
                                   const get = () => {
                                     const button = document.createElement('button');
@@ -410,7 +410,7 @@ const contentDiv = () => {
 
                                     projectList[getActiveProject().id].todoList[listId].title = editTaskNameInput.value;
                                     projectList[getActiveProject().id].todoList[listId].description = editTaskDescriptionInput.value;
-                                    
+
 
                                     titleText.textContent = editTaskNameInput.value;
                                     description.textContent = editTaskDescriptionInput.value;
@@ -430,7 +430,7 @@ const contentDiv = () => {
                                   label.appendChild(taskNameInput().get());
                                   return label;
                                 }
-            
+
                                 const taskNameInput = () => {
                                   const get = () => {
                                     const input = document.createElement('textarea');
@@ -453,15 +453,15 @@ const contentDiv = () => {
                                       saveBtn.classList.remove('disabled');
                                     }
                                     else {
-                                    saveBtn.disabled = true;
-                                    saveBtn.classList.add('disabled');
+                                      saveBtn.disabled = true;
+                                      saveBtn.classList.add('disabled');
                                     }
                                   }
                                   return { get };
                                 }
                                 return { get };
                               }
-            
+
                               const taskDescriptionLabel = () => {
                                 const get = () => {
                                   const label = document.createElement('label');
@@ -469,7 +469,7 @@ const contentDiv = () => {
                                   label.appendChild(taskDescriptionInput().get());
                                   return label;
                                 }
-            
+
                                 const taskDescriptionInput = () => {
                                   const get = () => {
                                     const input = document.createElement('textarea');
@@ -732,7 +732,7 @@ const contentDiv = () => {
                                         const label = projectDropDownMenuLabel().get();
                                         label.id = `expanded-todo-property-project-content`;
                                         label.addEventListener('change', (e) => {
-                                          updateProject(e);
+                                          const projectListId = updateProject(e).projectListId;
                                         });
                                         return label;
                                       }

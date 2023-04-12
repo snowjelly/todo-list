@@ -14,11 +14,11 @@ const createProject = (title, description, selected = false) => {
     const getProject = () => {
         return newProject;
     }
-    
+
     const getTodoList = () => {
         return newProject.todoList;
     }
-    return {getProject, getTodoList};
+    return { getProject, getTodoList };
 }
 
 const storageFirstLoad = () => {
@@ -61,7 +61,7 @@ const addTaskToStorage = () => {
 
         const newTodo = createTodo(taskName, taskDescription, taskProject.title, taskDueDate);
         taskProject.todoList.push(newTodo);
-    
+
         updateLocalStorage(projectList);
         resetHTML();
         return true;
@@ -73,12 +73,11 @@ const addTaskToStorage = () => {
             if (taskDueDate === null || taskDueDate.valueAsDate === null) {
                 return true;
             }
-            else 
-            {
+            else {
                 return false;
             }
         }
-        if(checkIfNull()) {
+        if (checkIfNull()) {
             return '';
         }
         else {
@@ -91,8 +90,7 @@ const addTaskToStorage = () => {
             if (checkIfNull()) {
                 return '';
             }
-            else if (checkIfNull() === false)
-            {
+            else if (checkIfNull() === false) {
                 const taskDueDate = document.querySelector('#due-date-input');
                 const newDate = create(taskDueDate.value);
                 return newDate;
@@ -112,8 +110,7 @@ const addTaskToStorage = () => {
             if (taskDueDate === null || taskDueDate.value === '') {
                 return true;
             }
-            else 
-            {
+            else {
                 return false;
             }
         }
@@ -126,7 +123,7 @@ const addTaskToStorage = () => {
 const searchForProject = (projectTitle) => {
     const projectList = loadLocalStorage();
 
-    for (let i=0;i<projectList.length;i++) {
+    for (let i = 0; i < projectList.length; i++) {
         if (projectList[i].title === projectTitle) {
             const foundProjectId = i;
             return foundProjectId;
@@ -135,17 +132,17 @@ const searchForProject = (projectTitle) => {
 }
 
 const formatDueDate = (rawDueDate) => {
-    const dueDateObject = parseJSON(rawDueDate);  
+    const dueDateObject = parseJSON(rawDueDate);
 
     const get = () => {
-      if (isThisYear(dueDateObject)) {
-        const dueDateFormatted = format(dueDateObject, 'MMM dd');
-        return dueDateFormatted;
-      }
-      else if (isThisYear(dueDateObject) === false) {
-        const dueDateFormatted = format(dueDateObject, 'MMM dd yyyy');
-        return dueDateFormatted;
-      }
+        if (isThisYear(dueDateObject)) {
+            const dueDateFormatted = format(dueDateObject, 'MMM dd');
+            return dueDateFormatted;
+        }
+        else if (isThisYear(dueDateObject) === false) {
+            const dueDateFormatted = format(dueDateObject, 'MMM dd yyyy');
+            return dueDateFormatted;
+        }
     }
 
     const overdue = () => {
@@ -157,7 +154,7 @@ const formatDueDate = (rawDueDate) => {
         }
     }
     return { get, overdue };
-  }
+}
 
 const updateLocalStorage = (projectList) => {
     localStorage.setItem('projectList', JSON.stringify(projectList));
@@ -230,12 +227,12 @@ const selectProject = (e) => {
     const listId = e.currentTarget.dataset.listId;
     const projectList = loadLocalStorage();
 
-    if (projectList[listId] === undefined|| projectList[listId].selected === true ) return;
+    if (projectList[listId] === undefined || projectList[listId].selected === true) return;
     e.target.classList.add('stone-200');
 
     projectList[getActiveProject().id].selected = false;
     projectList[listId].selected = true;
-    
+
     updateLocalStorage(projectList);
 
     const content = document.querySelector('#content');
@@ -252,15 +249,15 @@ const getActiveProject = () => {
     const getActiveProjectId = () => {
         const inboxId = 0;
 
-        for (let i=0;i<projectList.length;i++) {
+        for (let i = 0; i < projectList.length; i++) {
             if (projectList[i].selected === false) continue;
-      
+
             const activeProjectId = i;
             return activeProjectId;
-          }
-          projectList[inboxId].selected = true;
-          updateLocalStorage(projectList);
-          return inboxId;
+        }
+        projectList[inboxId].selected = true;
+        updateLocalStorage(projectList);
+        return inboxId;
     }
 
     const id = getActiveProjectId();
@@ -272,29 +269,29 @@ const getActiveProject = () => {
 
     const activeProject = getActiveProject();
 
-    return {activeProject, id};
+    return { activeProject, id };
 }
 
 const shortenString = (unshortenedString, maxLength) => {
 
     const tooLong = () => {
-      if (unshortenedString.length > maxLength) {
-        return true;
-      }
-      else {
-        return false;
-      }
+        if (unshortenedString.length > maxLength) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     if (tooLong()) {
-      const shortenedString = unshortenedString.slice(0, maxLength) + '...';
-      return shortenedString;
+        const shortenedString = unshortenedString.slice(0, maxLength) + '...';
+        return shortenedString;
     }
     else if (tooLong() === false) {
-      return unshortenedString;
+        return unshortenedString;
     }
 
-  }
+}
 
 const addProject = (e) => {
     const projectName = document.querySelector('#project-menu-name-input');
@@ -315,13 +312,13 @@ const enableAddBtn = (e) => {
     const textInput = e.currentTarget;
 
     const getAddBtn = () => {
-        for (let i=0;i<textInput.form.length;i++) {
+        for (let i = 0; i < textInput.form.length; i++) {
             if (textInput.form[i].classList.contains('add-btn')) {
                 return textInput.form[i];
             }
         }
     }
-    
+
     const addBtn = getAddBtn();
 
     if (textInput.value !== "") {
@@ -364,15 +361,15 @@ const updateProject = (e) => {
     projectList[getActiveProject().id].todoList[todoListId].project = e.target.value;
 
     const todoBeingMoved = projectList[getActiveProject().id].todoList.splice(todoListId, 1)[0];
-    
 
-    projectList.forEach((project) => {
-        if (project.title === e.target.value) {
-            project.todoList.push(todoBeingMoved);
+
+    for (let i = 0; i < projectList.length; i++) {
+        if (projectList[i].title === e.target.value) {
+            projectList[i].todoList.push(todoBeingMoved);
+            updateLocalStorage(projectList);
+            return { projectListId: i };
         }
-    });
-
-    updateLocalStorage(projectList);
+    }
 }
 
 
