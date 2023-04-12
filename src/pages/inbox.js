@@ -98,7 +98,9 @@ const contentDiv = () => {
                       const li = document.createElement('li');
                       li.classList.value = 'todo-list-item';
                       li.setAttribute('data-list-id', `${i}`);
-                      li.addEventListener('click', expandTodo);
+                      li.addEventListener('click', (e) => {
+                        expandTodo(e);
+                      });
                       li.appendChild(todoListItemCheckboxDiv().get());
                       li.appendChild(todoListItemContent().get());
                       return li;
@@ -190,15 +192,19 @@ const contentDiv = () => {
                       return { get };
                     }
 
-                    const expandTodo = (e) => {
-                      if (e.target.className === 'checkbox') return;
-
+                    const expandTodo = (e, todoListIdParam = undefined, checkIfEventInput = true) => {
+                      if (checkIfEventInput) {
+                        if (e.target.className === 'checkbox') return;
+                      }
 
                       const expandedTodoContainer = () => {
                         const getDiv = () => {
                           const div = document.createElement('div');
                           div.id = 'expanded-todo-container';
-                          div.classList.add('isolated-container', 'fade-in');
+                          if (checkIfEventInput) {
+                            div.classList.add('fade-in');
+                          }
+                          div.classList.add('isolated-container');
                           div.addEventListener('click', (e) => {
                             if (e.currentTarget === e.target) {
                               resetHTML();
@@ -215,13 +221,29 @@ const contentDiv = () => {
                         }
 
                         const expandedTodoContent = () => {
-                          const listId = e.currentTarget.dataset.listId;
-                          const selectedTodo = activeProject.todoList[listId];
+                          const getListId = () => {
+                            if (checkIfEventInput) {
+                              return {projectListId:getActiveProject().id, todoListId:e.currentTarget.dataset.listId};
+                            }
+                            else if (checkIfEventInput === false) {
+                              const projectListId = e;
+                              return {projectListId:projectListId, todoListId:todoListIdParam};
+                            }
+                          }
+
+                          const projectList = loadLocalStorage();
+                          const projectListId = getListId().projectListId;
+                          const todoListId = getListId().todoListId;
+                          const activeProject = projectList[getActiveProject().id];
+
+
+                          const selectedTodo = projectList[projectListId].todoList[todoListId];
+
                           const getDiv = () => {
                             const div = document.createElement('div');
                             div.id = 'expanded-todo-content';
                             div.classList.add('isolated-content');
-                            div.todoListId = listId;
+                            div.todoListId = todoListId;
                             div.appendChild(expandedTodoTopContent().getDiv());
                             div.appendChild(expandedTodoBody().getDiv());
                             div.appendChild(expandedTodoRightSidebar().getDiv());
@@ -732,8 +754,12 @@ const contentDiv = () => {
                                         const label = projectDropDownMenuLabel().get();
                                         label.id = `expanded-todo-property-project-content`;
                                         label.addEventListener('change', (e) => {
-                                          const projectListId = updateProject(e).projectListId;
+                                          const getListId = updateProject(e);
+                                          const todoListId = getListId.todoListId;
+                                          const projectListId = getListId.projectListId;
+
                                           selectProject(projectListId, false);
+                                          expandTodo(projectListId, todoListId, false);
                                         });
                                         return label;
                                       }
@@ -746,7 +772,7 @@ const contentDiv = () => {
                                         return div;
                                       }
                                       else if (getLiInfo().getProperty() === 'Due date') {
-                                        const dueDateContent = document.querySelector(`.todo-list-item[data-list-id="${listId}"] > .list-item-content > .list-item-duedate-content`);
+                                        const dueDateContent = document.querySelector(`.todo-list-item[data-list-id="${todoListId}"] > .list-item-content > .list-item-duedate-content`);
                                         if (dueDateContent === null) return document.createElement('div');
 
                                         dueDateContent.id = 'expanded-todo-property-duedate-info-content';
@@ -806,7 +832,7 @@ const contentDiv = () => {
                                         }
                                         else if (getLiInfo().getProperty() === 'Priority') {
                                           const projectList = loadLocalStorage();
-                                          return projectList[getActiveProject().id].todoList[listId].priority;
+                                          return projectList[getListId().projectListId].todoList[getListId().todoListId].priority;
                                         }
                                       }
 

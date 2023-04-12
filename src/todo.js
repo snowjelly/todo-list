@@ -395,7 +395,7 @@ const updateProject = (e) => {
         if (projectList[i].title === e.target.value) {
             projectList[i].todoList.push(todoBeingMoved);
             updateLocalStorage(projectList);
-            return { projectListId: i };
+            return { projectListId: i, todoListId: projectList[i].todoList.length - 1};
         }
     }
 }
