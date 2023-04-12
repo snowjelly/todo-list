@@ -733,6 +733,7 @@ const contentDiv = () => {
                                         label.id = `expanded-todo-property-project-content`;
                                         label.addEventListener('change', (e) => {
                                           const projectListId = updateProject(e).projectListId;
+                                          selectProject(projectListId, false);
                                         });
                                         return label;
                                       }

@@ -222,25 +222,53 @@ const removeProject = (e) => {
     resetHTML();
 }
 
-const selectProject = (e) => {
-    if (e.target.className === "trash-image") return;
-    const listId = e.currentTarget.dataset.listId;
+const selectProject = (e, checkIfEventInput = true) => {
     const projectList = loadLocalStorage();
 
-    if (projectList[listId] === undefined || projectList[listId].selected === true) return;
-    e.target.classList.add('stone-200');
-
-    projectList[getActiveProject().id].selected = false;
-    projectList[listId].selected = true;
-
-    updateLocalStorage(projectList);
-
-    const content = document.querySelector('#content');
-
-    while (content.children.length > 0) {
-        content.children[0].remove();
+    if (checkIfEventInput) {
+        if (e.target.className === "trash-image") return;
+        const listId = e.currentTarget.dataset.listId;
+    
+        if (projectList[listId] === undefined || projectList[listId].selected === true) return;
+        e.target.classList.add('stone-200');
+    
+        projectList[getActiveProject().id].selected = false;
+        projectList[listId].selected = true;
+    
+        updateLocalStorage(projectList);
+    
+        const content = document.querySelector('#content');
+    
+        while (content.children.length > 0) {
+            content.children[0].remove();
+        }
+        render();
     }
-    render();
+    else if (checkIfEventInput === false) {
+        const projectListId = e;
+        const projectListItem = document.querySelector(`.project-list-item[data-list-id="${projectListId}"`);
+
+        if (projectList[projectListId] === undefined || projectList[projectListId].selected === true) return;
+
+        if (projectListItem === null) {
+            document.querySelector('#filter-inbox').classList.add('stone-200');
+        }
+        else {
+            projectListItem.classList.add('stone-200');
+        }
+
+        projectList[getActiveProject().id].selected = false;
+        projectList[projectListId].selected = true;
+
+        updateLocalStorage(projectList);
+    
+        const content = document.querySelector('#content');
+    
+        while (content.children.length > 0) {
+            content.children[0].remove();
+        }
+        render();
+    }
 }
 
 const getActiveProject = () => {
