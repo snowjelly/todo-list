@@ -1,7 +1,7 @@
 import taskDueDateImage from '../assets/imgs/due-date.png';
 import taskProjectImage from '../assets/imgs/inbox.png';
 import closeImage from "../assets/imgs/close.png";
-import { addTaskToStorage, getActiveProject, removeTask, addDueDateInput, resetHTML, formatDueDate, loadLocalStorage, getTaskProjectTitle, shortenString, enableAddBtn, openRemoveProjectConfirmationMenu, removeProject, updateLocalStorage, updateProject, selectProject } from "../todo";
+import { addTaskToStorage, getActiveProject, removeTask, addDueDateInput, resetHTML, formatDueDate, loadLocalStorage, getTaskProjectTitle, shortenString, enableAddBtn, openRemoveProjectConfirmationMenu, removeProject, updateLocalStorage, updateProject, selectProject, formatNewDueDate } from "../todo";
 
 const inbox = () => {
   contentDiv().get();
@@ -797,7 +797,19 @@ const contentDiv = () => {
                                         dueDateText.classList.remove('list-item-duedate');
                                         dueDateText.classList.add('property-text');
 
-                                        return dueDateContent.cloneNode(true);
+                                        const clonedDueDateContent = dueDateContent.cloneNode(true);
+
+
+                                        clonedDueDateContent.addEventListener('click', (e) => {
+                                          const dueDateInput = addDueDateInput(e);
+                                          const currentDueDate = document.querySelector('#expanded-todo-property-duedate-info-text').textContent;
+                                          formatNewDueDate(currentDueDate);
+
+                                          //format(currentDueDate, 'yyyy/MM/dd')
+                                          //dueDateInput.value = ;
+                                        },{once:true});
+
+                                        return clonedDueDateContent;
                                       }
                                     }
 
@@ -1018,43 +1030,6 @@ const contentDiv = () => {
                       div.appendChild(dueDateBtnLabel().get());
                       div.appendChild(projectBtnContentDiv().get());
                       return div;
-                    }
-
-                    const dueDateBtnLabel = () => {
-                      const get = () => {
-                        const label = document.createElement('label');
-                        label.classList.add('left-side-btn');
-                        label.id = 'due-date-btn';
-                        label.tabIndex = 0;
-                        label.setAttribute('for', 'due-date-input');
-                        label.appendChild(dueDateImage().get());
-                        label.appendChild(dueDateText().get());
-                        label.addEventListener('click', addDueDateInput, { once: true });
-                        label.addEventListener('keydown', addDueDateInput, { once: true });
-                        return label;
-                      }
-
-                      const dueDateImage = () => {
-                        const get = () => {
-                          const image = new Image();
-                          image.src = taskDueDateImage;
-                          image.width = '20';
-                          image.height = '20';
-                          return image;
-                        }
-                        return { get };
-                      }
-
-                      const dueDateText = () => {
-                        const get = () => {
-                          const p = document.createElement('p');
-                          p.id = 'task-due-date-text';
-                          p.textContent = 'Due date';
-                          return p;
-                        }
-                        return { get };
-                      }
-                      return { get };
                     }
 
                     const projectBtnContentDiv = () => {
@@ -1394,7 +1369,43 @@ const toggleExpandedTodoProperties = () => {
     checkbox.disabled = true;
     checkbox.classList.toggle('disabled');
   })();
+}
 
+const dueDateBtnLabel = () => {
+  const get = () => {
+    const label = document.createElement('label');
+    label.classList.add('left-side-btn');
+    label.id = 'due-date-btn';
+    label.tabIndex = 0;
+    label.setAttribute('for', 'due-date-input');
+    label.appendChild(dueDateImage().get());
+    label.appendChild(dueDateText().get());
+    label.addEventListener('click', addDueDateInput, { once: true });
+    label.addEventListener('keydown', addDueDateInput, { once: true });
+    return label;
+  }
+
+  const dueDateImage = () => {
+    const get = () => {
+      const image = new Image();
+      image.src = taskDueDateImage;
+      image.width = '20';
+      image.height = '20';
+      return image;
+    }
+    return { get };
+  }
+
+  const dueDateText = () => {
+    const get = () => {
+      const p = document.createElement('p');
+      p.id = 'task-due-date-text';
+      p.textContent = 'Due date';
+      return p;
+    }
+    return { get };
+  }
+  return { get };
 }
 
 export { inbox, confirmDeletionIsolatedContainer };

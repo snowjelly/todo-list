@@ -1,6 +1,6 @@
 import { sidebarDiv, removeProjectMenu } from "./pages/sidebar";
 import { render } from "./functions/firstLoad";
-import { format, isPast, isThisYear, parseJSON, } from 'date-fns';
+import { format, isPast, isThisYear, parseJSON, parse, toDate } from 'date-fns';
 import { confirmDeletionIsolatedContainer } from "./pages/inbox";
 
 const createProject = (title, description, selected = false) => {
@@ -132,7 +132,8 @@ const searchForProject = (projectTitle) => {
 }
 
 const formatDueDate = (rawDueDate) => {
-    const dueDateObject = parseJSON(rawDueDate);
+    const parsedDueDate = parseJSON(rawDueDate); 
+    const dueDateObject = new Date(parsedDueDate.getTime() + parsedDueDate.getTimezoneOffset() * 60000);
 
     const get = () => {
         if (isThisYear(dueDateObject)) {
@@ -154,6 +155,10 @@ const formatDueDate = (rawDueDate) => {
         }
     }
     return { get, overdue };
+}
+
+const formatNewDueDate = (rawDueDate) => {
+    const result = parse(rawDueDate, 'MMM dd yyyy', new Date());
 }
 
 const updateLocalStorage = (projectList) => {
@@ -198,13 +203,14 @@ const resetHTML = () => {
 
 const addDueDateInput = (e) => {
     if (e.target.id === 'due-date-input') return;
-    const container = document.querySelector('#due-date-btn');
+    const container = e.currentTarget;
     const dueDateInput = document.createElement('input');
 
     dueDateInput.id = 'due-date-input';
     dueDateInput.type = 'date';
     container.appendChild(dueDateInput);
     dueDateInput.focus();
+    return dueDateInput;
 }
 
 const openRemoveProjectConfirmationMenu = (e) => {
@@ -406,6 +412,6 @@ const updateProject = (e) => {
 
 
 export {
-    addTaskToStorage, storageFirstLoad, loadLocalStorage, removeTask, addProject, openRemoveProjectConfirmationMenu, removeProject, selectProject, getActiveProject, addDueDateInput, resetHTML, formatDueDate, getTaskProjectTitle, shortenString, enableAddBtn, updateLocalStorage, updateProject
+    addTaskToStorage, storageFirstLoad, loadLocalStorage, removeTask, addProject, openRemoveProjectConfirmationMenu, removeProject, selectProject, getActiveProject, addDueDateInput, resetHTML, formatDueDate, getTaskProjectTitle, shortenString, enableAddBtn, updateLocalStorage, updateProject, formatNewDueDate
 };
 
