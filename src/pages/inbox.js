@@ -804,9 +804,6 @@ const contentDiv = () => {
                                           const dueDateInput = addDueDateInput(e);
                                           const currentDueDate = document.querySelector('#expanded-todo-property-duedate-info-text').textContent;
                                           formatNewDueDate(currentDueDate);
-
-                                          //format(currentDueDate, 'yyyy/MM/dd')
-                                          //dueDateInput.value = ;
                                         },{once:true});
 
                                         return clonedDueDateContent;
