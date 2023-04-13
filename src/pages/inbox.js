@@ -222,8 +222,11 @@ const contentDiv = () => {
 
                         const expandedTodoContent = () => {
                           const getListId = () => {
-                            if (checkIfEventInput) {
+                            if (checkIfEventInput && e.currentTarget !== null) {
                               return {projectListId:getActiveProject().id, todoListId:e.currentTarget.dataset.listId};
+                            }
+                            else if (checkIfEventInput) {
+                              return {projectListId:getActiveProject().id, todoListId:document.querySelector('#expanded-todo-content').todoListId};
                             }
                             else if (checkIfEventInput === false) {
                               const projectListId = e;
@@ -430,8 +433,8 @@ const contentDiv = () => {
                                     const titleText = titleContent.firstChild;
                                     const projectList = loadLocalStorage();
 
-                                    projectList[getActiveProject().id].todoList[listId].title = editTaskNameInput.value;
-                                    projectList[getActiveProject().id].todoList[listId].description = editTaskDescriptionInput.value;
+                                    projectList[getActiveProject().id].todoList[getListId().todoListId].title = editTaskNameInput.value;
+                                    projectList[getActiveProject().id].todoList[getListId().todoListId].description = editTaskDescriptionInput.value;
 
 
                                     titleText.textContent = editTaskNameInput.value;
