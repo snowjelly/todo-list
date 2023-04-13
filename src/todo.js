@@ -173,7 +173,11 @@ const removeTask = (e) => {
         projectList[getActiveProject().id].todoList.splice(taskId, 1);
     }
 
-    if (e.target.parentElement.id === 'checkbox-container' || e.currentTarget.id === 'confirm-deletion-btn') {
+    if (e.target.parentElement.id === 'checkbox-container') {
+        if (e.currentTarget.classList.contains('disabled')) return;
+        expandedContentTaskRemoval();
+    }
+    else if (e.currentTarget.id === 'confirm-deletion-btn') {
         expandedContentTaskRemoval();
     }
     else if (e.target.parentElement.className === 'todo-list-item') {

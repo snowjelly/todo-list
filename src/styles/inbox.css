@@ -195,6 +195,10 @@ textarea {
   column-gap: 3px;
 }
 
+.left-side-btn.disabled {
+  border: grey solid 1px;
+}
+
 #project-dropdown-menu-container {
   background-color: transparent;
 }
@@ -549,6 +553,11 @@ textarea {
   cursor: default;
 }
 
+.disabled{
+  cursor: not-allowed;
+  opacity: 60%;
+}
+
 #expanded-todo-property-list>li .project-icon.inbox {
   font-size: 1rem;
 }
@@ -736,6 +745,11 @@ span#expanded-todo-property-project-info-icon.property-icon.material-symbols-out
 .checkbox:hover {
   background-image: url(/src/assets/imgs/todo-checked.png);
   cursor: pointer;
+}
+
+.checkbox.disabled:hover{
+  background-image: url(/src/assets/imgs/todo-unchecked.png);
+  cursor: not-allowed;
 }
 
 .inbox-image {

@@ -384,6 +384,8 @@ const contentDiv = () => {
                               const titleContent = document.querySelector('#expanded-todo-title-content');
                               const expandedTodoBody = document.querySelector('#expanded-todo-body');
 
+                              toggleExpandedTodoProperties();
+
                               const editTaskActionBtnsContent = () => {
                                 const get = () => {
                                   const div = document.createElement('div');
@@ -397,6 +399,8 @@ const contentDiv = () => {
                                   while (expandedTodoBody.children.length > 1) {
                                     expandedTodoBody.children[1].remove();
                                   }
+
+                                  toggleExpandedTodoProperties();
 
                                   expandedTodoBody.appendChild(titleContent);
                                   expandedTodoBody.appendChild(description);
@@ -1366,6 +1370,31 @@ const confirmDeletionIsolatedContainer = (selectedTodoOrProject) => {
     return { getDiv };
   }
   return { appendToParent };
+}
+
+const toggleExpandedTodoProperties = () => {
+  const expandedTodoPropertyList = document.querySelector('#expanded-todo-property-list');
+  const projectSelect = document.querySelector('#project-dropdown-menu-select');
+
+  for (let i=0;i<expandedTodoPropertyList.children.length;i++) {
+    expandedTodoPropertyList.children[i].lastChild.classList.toggle('disabled');
+  }
+
+  projectSelect.classList.toggle('disabled');
+
+  if (projectSelect.disabled) {
+    projectSelect.disabled = false;
+  }
+  else {
+    projectSelect.disabled = true;
+  }
+
+  const toggleCheckbox = (() => {
+    const checkbox = document.querySelector('#checkbox-container').firstChild;
+    checkbox.disabled = true;
+    checkbox.classList.toggle('disabled');
+  })();
+
 }
 
 export { inbox, confirmDeletionIsolatedContainer };
