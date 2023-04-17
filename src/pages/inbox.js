@@ -1,7 +1,8 @@
 import taskDueDateImage from '../assets/imgs/due-date.png';
 import taskProjectImage from '../assets/imgs/inbox.png';
 import closeImage from "../assets/imgs/close.png";
-import { addTaskToStorage, getActiveProject, removeTask, addDueDateInput, resetHTML, formatDueDate, loadLocalStorage, getTaskProjectTitle, shortenString, enableAddBtn, openRemoveProjectConfirmationMenu, removeProject, updateLocalStorage, updateProject, selectProject, formatNewDueDate } from "../todo";
+import { addTaskToStorage, getActiveProject, removeTask, addDueDateInput, resetHTML, loadLocalStorage, getTaskProjectTitle, shortenString, enableAddBtn, openRemoveProjectConfirmationMenu, removeProject, updateLocalStorage, updateProject, selectProject, getValidDueDate } from "../todo";
+import { parseJSON } from 'date-fns';
 
 const inbox = () => {
   contentDiv().get();
@@ -164,7 +165,7 @@ const contentDiv = () => {
                             span.classList.add('material-symbols-outlined', 'list-item-duedate-img');
                             span.innerHTML = 'calendar_today';
 
-                            if (formatDueDate(todoListItem.dueDate).overdue()) {
+                            if (todoListItem.dueDate.overdue) {
                               span.classList.add('overdue');
                             }
 
@@ -177,9 +178,9 @@ const contentDiv = () => {
                           const get = () => {
                             const p = document.createElement('p');
                             p.classList.add('list-item-duedate');
-                            p.textContent = `${formatDueDate(todoListItem.dueDate).get()}`;
+                            p.textContent = todoListItem.dueDate.readableDueDate;
 
-                            if (formatDueDate(todoListItem.dueDate).overdue()) {
+                            if (todoListItem.dueDate.overdue) {
                               p.classList.add('overdue');
                             }
 
@@ -793,8 +794,8 @@ const contentDiv = () => {
 
                                         dueDateText.id = 'expanded-todo-property-duedate-info-text';
                                         dueDateText.classList.add('property-text');
-                                        dueDateText.textContent = formatDueDate(selectedTodo.dueDate).get();
-                                        if (formatDueDate(selectedTodo).overdue) {
+                                        dueDateText.textContent = selectedTodo.dueDate.readableDueDate;
+                                        if (selectedTodo.dueDate.overdue) {
                                           dueDateText.classList.add('overdue');
                                           dueDateIcon.classList.add('overdue');
                                         }
@@ -806,12 +807,12 @@ const contentDiv = () => {
                                         const editDueDate = (e) => {
                                           if (e.target.id === 'expanded-todo-duedate-label-container') return;
                                           if (e.target.id === 'due-date-input') return;
+                                          if (document.querySelector('#edit-task-name') !== null) return;
 
                                           const dueDateInput = addDueDateInput(e);
-                                          const currentDueDate = document.querySelector('#expanded-todo-property-duedate-info-text').textContent;
-                                          const formattedDueDate = formatNewDueDate(currentDueDate);
 
-                                          dueDateInput.valueAsDate = formattedDueDate;
+                                          dueDateInput.valueAsDate = parseJSON(projectList[projectListId].todoList[todoListId].dueDate.dateObject);
+
                                           dueDateInput.classList.add('expanded-todo-due-date-input');
 
                                           while (dueDateContent.children.length > 0) {
@@ -828,14 +829,25 @@ const contentDiv = () => {
                                             }
 
                                             const reset = (e) => {
+                                              save();
+
                                               if (e.target === e.currentTarget) {
                                                 while (ul.children.length > 0) {
                                                   ul.children[0].remove();
                                                 }
-
+                                                
                                                 render(ul);
                                               }
                                             }
+
+                                            const save = () => {
+                                              const dateInput = document.querySelector('#due-date-input');
+                                              const validDueDate = getValidDueDate(dateInput);
+                                              if (validDueDate === '') return;
+                                              projectList[projectListId].todoList[todoListId].dueDate = getValidDueDate(dateInput);
+                                              updateLocalStorage(projectList);
+                                            }
+
                                             return { get };
                                           }
 
@@ -851,6 +863,7 @@ const contentDiv = () => {
                                           }
                                           dueDateContent.appendChild(dueDateSelectIsolatedContainer().get());
                                           dueDateContent.appendChild(dueDateLabel().get());
+                                          dueDateInput.focus();
                                         }
                                         dueDateContent.addEventListener('click', editDueDate, {once:false});
 

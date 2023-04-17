@@ -586,7 +586,9 @@ span#expanded-todo-property-project-info-icon.property-icon.material-symbols-out
   position: relative;
 }
 
-
+#expanded-todo-duedate-label-container{
+  background-color: transparent;
+}
 
 .property-content {
   display: flex;

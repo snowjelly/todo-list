@@ -1,6 +1,6 @@
 import { sidebarDiv, removeProjectMenu } from "./pages/sidebar";
 import { render } from "./functions/firstLoad";
-import { format, isPast, isThisYear, parseJSON, parse, toDate } from 'date-fns';
+import { format, isPast, isThisYear, isValid } from 'date-fns';
 import { confirmDeletionIsolatedContainer } from "./pages/inbox";
 
 const createProject = (title, description, selected = false) => {
@@ -54,10 +54,14 @@ const addTaskToStorage = () => {
             return false;
         }
         const taskDescription = document.querySelector('#task-description-input').value;
-        const taskDueDate = getDate();
+        const taskDueDateInput = document.querySelector('#due-date-input');
+
         const projectList = loadLocalStorage();
         const taskProjectTitle = document.querySelector('#project-dropdown-menu-select').value;
         const taskProject = projectList[searchForProject(taskProjectTitle)];
+
+        const validDueDate = getValidDueDate(taskDueDateInput);
+        const taskDueDate = validDueDate;
 
         const newTodo = createTodo(taskName, taskDescription, taskProject.title, taskDueDate);
         taskProject.todoList.push(newTodo);
@@ -66,57 +70,6 @@ const addTaskToStorage = () => {
         resetHTML();
         return true;
     }
-
-    const getDate = () => {
-        const taskDueDate = document.querySelector('#due-date-input');
-        const checkIfNull = () => {
-            if (taskDueDate === null || taskDueDate.valueAsDate === null) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-        if (checkIfNull()) {
-            return '';
-        }
-        else {
-            return taskDueDate.valueAsDate;
-        }
-    }
-
-    const createNewDate = () => {
-        const get = () => {
-            if (checkIfNull()) {
-                return '';
-            }
-            else if (checkIfNull() === false) {
-                const taskDueDate = document.querySelector('#due-date-input');
-                const newDate = create(taskDueDate.value);
-                return newDate;
-            }
-        }
-
-        const create = (dueDateInputString) => {
-            const year = dueDateInputString.slice(0, 4);
-            const month = dueDateInputString.slice(5, 7);
-            const day = dueDateInputString.slice(8);
-            const newDate = month + '/' + day + '/' + year;
-            return newDate;
-        }
-
-        const checkIfNull = () => {
-            const taskDueDate = document.querySelector('#due-date-input');
-            if (taskDueDate === null || taskDueDate.value === '') {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-        return { get };
-    }
-
     return { get };
 }
 
@@ -131,35 +84,54 @@ const searchForProject = (projectTitle) => {
     }
 }
 
-const formatDueDate = (rawDueDate) => {
-    const parsedDueDate = parseJSON(rawDueDate); 
-    const dueDateObject = new Date(parsedDueDate.getTime() + parsedDueDate.getTimezoneOffset() * 60000);
-
-    const get = () => {
-        if (isThisYear(dueDateObject)) {
-            const dueDateFormatted = format(dueDateObject, 'MMM dd');
-            return dueDateFormatted;
-        }
-        else if (isThisYear(dueDateObject) === false) {
-            const dueDateFormatted = format(dueDateObject, 'MMM dd yyyy');
-            return dueDateFormatted;
-        }
+const createDueDateObject = (dateObject) => {
+    if (isValid(dateObject) === false) return {
+        dateObject,
+        valid: false,
     }
 
-    const overdue = () => {
-        if (isPast(dueDateObject)) {
-            return true;
-        }
-        else if (isPast(dueDateObject) === false) {
-            return false;
-        }
+    const overdue = (isPast(dateObject)) ? true : false;
+
+    return {
+        dateObject,
+        valid: true,
+        overdue,
+        readableDueDate: formatDueDate(dateObject),
     }
-    return { get, overdue };
 }
 
-const formatNewDueDate = (rawDueDate) => {
-    const result = parse(rawDueDate, 'MMM dd yyyy', new Date());
-    return result;
+const getDueDate = (input) => {
+    if (input === null) return '';
+
+    const valueAsDate = input.valueAsDate;
+
+    if (valueAsDate === null) return '';
+
+    const dueDate = new Date(valueAsDate.getTime() + valueAsDate.getTimezoneOffset() * 60000);
+    return dueDate;
+}
+
+const getValidDueDate = (taskDueDateInput) => {
+    const dueDateObject = createDueDateObject(getDueDate(taskDueDateInput));
+    if (dueDateObject.valid) {
+        return dueDateObject;
+    }
+    else {
+        return '';
+    }
+}
+
+const formatDueDate = (dueDateObject) => {
+
+    const isDueDateThisYear = (isThisYear(dueDateObject)) ? true : false;
+
+    if (isDueDateThisYear) {
+        return format(dueDateObject, 'MMM dd');
+    }
+
+    const readableDueDate = (isDueDateThisYear) ? format(dueDateObject, 'MMM dd') : format(dueDateObject, 'MMM dd yyyy');
+
+    return readableDueDate;
 }
 
 const updateLocalStorage = (projectList) => {
@@ -413,6 +385,6 @@ const updateProject = (e) => {
 
 
 export {
-    addTaskToStorage, storageFirstLoad, loadLocalStorage, removeTask, addProject, openRemoveProjectConfirmationMenu, removeProject, selectProject, getActiveProject, addDueDateInput, resetHTML, formatDueDate, getTaskProjectTitle, shortenString, enableAddBtn, updateLocalStorage, updateProject, formatNewDueDate
+    addTaskToStorage, storageFirstLoad, loadLocalStorage, removeTask, addProject, openRemoveProjectConfirmationMenu, removeProject, selectProject, getActiveProject, addDueDateInput, resetHTML, formatDueDate, getTaskProjectTitle, shortenString, enableAddBtn, updateLocalStorage, updateProject, getValidDueDate
 };
 
