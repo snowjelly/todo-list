@@ -159,6 +159,7 @@ const formatDueDate = (rawDueDate) => {
 
 const formatNewDueDate = (rawDueDate) => {
     const result = parse(rawDueDate, 'MMM dd yyyy', new Date());
+    return result;
 }
 
 const updateLocalStorage = (projectList) => {

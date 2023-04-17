@@ -582,6 +582,12 @@ span#expanded-todo-property-project-info-icon.property-icon.material-symbols-out
   font-size: 0.5rem;
 }
 
+.expanded-todo-due-date-input{
+  position: relative;
+}
+
+
+
 .property-content {
   display: flex;
   gap: 0.7rem;
