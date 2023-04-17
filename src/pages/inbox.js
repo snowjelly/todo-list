@@ -779,42 +779,44 @@ const contentDiv = () => {
                                         return div;
                                       }
                                       else if (getLiInfo().getProperty() === 'Due date') {
-                                        const dueDateContent = document.querySelector(`.todo-list-item[data-list-id="${todoListId}"] > .list-item-content > .list-item-duedate-content`);
-                                        if (dueDateContent === null) return document.createElement('div');
+                                        const dueDateContent = document.createElement('div');
 
                                         dueDateContent.id = 'expanded-todo-property-duedate-info-content';
-                                        dueDateContent.classList.remove('list-item-duedate-content');
                                         dueDateContent.classList.add('property-content');
 
-                                        const dueDateIcon = dueDateContent.children[0];
-                                        const dueDateText = dueDateContent.children[1];
+                                        const dueDateIcon = document.createElement('span');
+                                        const dueDateText = document.createElement('p');
 
                                         dueDateIcon.id = 'expanded-todo-property-duedate-info-icon';
-                                        dueDateIcon.classList.remove('list-item-duedate-img');
-                                        dueDateIcon.classList.add('property-icon');
+                                        dueDateIcon.classList.add('property-icon', 'material-symbols-outlined');
+                                        dueDateIcon.innerHTML = 'calendar_today';
 
                                         dueDateText.id = 'expanded-todo-property-duedate-info-text';
-                                        dueDateText.classList.remove('list-item-duedate');
                                         dueDateText.classList.add('property-text');
+                                        dueDateText.textContent = formatDueDate(selectedTodo.dueDate).get();
+                                        if (formatDueDate(selectedTodo).overdue) {
+                                          dueDateText.classList.add('overdue');
+                                          dueDateIcon.classList.add('overdue');
+                                        }
 
-                                        const clonedDueDateContent = dueDateContent.cloneNode(true);
+                                        dueDateContent.appendChild(dueDateIcon);
+                                        dueDateContent.appendChild(dueDateText);
+
 
                                         const editDueDate = (e) => {
                                           if (e.target.id === 'expanded-todo-duedate-label-container') return;
                                           if (e.target.id === 'due-date-input') return;
 
-                                          const uneditedDueDateInfoContent = [];
-
-                                          while (clonedDueDateContent.children.length > 0) {
-                                            uneditedDueDateInfoContent.push(clonedDueDateContent.children[0]);
-                                            clonedDueDateContent.children[0].remove();
-                                          }
                                           const dueDateInput = addDueDateInput(e);
                                           const currentDueDate = document.querySelector('#expanded-todo-property-duedate-info-text').textContent;
                                           const formattedDueDate = formatNewDueDate(currentDueDate);
 
                                           dueDateInput.valueAsDate = formattedDueDate;
                                           dueDateInput.classList.add('expanded-todo-due-date-input');
+
+                                          while (dueDateContent.children.length > 0) {
+                                            dueDateContent.children[0].remove();
+                                          }
 
                                           const dueDateSelectIsolatedContainer = () => {
                                             const get = () => {
@@ -827,16 +829,13 @@ const contentDiv = () => {
 
                                             const reset = (e) => {
                                               if (e.target === e.currentTarget) {
-                                                while (clonedDueDateContent.children.length > 0) {
-                                                  clonedDueDateContent.children[0].remove();
+                                                while (ul.children.length > 0) {
+                                                  ul.children[0].remove();
                                                 }
-                                                for (let i=0;i<uneditedDueDateInfoContent.length;i++) {
-                                                  clonedDueDateContent.appendChild(uneditedDueDateInfoContent[i]);
-                                                }
-                                                document.querySelector('#expanded-todo-property-duedate-info-content').addEventListener('click', editDueDate);
+
+                                                render(ul);
                                               }
                                             }
-
                                             return { get };
                                           }
 
@@ -850,12 +849,12 @@ const contentDiv = () => {
                                             }
                                             return { get };
                                           }
-                                          clonedDueDateContent.appendChild(dueDateSelectIsolatedContainer().get());
-                                          clonedDueDateContent.appendChild(dueDateLabel().get());
+                                          dueDateContent.appendChild(dueDateSelectIsolatedContainer().get());
+                                          dueDateContent.appendChild(dueDateLabel().get());
                                         }
-                                        clonedDueDateContent.addEventListener('click', editDueDate, {once:false});
+                                        dueDateContent.addEventListener('click', editDueDate, {once:false});
 
-                                        return clonedDueDateContent;
+                                        return dueDateContent;
                                       }
                                     }
                                     const icon = () => {
