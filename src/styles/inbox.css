@@ -213,6 +213,7 @@ textarea {
   appearance: none;
   background-color: transparent;
   border: 0;
+  cursor: pointer;
 }
 
 #project-dropdown-menu-label {
@@ -351,6 +352,7 @@ textarea {
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
+  cursor: default;
 }
 
 .isolated-content {
@@ -537,6 +539,7 @@ textarea {
   font-family: 'Montserrat', sans-serif;
   word-break: break-all;
   margin-top: 0.5rem;
+  cursor: text;
 }
 
 #expanded-todo-right-sidebar {
@@ -550,7 +553,6 @@ textarea {
   display: flex;
   row-gap: 0.5rem;
   flex-direction: column;
-  cursor: default;
 }
 
 .disabled{
@@ -576,14 +578,20 @@ span#expanded-todo-property-priority-info-icon.project-icon {
 
 .property-icon {
   font-size: 1rem;
+  cursor: default;
 }
 
 span#expanded-todo-property-project-info-icon.property-icon.material-symbols-outlined-filled {
   font-size: 0.5rem;
 }
 
+#expanded-todo-property-duedate-info-icon {
+  cursor: pointer;
+}
+
 .expanded-todo-due-date-input{
   position: relative;
+  cursor: text;
 }
 
 #expanded-todo-duedate-label-container{
@@ -594,6 +602,7 @@ span#expanded-todo-property-project-info-icon.property-icon.material-symbols-out
   display: flex;
   gap: 0.7rem;
   align-items: center;
+  cursor: pointer;
 }
 
 #project-menu-header,
@@ -723,6 +732,7 @@ span#expanded-todo-property-project-info-icon.property-icon.material-symbols-out
 .list-item-content {
   display: flex;
   flex-direction: column;
+  row-gap: 0.2rem;
 }
 
 .checkbox {

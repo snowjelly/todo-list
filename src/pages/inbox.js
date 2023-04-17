@@ -1,7 +1,7 @@
 import taskDueDateImage from '../assets/imgs/due-date.png';
 import taskProjectImage from '../assets/imgs/inbox.png';
 import closeImage from "../assets/imgs/close.png";
-import { addTaskToStorage, getActiveProject, removeTask, addDueDateInput, resetHTML, loadLocalStorage, getTaskProjectTitle, shortenString, enableAddBtn, openRemoveProjectConfirmationMenu, removeProject, updateLocalStorage, updateProject, selectProject, getValidDueDate } from "../todo";
+import { addTaskToStorage, getActiveProject, removeTask, addDueDateInput, resetHTML, loadLocalStorage, getTaskProjectTitle, shortenString, enableAddBtn, removeProject, updateLocalStorage, updateProject, selectProject, getValidDueDate } from "../todo";
 import { parseJSON } from 'date-fns';
 
 const inbox = () => {
