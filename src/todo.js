@@ -177,6 +177,8 @@ const resetHTML = () => {
 const addDueDateInput = (e) => {
     if (e.target.id === 'due-date-input') return;
     const container = e.currentTarget;
+    if (container.children[2] !== undefined && container.children[2].id === 'due-date-input') return;
+
     const dueDateInput = document.createElement('input');
 
     dueDateInput.id = 'due-date-input';

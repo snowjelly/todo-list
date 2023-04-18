@@ -771,14 +771,6 @@ const contentDiv = () => {
                                         });
                                         return label;
                                       }
-                                      else if (getLiInfo().getProperty() !== 'Due date') {
-                                        const div = document.createElement('div');
-                                        div.id = `expanded-todo-property-${getLiInfo().getPropertyTitle()}-content`;
-                                        div.classList.add('property-content');
-                                        div.appendChild(icon().getSpan());
-                                        div.appendChild(text().getP());
-                                        return div;
-                                      }
                                       else if (getLiInfo().getProperty() === 'Due date') {
                                         const dueDateContent = document.createElement('div');
 
@@ -868,6 +860,17 @@ const contentDiv = () => {
                                         dueDateContent.addEventListener('click', editDueDate, {once:false});
 
                                         return dueDateContent;
+                                      }
+                                      else if (getLiInfo().getProperty() === 'Priority') {
+                                        const div = document.createElement('div');
+                                        div.id = `expanded-todo-property-${getLiInfo().getPropertyTitle()}-content`;
+                                        div.classList.add('property-content');
+                                        div.appendChild(icon().getSpan());
+                                        div.appendChild(text().getP());
+                                        div.addEventListener('click', (e) => {
+                                          editPriority(todoListId, projectListId);
+                                        });
+                                        return div;
                                       }
                                     }
                                     const icon = () => {
@@ -1463,6 +1466,19 @@ const dueDateBtnLabel = () => {
     return { get };
   }
   return { get };
+}
+
+const editPriority = (todoListId, projectListId) => {
+  const priorityInfoContent = document.querySelector('#expanded-todo-property-priority-info-content');
+  const projectList = loadLocalStorage();
+
+  while (priorityInfoContent.children.length > 0) {
+    priorityInfoContent.children[0].remove();
+  }
+
+  const numberInput = document.createElement('input');
+  numberInput.type = 'number';
+
 }
 
 export { inbox, confirmDeletionIsolatedContainer };
