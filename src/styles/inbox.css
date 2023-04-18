@@ -216,10 +216,13 @@ textarea {
   background-color: transparent;
   border: 0;
   cursor: pointer;
+  font-weight: 700;
+  color: grey;
 }
 
 #project-dropdown-menu-label {
   display: flex;
+  border: 0;
 }
 
 #project-dropdown-menu-label::after {
@@ -250,8 +253,8 @@ textarea {
 }
 
 #add-task-action-buttons-content {
-  display: flex;
-  justify-content: end;
+  display: grid;
+  grid-template-columns: 1fr min-content min-content;
   gap: 1rem;
   margin-top: 1rem;
 }
