@@ -258,6 +258,7 @@ const contentDiv = () => {
                             const getDiv = () => {
                               const div = document.createElement('div');
                               div.id = 'expanded-todo-top-content';
+                              div.classList.add('bottom-shadow');
                               div.appendChild(projectTitleHeaderContent().getDiv());
                               div.appendChild(expandedTodoTopRightSidebar().getDiv());
                               return div;
@@ -740,6 +741,7 @@ const contentDiv = () => {
                                   const getLi = () => {
                                     const li = document.createElement('li');
                                     li.id = `expanded-todo-property-${getLiInfo().getPropertyTitle()}`;
+                                    li.classList.add('project-info');
                                     li.appendChild(header().getP());
                                     li.appendChild(content().getDiv());
                                     return li;
@@ -761,6 +763,9 @@ const contentDiv = () => {
                                       if (getLiInfo().getProperty() === 'Project') {
                                         const label = projectDropDownMenuLabel().get();
                                         label.id = `expanded-todo-property-project-content`;
+                                        label.classList.add('property', 'property-content');
+                                        label.children[0].classList.add('property', 'property-icon');
+                                        label.children[1].classList.add('property');
                                         label.addEventListener('change', (e) => {
                                           const getListId = updateProject(e);
                                           const todoListId = getListId.todoListId;
@@ -775,17 +780,17 @@ const contentDiv = () => {
                                         const dueDateContent = document.createElement('div');
 
                                         dueDateContent.id = 'expanded-todo-property-duedate-info-content';
-                                        dueDateContent.classList.add('property-content');
+                                        dueDateContent.classList.add('property-content', 'property');
 
                                         const dueDateIcon = document.createElement('span');
                                         const dueDateText = document.createElement('p');
 
                                         dueDateIcon.id = 'expanded-todo-property-duedate-info-icon';
-                                        dueDateIcon.classList.add('property-icon', 'material-symbols-outlined');
+                                        dueDateIcon.classList.add('property-icon', 'material-symbols-outlined', 'property');
                                         dueDateIcon.innerHTML = 'calendar_today';
 
                                         dueDateText.id = 'expanded-todo-property-duedate-info-text';
-                                        dueDateText.classList.add('property-text');
+                                        dueDateText.classList.add('property-text', 'property');
                                         dueDateText.textContent = selectedTodo.dueDate.readableDueDate;
                                         if (selectedTodo.dueDate.overdue) {
                                           dueDateText.classList.add('overdue');
@@ -864,11 +869,11 @@ const contentDiv = () => {
                                       else if (getLiInfo().getProperty() === 'Priority') {
                                         const div = document.createElement('div');
                                         div.id = `expanded-todo-property-${getLiInfo().getPropertyTitle()}-content`;
-                                        div.classList.add('property-content');
+                                        div.classList.add('property-content', 'property');
                                         div.appendChild(icon().getSpan());
                                         div.appendChild(text().getP());
                                         div.addEventListener('click', (e) => {
-                                          editPriority(todoListId, projectListId);
+                                          editPriority(e, todoListId, projectListId);
                                         });
                                         return div;
                                       }
@@ -880,6 +885,7 @@ const contentDiv = () => {
                                           span.id = `expanded-todo-property-${getLiInfo().getPropertyTitle()}-icon`;
                                           getClassList(span);
                                           span.innerText = `${getLiInfo().getPropertyIcon()}`;
+                                          span.classList.add('property');
                                           return span;
                                         }
                                       }
@@ -898,7 +904,7 @@ const contentDiv = () => {
                                         if (getLiInfo().getProperty() !== 'Due date') {
                                           const p = document.createElement('p');
                                           p.id = `expanded-todo-property-${getLiInfo().getPropertyTitle()}-text`;
-                                          p.classList.add('property-text');
+                                          p.classList.add('property-text', 'property');
                                           p.textContent = getTextContent();
                                           return p;
                                         }
@@ -1080,7 +1086,18 @@ const contentDiv = () => {
                     const div = document.createElement('div');
                     div.id = 'form-btn-content';
                     div.appendChild(leftSideBtnsContent().get());
+                    div.classList.add('bottom-shadow');
                     return div;
+                  }
+
+                  const projectDropDownMenuContentDiv = () => {
+                    const get = () => {
+                      const div = document.createElement('div');
+                      div.id = 'project-dropdown-menu-content';
+                      div.appendChild(projectDropDownMenuLabel().get());
+                      return div;
+                    }
+                    return { get };
                   }
 
                   const leftSideBtnsContent = () => {
@@ -1088,28 +1105,7 @@ const contentDiv = () => {
                       const div = document.createElement('div');
                       div.id = 'form-btn-content-left-side';
                       div.appendChild(dueDateBtnLabel().get());
-                      div.appendChild(projectBtnContentDiv().get());
                       return div;
-                    }
-
-                    const projectBtnContentDiv = () => {
-                      const get = () => {
-                        const div = document.createElement('div');
-                        div.id = 'project-btn-content';
-                        div.appendChild(projectDropDownMenuContentDiv().get());
-                        return div;
-                      }
-
-                      const projectDropDownMenuContentDiv = () => {
-                        const get = () => {
-                          const div = document.createElement('div');
-                          div.id = 'project-dropdown-menu-content';
-                          div.appendChild(projectDropDownMenuLabel().get());
-                          return div;
-                        }
-                        return { get };
-                      }
-                      return { get };
                     }
                     return { get };
                   }
@@ -1128,6 +1124,7 @@ const contentDiv = () => {
                     const get = () => {
                       const div = document.createElement('div');
                       div.id = 'add-task-action-buttons-content';
+                      div.appendChild(projectDropDownMenuLabel().get());
                       div.appendChild(cancelBtn().get());
                       div.appendChild(addTaskBtn().get());
                       return div;
@@ -1468,7 +1465,8 @@ const dueDateBtnLabel = () => {
   return { get };
 }
 
-const editPriority = (todoListId, projectListId) => {
+const editPriority = (e, todoListId, projectListId) => {
+  if (e.currentTarget.classList.contains('disabled')) return;
   const priorityInfoContent = document.querySelector('#expanded-todo-property-priority-info-content');
   const projectList = loadLocalStorage();
 

@@ -156,7 +156,7 @@ textarea {
 
 #add-task-menu-content {
   padding: 1rem;
-  height: max(253px, 40%);
+  height: max(270px, 40%);
 }
 
 #add-task-menu-form {
@@ -176,6 +176,13 @@ textarea {
 #form-textarea-content textarea {
   border: 0;
   outline: 0;
+}
+
+#form-btn-content{
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  padding-bottom: 1rem;
 }
 
 #form-btn-content-left-side {
@@ -201,11 +208,6 @@ textarea {
 
 #project-dropdown-menu-container {
   background-color: transparent;
-}
-
-#project-dropdown-menu-content {
-  position: absolute;
-  width: 150px;
 }
 
 #project-dropdown-menu-select {
@@ -247,14 +249,11 @@ textarea {
   font-size: 1rem;
 }
 
-#add-task-action-buttons-container {
-  margin-top: 0.5rem;
-}
-
 #add-task-action-buttons-content {
   display: flex;
   justify-content: end;
   gap: 1rem;
+  margin-top: 1rem;
 }
 
 .cancel-btn {
@@ -383,6 +382,9 @@ textarea {
 #expanded-todo-top-content {
   display: flex;
   grid-column: span 3;
+}
+
+.bottom-shadow{
   box-shadow: 0 2px 2px -2px grey;
 }
 
@@ -579,6 +581,26 @@ span#expanded-todo-property-priority-info-icon.project-icon {
 .property-icon {
   font-size: 1rem;
   cursor: default;
+}
+
+.property.disabled{
+  cursor: not-allowed;
+}
+
+#project-dropdown-menu-select.disabled{
+  cursor: not-allowed;
+}
+
+#expanded-todo-property-project-content.disabled > img.property-icon{
+  cursor: not-allowed;
+}
+
+#expanded-todo-property-duedate-info-content.disabled > .property-icon {
+  cursor: not-allowed;
+}
+
+#expanded-todo-property-priority-info-content.disabled > .property-icon {
+  cursor: not-allowed;
 }
 
 span#expanded-todo-property-project-info-icon.property-icon.material-symbols-outlined-filled {
