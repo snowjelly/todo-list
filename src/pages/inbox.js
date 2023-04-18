@@ -1105,6 +1105,7 @@ const contentDiv = () => {
                       const div = document.createElement('div');
                       div.id = 'form-btn-content-left-side';
                       div.appendChild(dueDateBtnLabel().get());
+                      div.appendChild(prioritySelectMenu().label);
                       return div;
                     }
                     return { get };
@@ -1236,16 +1237,60 @@ const projectDropDownMenuLabel = () => {
 
   const projectBtnImage = () => {
     const get = () => {
-      const image = new Image();
-      image.src = taskProjectImage;
-      image.width = '20';
-      image.height = '20';
-      return image;
+      const span = document.createElement('span');
+      span.id = 'project-icon';
+      span.innerText = determineProjectIcon().getInnerText();
+      span.classList.add('material-symbols-outlined');
+      span.classList.add(determineProjectIcon().getClassList());
+      return span;
     }
     return { get };
   }
 
   return { get };
+}
+
+const prioritySelectMenu = () => {
+  const options = ['P1', 'P2', 'P3', 'P4'];
+
+  const getLabel = () => {
+    const label = document.createElement('label');
+    label.id = 'add-priority-menu';
+    label.classList.add('left-side-btn');
+    label.setAttribute('for', 'priority-select')
+    label.appendChild(getPriorityIcon());
+    label.appendChild(getSelect());
+    return label;
+  }
+
+  const getSelect = () => {
+    const select = document.createElement('select');
+    select.id = 'priority-select';
+    select.name = 'priority';
+    renderOptions(select);
+    return select;
+  }
+
+  const renderOptions = (select) => {
+    for (let i=0;i<options.length;i++) {
+      const option = document.createElement('option');
+      option.textContent = options[i];
+      option.value = options[i];
+      select.appendChild(option);
+    }
+  }
+
+  const getPriorityIcon = () => {
+    const span = document.createElement('span');
+    span.id = 'priority-icon';
+    span.innerText = 'flag';
+    span.classList.add('material-symbols-outlined');
+    return span;
+  }
+
+  return {
+    label: getLabel(),
+   };
 }
 
 const determineProjectIcon = () => {

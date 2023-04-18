@@ -216,8 +216,6 @@ textarea {
   background-color: transparent;
   border: 0;
   cursor: pointer;
-  font-weight: 700;
-  color: grey;
 }
 
 #project-dropdown-menu-label {
@@ -225,7 +223,7 @@ textarea {
   border: 0;
 }
 
-#project-dropdown-menu-label::after {
+#project-dropdown-menu-label::after, #expanded-todo-property-project-content::after {
   content: '\25BC';
 }
 
@@ -257,6 +255,11 @@ textarea {
   grid-template-columns: 1fr min-content min-content;
   gap: 1rem;
   margin-top: 1rem;
+}
+
+#add-task-action-buttons-content > #project-dropdown-menu-label > #project-dropdown-menu-select {
+  font-weight: 700;
+  color: grey;
 }
 
 .cancel-btn {
@@ -560,6 +563,24 @@ textarea {
   flex-direction: column;
 }
 
+#expanded-todo-property-list > * .property-icon{
+  cursor: pointer;
+}
+
+span#project-icon.property-icon{
+  cursor: default;
+}
+
+#project-icon{
+  font-size: 1rem;
+  color: #be123c;
+}
+
+span#project-icon.material-symbols-outlined-filled{
+  font-size: 0.5rem;
+  color: black;
+}
+
 .disabled{
   cursor: not-allowed;
   opacity: 60%;
@@ -594,6 +615,18 @@ span#expanded-todo-property-priority-info-icon.project-icon {
   cursor: not-allowed;
 }
 
+#expanded-todo-property-project-content{
+  cursor: default;
+}
+
+#expanded-todo-property-project-content.disabled > span#project-icon.property-icon {
+  cursor: not-allowed;
+}
+
+label#expanded-todo-property-project-content.disabled{
+  cursor: not-allowed;
+}
+
 #expanded-todo-property-project-content.disabled > img.property-icon{
   cursor: not-allowed;
 }
@@ -625,7 +658,7 @@ span#expanded-todo-property-project-info-icon.property-icon.material-symbols-out
 
 .property-content {
   display: flex;
-  gap: 0.7rem;
+  gap: 0.3rem;
   align-items: center;
   cursor: pointer;
 }
@@ -746,7 +779,7 @@ span#expanded-todo-property-project-info-icon.property-icon.material-symbols-out
 }
 
 .list-item-duedate-img {
-  font-size: 17px;
+  font-size: 1rem;
 }
 
 
