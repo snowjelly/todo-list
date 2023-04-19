@@ -42,6 +42,7 @@ const createTodo = (title = "", description = "", project = loadLocalStorage()[0
         project,
         dueDate,
         priority,
+        selected,
     }
 
     return newTodo;
@@ -174,6 +175,22 @@ const resetHTML = () => {
         rootContent.children[0].remove();
     }
     render();
+    const todoList = loadLocalStorage()[getActiveProject().id].todoList;
+    
+    for (let i=0;i<todoList.length;i++) {
+        if (todoList[i].selected === true) {
+            todoList[i].selected = false;
+        }
+    }
+}
+
+const getSelectedTodo = () => {
+    const todoList = loadLocalStorage()[getActiveProject().id].todoList;
+    for (let i=0;i<todoList.length;i++) {
+        if (todoList[i].selected === true) {
+            return todoList[i];
+        }
+    }
 }
 
 const addDueDateInput = (e) => {

@@ -242,6 +242,7 @@ const contentDiv = () => {
 
 
                           const selectedTodo = projectList[projectListId].todoList[todoListId];
+                          selectedTodo.selected = true;
 
                           const getDiv = () => {
                             const div = document.createElement('div');
