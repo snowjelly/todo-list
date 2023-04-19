@@ -602,9 +602,14 @@ span#expanded-todo-property-priority-info-icon.project-icon {
   column-gap: 0.7rem;
 }
 
-.property-icon {
+.property-icon, #priority-icon {
   font-size: 1rem;
   cursor: default;
+}
+
+#priority-select{
+  background-color: transparent;
+  border: 0;
 }
 
 .property.disabled{

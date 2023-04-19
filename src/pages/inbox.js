@@ -1090,16 +1090,6 @@ const contentDiv = () => {
                     return div;
                   }
 
-                  const projectDropDownMenuContentDiv = () => {
-                    const get = () => {
-                      const div = document.createElement('div');
-                      div.id = 'project-dropdown-menu-content';
-                      div.appendChild(projectDropDownMenuLabel().get());
-                      return div;
-                    }
-                    return { get };
-                  }
-
                   const leftSideBtnsContent = () => {
                     const get = () => {
                       const div = document.createElement('div');
@@ -1260,6 +1250,9 @@ const prioritySelectMenu = () => {
     label.setAttribute('for', 'priority-select')
     label.appendChild(getPriorityIcon());
     label.appendChild(getSelect());
+    label.addEventListener('change', (e) => {
+      updatePriorityIcon(e);
+    });
     return label;
   }
 
@@ -1271,11 +1264,32 @@ const prioritySelectMenu = () => {
     return select;
   }
 
+  const updatePriorityIcon = (e) => {
+    const priorityIcon = document.querySelector('#priority-icon');
+    const priority = e.target.value;
+
+    if (priority === 'P4') {
+      priorityIcon.classList.value = 'material-symbols-outlined';
+    }
+    else if (priority === 'P3') {
+      priorityIcon.classList.value = ['P3 material-symbols-outlined-filled material-symbols-outlined'];
+    }
+    else if (priority === 'P2') {
+      priorityIcon.classList.value = ['P2 material-symbols-outlined-filled material-symbols-outlined'];
+    }
+    else if (priority === 'P1') {
+      priorityIcon.classList.value = ['P1 material-symbols-outlined-filled material-symbols-outlined'];
+    }
+  }
+
   const renderOptions = (select) => {
     for (let i=0;i<options.length;i++) {
       const option = document.createElement('option');
       option.textContent = options[i];
       option.value = options[i];
+      if (options[i] === 'P4') {
+        option.selected = true;
+      }
       select.appendChild(option);
     }
   }
@@ -1491,8 +1505,8 @@ const dueDateBtnLabel = () => {
     const get = () => {
       const image = new Image();
       image.src = taskDueDateImage;
-      image.width = '20';
-      image.height = '20';
+      image.width = '16';
+      image.height = '16';
       return image;
     }
     return { get };
