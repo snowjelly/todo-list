@@ -63,7 +63,9 @@ const addTaskToStorage = () => {
         const validDueDate = getValidDueDate(taskDueDateInput);
         const taskDueDate = validDueDate;
 
-        const newTodo = createTodo(taskName, taskDescription, taskProject.title, taskDueDate);
+        const taskPriority = document.querySelector('#priority-select').value;
+
+        const newTodo = createTodo(taskName, taskDescription, taskProject.title, taskDueDate, taskPriority);
         taskProject.todoList.push(newTodo);
 
         updateLocalStorage(projectList);

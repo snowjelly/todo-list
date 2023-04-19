@@ -867,61 +867,8 @@ const contentDiv = () => {
                                         return dueDateContent;
                                       }
                                       else if (getLiInfo().getProperty() === 'Priority') {
-                                        const div = document.createElement('div');
-                                        div.id = `expanded-todo-property-${getLiInfo().getPropertyTitle()}-content`;
-                                        div.classList.add('property-content', 'property');
-                                        div.appendChild(icon().getSpan());
-                                        div.appendChild(text().getP());
-                                        div.addEventListener('click', (e) => {
-                                          editPriority(e, todoListId, projectListId);
-                                        });
-                                        return div;
+                                        return prioritySelectMenu().label;
                                       }
-                                    }
-                                    const icon = () => {
-                                      const getSpan = () => {
-                                        if (getLiInfo().getProperty() !== 'Due date') {
-                                          const span = document.createElement('span');
-                                          span.id = `expanded-todo-property-${getLiInfo().getPropertyTitle()}-icon`;
-                                          getClassList(span);
-                                          span.innerText = `${getLiInfo().getPropertyIcon()}`;
-                                          span.classList.add('property');
-                                          return span;
-                                        }
-                                      }
-
-                                      const getClassList = (span) => {
-                                        span.classList.add('material-symbols-outlined', 'property-icon');
-                                        if (getLiInfo().getProperty() === 'Project') {
-                                          span.classList.add(determineProjectIcon().getClassList());
-                                        }
-                                      }
-                                      return { getSpan };
-                                    }
-
-                                    const text = () => {
-                                      const getP = () => {
-                                        if (getLiInfo().getProperty() !== 'Due date') {
-                                          const p = document.createElement('p');
-                                          p.id = `expanded-todo-property-${getLiInfo().getPropertyTitle()}-text`;
-                                          p.classList.add('property-text', 'property');
-                                          p.textContent = getTextContent();
-                                          return p;
-                                        }
-                                      }
-
-                                      const getTextContent = () => {
-                                        if (getLiInfo().getProperty() === 'Project') {
-                                          const activeProject = getActiveProject().activeProject;
-                                          return activeProject.title;
-                                        }
-                                        else if (getLiInfo().getProperty() === 'Priority') {
-                                          const projectList = loadLocalStorage();
-                                          return projectList[getListId().projectListId].todoList[getListId().todoListId].priority;
-                                        }
-                                      }
-
-                                      return { getP };
                                     }
                                     return { getDiv };
                                   }
@@ -1264,24 +1211,6 @@ const prioritySelectMenu = () => {
     return select;
   }
 
-  const updatePriorityIcon = (e) => {
-    const priorityIcon = document.querySelector('#priority-icon');
-    const priority = e.target.value;
-
-    if (priority === 'P4') {
-      priorityIcon.classList.value = 'material-symbols-outlined';
-    }
-    else if (priority === 'P3') {
-      priorityIcon.classList.value = ['P3 material-symbols-outlined-filled material-symbols-outlined'];
-    }
-    else if (priority === 'P2') {
-      priorityIcon.classList.value = ['P2 material-symbols-outlined-filled material-symbols-outlined'];
-    }
-    else if (priority === 'P1') {
-      priorityIcon.classList.value = ['P1 material-symbols-outlined-filled material-symbols-outlined'];
-    }
-  }
-
   const renderOptions = (select) => {
     for (let i=0;i<options.length;i++) {
       const option = document.createElement('option');
@@ -1305,6 +1234,48 @@ const prioritySelectMenu = () => {
   return {
     label: getLabel(),
    };
+}
+
+const updatePriorityIcon = (e = null) => {
+  const getPriority = () => {
+    if (e !== null) {
+          const priority = e.target.value;
+          const priorityIcon = document.querySelector('#priority-icon');
+          return {
+            priority,
+            priorityIcon,
+          };
+    }
+    else {
+      const projectList = loadLocalStorage();
+      const activeProject = projectList[getActiveProject().id];
+      const todoListId = document.querySelector('#expanded-todo-content').todoListId;
+
+      const priority = activeProject.todoList[todoListId].priority;
+      const priorityIcon = document.querySelector('#expanded-todo-property-priority-info-icon');
+
+      return {
+        priority,
+        priorityIcon,
+      };
+    }
+  }
+
+  const priority = getPriority().priority;
+  const priorityIcon = getPriority().priorityIcon;
+  
+  if (priority === 'P4') {
+    priorityIcon.classList.value = 'material-symbols-outlined';
+  }
+  else if (priority === 'P3') {
+    priorityIcon.classList.value = ['P3 material-symbols-outlined-filled material-symbols-outlined'];
+  }
+  else if (priority === 'P2') {
+    priorityIcon.classList.value = ['P2 material-symbols-outlined-filled material-symbols-outlined'];
+  }
+  else if (priority === 'P1') {
+    priorityIcon.classList.value = ['P1 material-symbols-outlined-filled material-symbols-outlined'];
+  }
 }
 
 const determineProjectIcon = () => {

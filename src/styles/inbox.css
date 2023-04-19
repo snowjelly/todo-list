@@ -811,16 +811,16 @@ span#expanded-todo-property-project-info-icon.property-icon.material-symbols-out
   grid-area: checkbox;
 }
 
-.priority-1 {
-  background-color: red;
+.P1 {
+  color: #ef4444;
 }
 
-.priority-2 {
-  background-color: orange;
+.P2 {
+  color: #fb923c;
 }
 
-.priority-3 {
-  background-color: cyan;
+.P3 {
+  color: #3b82f6;
 }
 
 .checkbox:hover {
