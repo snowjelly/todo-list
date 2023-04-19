@@ -35,7 +35,7 @@ const loadLocalStorage = () => {
     return projectList;
 }
 
-const createTodo = (title = "", description = "", project = loadLocalStorage()[0].title, dueDate, priority = 4) => {
+const createTodo = (title = "", description = "", project = loadLocalStorage()[0].title, dueDate, priority = 4, selected = false) => {
     const newTodo = {
         title,
         description,
@@ -67,6 +67,7 @@ const addTaskToStorage = () => {
         const taskPriority = document.querySelector('#priority-select').value;
 
         const newTodo = createTodo(taskName, taskDescription, taskProject.title, taskDueDate, taskPriority);
+        newTodo.id = taskProject.todoList.length;
         taskProject.todoList.push(newTodo);
 
         updateLocalStorage(projectList);
@@ -398,6 +399,8 @@ const updateProject = (e) => {
     for (let i = 0; i < projectList.length; i++) {
         if (projectList[i].title === e.target.value) {
             projectList[i].todoList.push(todoBeingMoved);
+            todoBeingMoved.id = projectList[i].todoList.length - 1;
+            todoBeingMoved.selected = true;
             updateLocalStorage(projectList);
             return { projectListId: i, todoListId: projectList[i].todoList.length - 1};
         }
@@ -406,6 +409,6 @@ const updateProject = (e) => {
 
 
 export {
-    addTaskToStorage, storageFirstLoad, loadLocalStorage, removeTask, addProject, openRemoveProjectConfirmationMenu, removeProject, selectProject, getActiveProject, addDueDateInput, resetHTML, formatDueDate, getTaskProjectTitle, shortenString, enableAddBtn, updateLocalStorage, updateProject, getValidDueDate
+    addTaskToStorage, storageFirstLoad, loadLocalStorage, removeTask, addProject, openRemoveProjectConfirmationMenu, removeProject, selectProject, getActiveProject, addDueDateInput, resetHTML, formatDueDate, getTaskProjectTitle, shortenString, enableAddBtn, updateLocalStorage, updateProject, getValidDueDate, getSelectedTodo
 };
 
