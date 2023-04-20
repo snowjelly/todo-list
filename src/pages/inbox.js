@@ -1,6 +1,6 @@
 import taskDueDateImage from '../assets/imgs/due-date.png';
 import closeImage from "../assets/imgs/close.png";
-import { addTaskToStorage, getActiveProject, removeTask, addDueDateInput, resetHTML, loadLocalStorage, getTaskProjectTitle, shortenString, enableAddBtn, removeProject, updateLocalStorage, updateProject, selectProject, getValidDueDate, getTodoById } from "../todo";
+import { addTaskToStorage, getActiveProject, removeTask, addDueDateInput, resetHTML, loadLocalStorage, getTaskProjectTitle, shortenString, enableAddBtn, removeProject, updateLocalStorage, updateProject, selectProject, getValidDueDate, getTodoById, getSelectedTodo, setSelectedTodo } from "../todo";
 import { parseJSON } from 'date-fns';
 
 const inbox = () => {
@@ -96,11 +96,23 @@ const contentDiv = () => {
 
                     const get = () => {
                       const li = document.createElement('li');
+                      const projectList = loadLocalStorage();
+                      const selectedTodo = projectList[getActiveProject().id].todoList[i];
+
                       li.classList.value = 'todo-list-item';
                       li.setAttribute('data-list-id', `${i}`);
+
+                      selectedTodo.id = i;
+
+                      updateLocalStorage(projectList);
+
                       li.addEventListener('click', (e) => {
+                        if (e.target.className === 'checkbox') return;
+
+                        setSelectedTodo(selectedTodo.id);
                         expandTodo(e);
                       });
+
                       li.appendChild(todoListItemCheckboxDiv().get());
                       li.appendChild(todoListItemContent().get());
                       return li;
@@ -192,16 +204,15 @@ const contentDiv = () => {
                       return { get };
                     }
 
-                    const expandTodo = (e, todoListIdParam = undefined, checkIfEventInput = true) => {
-                      if (checkIfEventInput) {
-                        if (e.target.className === 'checkbox') return;
-                      }
+                    const expandTodo = (e = undefined) => {
+                      const selectedTodo = getSelectedTodo().selectedTodo;
+                      const activeProject = loadLocalStorage()[getActiveProject().id];
 
                       const expandedTodoContainer = () => {
                         const getDiv = () => {
                           const div = document.createElement('div');
                           div.id = 'expanded-todo-container';
-                          if (checkIfEventInput) {
+                          if (e !== undefined) {
                             div.classList.add('fade-in');
                           }
                           div.classList.add('isolated-container');
@@ -221,33 +232,10 @@ const contentDiv = () => {
                         }
 
                         const expandedTodoContent = () => {
-                          const getListId = () => {
-                            if (checkIfEventInput && e.currentTarget !== null) {
-                              return {projectListId:getActiveProject().id, todoListId:e.currentTarget.dataset.listId};
-                            }
-                            else if (checkIfEventInput) {
-                              return {projectListId:getActiveProject().id, todoListId:document.querySelector('#expanded-todo-content').todoListId};
-                            }
-                            else if (checkIfEventInput === false) {
-                              const projectListId = e;
-                              return {projectListId:projectListId, todoListId:todoListIdParam};
-                            }
-                          }
-
-                          const projectList = loadLocalStorage();
-                          const projectListId = getListId().projectListId;
-                          const todoListId = getListId().todoListId;
-                          const activeProject = projectList[getActiveProject().id];
-
-
-                          const selectedTodo = projectList[projectListId].todoList[todoListId];
-                          selectedTodo.selected = true;
-
                           const getDiv = () => {
                             const div = document.createElement('div');
                             div.id = 'expanded-todo-content';
                             div.classList.add('isolated-content');
-                            div.todoListId = todoListId;
                             div.appendChild(expandedTodoTopContent().getDiv());
                             div.appendChild(expandedTodoBody().getDiv());
                             div.appendChild(expandedTodoRightSidebar().getDiv());
@@ -437,16 +425,16 @@ const contentDiv = () => {
                                     const editTaskNameInput = document.querySelector('#edit-task-name-input');
                                     const editTaskDescriptionInput = document.querySelector('#edit-task-description-input');
                                     const titleText = titleContent.firstChild;
-                                    const projectList = loadLocalStorage();
+                                    const selectedTodoObject = getSelectedTodo();
 
-                                    projectList[getActiveProject().id].todoList[getListId().todoListId].title = editTaskNameInput.value;
-                                    projectList[getActiveProject().id].todoList[getListId().todoListId].description = editTaskDescriptionInput.value;
+                                    selectedTodoObject.selectedTodo.title = editTaskNameInput.value;
+                                    selectedTodoObject.selectedTodo.description = editTaskDescriptionInput.value;
 
 
                                     titleText.textContent = editTaskNameInput.value;
                                     description.textContent = editTaskDescriptionInput.value;
 
-                                    updateLocalStorage(projectList);
+                                    updateLocalStorage(selectedTodoObject.projectList);
                                     closeEditTask();
                                   }
                                   return { get };
@@ -767,12 +755,10 @@ const contentDiv = () => {
                                         label.children[0].classList.add('property', 'property-icon');
                                         label.children[1].classList.add('property');
                                         label.addEventListener('change', (e) => {
-                                          const getListId = updateProject(e);
-                                          const todoListId = getListId.todoListId;
-                                          const projectListId = getListId.projectListId;
+                                          const newProjectId = updateProject(e).newProjectId;
 
-                                          selectProject(projectListId, false);
-                                          expandTodo(projectListId, todoListId, false);
+                                          selectProject(newProjectId, false);
+                                          expandTodo();
                                         });
                                         return label;
                                       }
@@ -807,8 +793,9 @@ const contentDiv = () => {
                                           if (document.querySelector('#edit-task-name') !== null) return;
 
                                           const dueDateInput = addDueDateInput(e);
+                                          const selectedTodoObject = getSelectedTodo();
 
-                                          dueDateInput.valueAsDate = parseJSON(projectList[projectListId].todoList[todoListId].dueDate.dateObject);
+                                          dueDateInput.valueAsDate = parseJSON(selectedTodoObject.selectedTodo.dueDate.dateObject);
 
                                           dueDateInput.classList.add('expanded-todo-due-date-input');
 
@@ -831,18 +818,20 @@ const contentDiv = () => {
                                               if (e.target === e.currentTarget) {
                                                 while (ul.children.length > 0) {
                                                   ul.children[0].remove();
-                                                }
-                                                
-                                                render(ul);
+                                                }                                                
+                                                render(document.querySelector('#expanded-todo-property-list'));
                                               }
                                             }
 
                                             const save = () => {
                                               const dateInput = document.querySelector('#due-date-input');
                                               const validDueDate = getValidDueDate(dateInput);
+
                                               if (validDueDate === '') return;
-                                              projectList[projectListId].todoList[todoListId].dueDate = getValidDueDate(dateInput);
-                                              updateLocalStorage(projectList);
+
+                                              selectedTodoObject.selectedTodo.dueDate = getValidDueDate(dateInput);
+
+                                              updateLocalStorage(selectedTodoObject.projectList);
                                             }
 
                                             return { get };

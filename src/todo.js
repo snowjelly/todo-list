@@ -143,31 +143,23 @@ const updateLocalStorage = (projectList) => {
 }
 
 const removeTask = (e) => {
-    const taskId = e.target.parentElement.dataset.listId;
+    const selectedTodoId = getSelectedTodoId(e);
     const projectList = loadLocalStorage();
-    const expandedTodoContent = document.querySelector('#expanded-todo-content');
-
-    const expandedContentTaskRemoval = () => {
-        projectList[getActiveProject().id].todoList.splice(expandedTodoContent.todoListId, 1);
-    }
-
-    const viewListTaskRemoval = () => {
-        projectList[getActiveProject().id].todoList.splice(taskId, 1);
-    }
-
-    if (e.target.parentElement.id === 'checkbox-container') {
-        if (e.currentTarget.classList.contains('disabled')) return;
-        expandedContentTaskRemoval();
-    }
-    else if (e.currentTarget.id === 'confirm-deletion-btn') {
-        expandedContentTaskRemoval();
-    }
-    else if (e.target.parentElement.className === 'todo-list-item') {
-        viewListTaskRemoval();
-    }
+    const activeProject = projectList[getActiveProject().id];
+    
+    activeProject.todoList.splice(selectedTodoId, 1);
 
     updateLocalStorage(projectList);
     resetHTML();
+}
+
+const getSelectedTodoId = (e) => {
+    if (getSelectedTodo() === undefined) {
+        return e.target.parentElement.dataset.id;
+    } 
+    else {
+        return getSelectedTodo().selectedTodo.id;
+    }
 }
 
 const resetHTML = () => {
@@ -175,23 +167,41 @@ const resetHTML = () => {
     while (rootContent.children.length > 0) {
         rootContent.children[0].remove();
     }
+
     render();
-    const todoList = loadLocalStorage()[getActiveProject().id].todoList;
-    
+
+    removeSelectedTodo();
+
+
+    console.log(loadLocalStorage());
+}
+
+const removeSelectedTodo = () => {
+    if (getSelectedTodo() === undefined) return;
+
+    const selectedTodoObject = getSelectedTodo();
+    selectedTodoObject.selectedTodo.selected = false;
+
+    updateLocalStorage(selectedTodoObject.projectList);
+}
+
+const getSelectedTodo = () => {
+    const projectList = loadLocalStorage();
+    const todoList = projectList[getActiveProject().id].todoList;
     for (let i=0;i<todoList.length;i++) {
         if (todoList[i].selected === true) {
-            todoList[i].selected = false;
+            return { selectedTodo:todoList[i], projectList };
         }
     }
 }
 
-const getSelectedTodo = () => {
-    const todoList = loadLocalStorage()[getActiveProject().id].todoList;
-    for (let i=0;i<todoList.length;i++) {
-        if (todoList[i].selected === true) {
-            return todoList[i];
-        }
-    }
+const setSelectedTodo = (todoId) => {
+    const projectList = loadLocalStorage();
+    const todoList = projectList[getActiveProject().id].todoList;
+
+    todoList[todoId].selected = true;
+
+    updateLocalStorage(projectList);
 }
 
 const addDueDateInput = (e) => {
@@ -397,26 +407,27 @@ const getTaskProjectTitle = () => {
 
 const updateProject = (e) => {
     const projectList = loadLocalStorage();
-    const todoListId = document.querySelector('#expanded-todo-content').todoListId;
+    const selectedTodo = getSelectedTodo().selectedTodo;
+    const newProject = e.target.value;
 
-    projectList[getActiveProject().id].todoList[todoListId].project = e.target.value;
+    projectList[getActiveProject().id].todoList.splice(selectedTodo.id, 1);
 
-    const todoBeingMoved = projectList[getActiveProject().id].todoList.splice(todoListId, 1)[0];
-
+    selectedTodo.project = newProject;
 
     for (let i = 0; i < projectList.length; i++) {
-        if (projectList[i].title === e.target.value) {
-            projectList[i].todoList.push(todoBeingMoved);
-            todoBeingMoved.id = projectList[i].todoList.length - 1;
-            todoBeingMoved.selected = true;
+        if (projectList[i].title === newProject) {
+            const newProjectObject = projectList[i];
+
+            newProjectObject.todoList.push(selectedTodo);
+
             updateLocalStorage(projectList);
-            return { projectListId: i, todoListId: projectList[i].todoList.length - 1};
+            return { newProjectId: i };
         }
     }
 }
 
 
 export {
-    addTaskToStorage, storageFirstLoad, loadLocalStorage, removeTask, addProject, openRemoveProjectConfirmationMenu, removeProject, selectProject, getActiveProject, addDueDateInput, resetHTML, formatDueDate, getTaskProjectTitle, shortenString, enableAddBtn, updateLocalStorage, updateProject, getValidDueDate, getSelectedTodo, getTodoById
+    addTaskToStorage, storageFirstLoad, loadLocalStorage, removeTask, addProject, openRemoveProjectConfirmationMenu, removeProject, selectProject, getActiveProject, addDueDateInput, resetHTML, formatDueDate, getTaskProjectTitle, shortenString, enableAddBtn, updateLocalStorage, updateProject, getValidDueDate, getSelectedTodo, getTodoById, setSelectedTodo
 };
 
