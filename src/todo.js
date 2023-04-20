@@ -305,6 +305,14 @@ const getActiveProject = () => {
     return { activeProject, id };
 }
 
+const getTodoById = (project, id) => {
+    for (let i=0;i<project.todoList.length;i++) {
+        if (id === project.todoList[i].id) {
+            return project.todoList[i];
+        }
+    }
+}
+
 const shortenString = (unshortenedString, maxLength) => {
 
     const tooLong = () => {
@@ -409,6 +417,6 @@ const updateProject = (e) => {
 
 
 export {
-    addTaskToStorage, storageFirstLoad, loadLocalStorage, removeTask, addProject, openRemoveProjectConfirmationMenu, removeProject, selectProject, getActiveProject, addDueDateInput, resetHTML, formatDueDate, getTaskProjectTitle, shortenString, enableAddBtn, updateLocalStorage, updateProject, getValidDueDate, getSelectedTodo
+    addTaskToStorage, storageFirstLoad, loadLocalStorage, removeTask, addProject, openRemoveProjectConfirmationMenu, removeProject, selectProject, getActiveProject, addDueDateInput, resetHTML, formatDueDate, getTaskProjectTitle, shortenString, enableAddBtn, updateLocalStorage, updateProject, getValidDueDate, getSelectedTodo, getTodoById
 };
 
