@@ -857,7 +857,30 @@ const contentDiv = () => {
                                         return dueDateContent;
                                       }
                                       else if (getLiInfo().getProperty() === 'Priority') {
-                                        return prioritySelectMenu().label;
+                                        const label = prioritySelectMenu().label;
+                                        const icon = prioritySelectMenu().getPriorityIcon;
+
+                                        const priority = getSelectedTodo().selectedTodo.priority;
+                                          
+                                          if (priority === 'P4') {
+                                            icon.classList.value = 'material-symbols-outlined';
+                                          }
+                                          else if (priority === 'P3') {
+                                            icon.classList.value = ['P3 material-symbols-outlined-filled material-symbols-outlined'];
+                                          }
+                                          else if (priority === 'P2') {
+                                            icon.classList.value = ['P2 material-symbols-outlined-filled material-symbols-outlined'];
+                                          }
+                                          else if (priority === 'P1') {
+                                            icon.classList.value = ['P1 material-symbols-outlined-filled material-symbols-outlined'];
+                                          }
+
+                                        label.appendChild(icon);
+                                        label.appendChild(prioritySelectMenu().editPriorityMenu);
+                                        label.addEventListener('change', (e) => {
+                                          setPriority(e);
+                                        });
+                                        return label;
                                       }
                                     }
                                     return { getDiv };
@@ -1030,9 +1053,15 @@ const contentDiv = () => {
                   const leftSideBtnsContent = () => {
                     const get = () => {
                       const div = document.createElement('div');
+                      const label = prioritySelectMenu().label;
+
                       div.id = 'form-btn-content-left-side';
                       div.appendChild(dueDateBtnLabel().get());
-                      div.appendChild(prioritySelectMenu().label);
+
+                      label.appendChild(prioritySelectMenu().getPriorityIcon);
+                      label.appendChild(prioritySelectMenu().addPriorityMenu);
+
+                      div.appendChild(label);
                       return div;
                     }
                     return { get };
@@ -1185,28 +1214,46 @@ const prioritySelectMenu = () => {
     label.id = 'add-priority-menu';
     label.classList.add('left-side-btn');
     label.setAttribute('for', 'priority-select')
-    label.appendChild(getPriorityIcon());
-    label.appendChild(getSelect());
     label.addEventListener('change', (e) => {
       updatePriorityIcon(e);
     });
     return label;
   }
 
-  const getSelect = () => {
+  const getSelect = (newOrEdit) => {
     const select = document.createElement('select');
     select.id = 'priority-select';
     select.name = 'priority';
-    renderOptions(select);
+    if (newOrEdit === 'new') {
+      renderNewOptions(select);
+    }
+    else if (newOrEdit === 'edit') {
+      renderOptions(select);
+    }
     return select;
   }
 
-  const renderOptions = (select) => {
+  const renderNewOptions = (select) => {
     for (let i=0;i<options.length;i++) {
       const option = document.createElement('option');
       option.textContent = options[i];
       option.value = options[i];
       if (options[i] === 'P4') {
+        option.selected = true;
+      }
+      select.appendChild(option);
+    }
+  }
+
+  const renderOptions = (select) => {
+    if (getSelectedTodo() === undefined) return;
+    const selectedTodo = getSelectedTodo().selectedTodo;
+
+    for (let i=0;i<options.length;i++) {
+      const option = document.createElement('option');
+      option.textContent = options[i];
+      option.value = options[i];
+      if (options[i] === selectedTodo.priority) {
         option.selected = true;
       }
       select.appendChild(option);
@@ -1223,6 +1270,9 @@ const prioritySelectMenu = () => {
 
   return {
     label: getLabel(),
+    addPriorityMenu: getSelect('new'),
+    editPriorityMenu: getSelect('edit'),
+    getPriorityIcon: getPriorityIcon(),
    };
 }
 
@@ -1237,11 +1287,7 @@ const updatePriorityIcon = (e = null) => {
           };
     }
     else {
-      const projectList = loadLocalStorage();
-      const activeProject = projectList[getActiveProject().id];
-      const todoListId = document.querySelector('#expanded-todo-content').todoListId;
-
-      const priority = activeProject.todoList[todoListId].priority;
+      const priority = getSelectedTodo().selectedTodo.priority;
       const priorityIcon = document.querySelector('#expanded-todo-property-priority-info-icon');
 
       return {
@@ -1266,6 +1312,16 @@ const updatePriorityIcon = (e = null) => {
   else if (priority === 'P1') {
     priorityIcon.classList.value = ['P1 material-symbols-outlined-filled material-symbols-outlined'];
   }
+}
+
+const setPriority = (e) => {
+  const newPriority = e.target.value;
+  const selectedTodoObject = getSelectedTodo();
+  const selectedTodo = selectedTodoObject.selectedTodo;
+
+  selectedTodo.priority = newPriority;
+
+  updateLocalStorage(selectedTodoObject.projectList);
 }
 
 const determineProjectIcon = () => {
@@ -1427,6 +1483,7 @@ const confirmDeletionIsolatedContainer = (selectedTodoOrProject) => {
 const toggleExpandedTodoProperties = () => {
   const expandedTodoPropertyList = document.querySelector('#expanded-todo-property-list');
   const projectSelect = document.querySelector('#project-dropdown-menu-select');
+  const prioritySelect = document.querySelector('#priority-select');
 
   for (let i=0;i<expandedTodoPropertyList.children.length;i++) {
     expandedTodoPropertyList.children[i].lastChild.classList.toggle('disabled');
@@ -1439,6 +1496,13 @@ const toggleExpandedTodoProperties = () => {
   }
   else {
     projectSelect.disabled = true;
+  }
+
+  if (prioritySelect.disabled) {
+    prioritySelect.disabled = false;
+  }
+  else {
+    prioritySelect.disabled = true;
   }
 
   const toggleCheckbox = (() => {

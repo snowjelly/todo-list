@@ -610,6 +610,7 @@ span#expanded-todo-property-priority-info-icon.project-icon {
 #priority-select{
   background-color: transparent;
   border: 0;
+  cursor: pointer;
 }
 
 .property.disabled{
@@ -650,6 +651,10 @@ span#expanded-todo-property-project-info-icon.property-icon.material-symbols-out
 
 #expanded-todo-property-duedate-info-icon {
   cursor: pointer;
+}
+
+#add-priority-menu.disabled > * {
+  cursor: not-allowed;
 }
 
 .expanded-todo-due-date-input{
