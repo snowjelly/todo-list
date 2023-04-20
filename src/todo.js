@@ -143,6 +143,7 @@ const updateLocalStorage = (projectList) => {
 }
 
 const removeTask = (e) => {
+    if (e.target.classList.contains('disabled')) return;
     const selectedTodoId = getSelectedTodoId(e);
     const projectList = loadLocalStorage();
     const activeProject = projectList[getActiveProject().id];
@@ -171,9 +172,6 @@ const resetHTML = () => {
     render();
 
     removeSelectedTodo();
-
-
-    console.log(loadLocalStorage());
 }
 
 const removeSelectedTodo = () => {

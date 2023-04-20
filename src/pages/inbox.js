@@ -764,6 +764,7 @@ const contentDiv = () => {
                                       }
                                       else if (getLiInfo().getProperty() === 'Due date') {
                                         const dueDateContent = document.createElement('div');
+                                        const selectedTodo = getSelectedTodo().selectedTodo;
 
                                         dueDateContent.id = 'expanded-todo-property-duedate-info-content';
                                         dueDateContent.classList.add('property-content', 'property');
@@ -819,7 +820,7 @@ const contentDiv = () => {
                                                 while (ul.children.length > 0) {
                                                   ul.children[0].remove();
                                                 }                                                
-                                                render(document.querySelector('#expanded-todo-property-list'));
+                                                render(ul);
                                               }
                                             }
 
