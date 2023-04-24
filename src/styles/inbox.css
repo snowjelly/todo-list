@@ -828,6 +828,18 @@ span#expanded-todo-property-project-info-icon.property-icon.material-symbols-out
   color: #3b82f6;
 }
 
+.checkbox.P1 {
+  background-color: #ef4444
+}
+
+.checkbox.P2 {
+  background-color: #fb923c;
+}
+
+.checkbox.P3 {
+  background-color: #3b82f6;
+}
+
 .checkbox:hover {
   background-image: url(/src/assets/imgs/todo-checked.png);
   cursor: pointer;

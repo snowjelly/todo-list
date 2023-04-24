@@ -107,7 +107,7 @@ const contentDiv = () => {
                       updateLocalStorage(projectList);
 
                       li.addEventListener('click', (e) => {
-                        if (e.target.className === 'checkbox') return;
+                        if (e.target.classList.contains('checkbox')) return;
 
                         setSelectedTodo(selectedTodo.id);
                         expandTodo(e);
@@ -121,7 +121,9 @@ const contentDiv = () => {
                     const todoListItemCheckboxDiv = () => {
                       const get = () => {
                         const div = document.createElement('div');
+                        const liPriority = loadLocalStorage()[getActiveProject().id].todoList[i].priority;
                         div.classList.add('checkbox');
+                        div.classList.add(liPriority);
                         div.addEventListener('click', removeTask);
                         return div;
                       }
@@ -326,6 +328,7 @@ const contentDiv = () => {
                                 const getDiv = () => {
                                   const div = document.createElement('div');
                                   div.classList.add('checkbox');
+                                  getCheckBoxClassList(div);
                                   div.width = 24;
                                   div.height = 24;
                                   div.addEventListener('click', removeTask);
@@ -875,10 +878,12 @@ const contentDiv = () => {
                                             icon.classList.value = ['P1 material-symbols-outlined-filled material-symbols-outlined'];
                                           }
 
+
                                         label.appendChild(icon);
                                         label.appendChild(prioritySelectMenu().editPriorityMenu);
                                         label.addEventListener('change', (e) => {
                                           setPriority(e);
+                                          getCheckBoxClassList(document.querySelector('#checkbox-container > .checkbox'));
                                         });
                                         return label;
                                       }
@@ -1561,6 +1566,22 @@ const editPriority = (e, todoListId, projectListId) => {
   const numberInput = document.createElement('input');
   numberInput.type = 'number';
 
+}
+
+const getCheckBoxClassList = (div) => {
+  div.classList.value = 'checkbox';
+  if (getSelectedTodo().selectedTodo.priority === 'P1') {
+    div.classList.add('P1');
+  }
+  else if (getSelectedTodo().selectedTodo.priority === 'P2') {
+    div.classList.add('P2');
+  }
+  else if (getSelectedTodo().selectedTodo.priority === 'P3') {
+    div.classList.add('P3');
+  }
+  else if (getSelectedTodo().selectedTodo.priority === 'P4') {
+    div.classList.add('P4');
+  }
 }
 
 export { inbox, confirmDeletionIsolatedContainer };
