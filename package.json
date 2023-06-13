@@ -8,7 +8,9 @@
     "watch": "webpack --watch",
     "build": "webpack",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "repository": {
     "type": "git",
@@ -29,6 +31,7 @@
     "webpack-cli": "^4.10.0"
   },
   "dependencies": {
-    "date-fns": "^2.29.3"
+    "date-fns": "^2.29.3",
+    "eslint": "^8.42.0"
   }
 }
