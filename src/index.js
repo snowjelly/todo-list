@@ -1,4 +1,4 @@
-import './styles/inbox.css';
-import {firstLoad} from "./functions/firstLoad";
+import "./styles/inbox.css";
+import { firstLoad } from "./functions/firstLoad";
 
 firstLoad();

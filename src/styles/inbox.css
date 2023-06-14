@@ -1,20 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
 
 .material-symbols-outlined {
-  font-variation-settings:
-    'FILL' 0,
-    'wght' 400,
-    'GRAD' 0,
-    'opsz' 48
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
 }
 
 .material-symbols-outlined-filled {
-  font-variation-settings:
-    'FILL' 1,
-    'wght' 400,
-    'GRAD' 0,
-    'opsz' 48
+  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 48;
 }
 
 html,
@@ -46,7 +38,7 @@ textarea {
 
 :root {
   --stone-200: #e7e5e4;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 #content {
@@ -55,8 +47,7 @@ textarea {
   grid-template-rows: min-content;
   grid-template-areas:
     "header header"
-    "sidebar view"
-  ;
+    "sidebar view";
 }
 
 #view-container {
@@ -178,7 +169,7 @@ textarea {
   outline: 0;
 }
 
-#form-btn-content{
+#form-btn-content {
   display: flex;
   flex-direction: column;
   row-gap: 1rem;
@@ -223,8 +214,9 @@ textarea {
   border: 0;
 }
 
-#project-dropdown-menu-label::after, #expanded-todo-property-project-content::after {
-  content: '\25BC';
+#project-dropdown-menu-label::after,
+#expanded-todo-property-project-content::after {
+  content: "\25BC";
 }
 
 #task-description {
@@ -257,7 +249,9 @@ textarea {
   margin-top: 1rem;
 }
 
-#add-task-action-buttons-content > #project-dropdown-menu-label > #project-dropdown-menu-select {
+#add-task-action-buttons-content
+  > #project-dropdown-menu-label
+  > #project-dropdown-menu-select {
   font-weight: 700;
   color: grey;
 }
@@ -312,7 +306,6 @@ textarea {
   height: 100px;
 }
 
-
 #expanded-todo-title-edit {
   font-size: 1.5rem;
   font-weight: 700;
@@ -325,14 +318,12 @@ textarea {
   margin-left: 10px;
 }
 
-
 #title-button-content {
   display: flex;
   justify-content: end;
   margin: 0.5rem 1rem 0.5rem;
   gap: 1rem;
 }
-
 
 #bottom-menu-header-content:hover {
   cursor: pointer;
@@ -368,7 +359,7 @@ textarea {
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
-  box-shadow: 2px 2px 8px 2px rgba(0, 0, 0, .16);
+  box-shadow: 2px 2px 8px 2px rgba(0, 0, 0, 0.16);
 }
 
 #project-menu-content {
@@ -377,8 +368,9 @@ textarea {
 
 #expanded-todo-content {
   display: grid;
-  grid-template-areas: 'top-content top-content'
-    'body right-sidebar';
+  grid-template-areas:
+    "top-content top-content"
+    "body right-sidebar";
   grid-template-columns: 3fr 1fr;
   grid-template-rows: min-content;
   width: max(300px, 40%);
@@ -390,16 +382,17 @@ textarea {
   grid-column: span 3;
 }
 
-.bottom-shadow{
+.bottom-shadow {
   box-shadow: 0 2px 2px -2px grey;
 }
 
 #expanded-todo-body {
   display: grid;
   grid-template-columns: min-content 1fr;
-  grid-template-areas: 'checkbox title'
-    'checkbox description'
-    'checkbox buttons';
+  grid-template-areas:
+    "checkbox title"
+    "checkbox description"
+    "checkbox buttons";
   margin-top: 1rem;
   grid-template-rows: min-content;
 }
@@ -544,7 +537,7 @@ textarea {
 
 #expanded-todo-description {
   grid-area: description;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   word-break: break-all;
   margin-top: 0.5rem;
   cursor: text;
@@ -556,41 +549,41 @@ textarea {
   flex-direction: column;
 }
 
-#expanded-todo-property-list>li {
+#expanded-todo-property-list > li {
   margin: 1rem;
   display: flex;
   row-gap: 0.5rem;
   flex-direction: column;
 }
 
-#expanded-todo-property-list > * .property-icon{
+#expanded-todo-property-list > * .property-icon {
   cursor: pointer;
 }
 
-span#project-icon.property-icon{
+span#project-icon.property-icon {
   cursor: default;
 }
 
-#project-icon{
+#project-icon {
   font-size: 1rem;
   color: #be123c;
 }
 
-span#project-icon.material-symbols-outlined-filled{
+span#project-icon.material-symbols-outlined-filled {
   font-size: 0.5rem;
   color: black;
 }
 
-.disabled{
+.disabled {
   cursor: not-allowed;
   opacity: 60%;
 }
 
-#expanded-todo-property-list>li .project-icon.inbox {
+#expanded-todo-property-list > li .project-icon.inbox {
   font-size: 1rem;
 }
 
-#expanded-todo-property-list>li .project-icon {
+#expanded-todo-property-list > li .project-icon {
   font-size: 0.5rem;
 }
 
@@ -598,42 +591,44 @@ span#expanded-todo-property-priority-info-icon.project-icon {
   font-size: 1rem;
 }
 
-#expanded-todo-property-duedate-info>.list-item-duedate-content {
+#expanded-todo-property-duedate-info > .list-item-duedate-content {
   column-gap: 0.7rem;
 }
 
-.property-icon, #priority-icon {
+.property-icon,
+#priority-icon {
   font-size: 1rem;
   cursor: default;
 }
 
-#priority-select{
+#priority-select {
   background-color: transparent;
   border: 0;
   cursor: pointer;
 }
 
-.property.disabled{
+.property.disabled {
   cursor: not-allowed;
 }
 
-#project-dropdown-menu-select.disabled{
+#project-dropdown-menu-select.disabled {
   cursor: not-allowed;
 }
 
-#expanded-todo-property-project-content{
+#expanded-todo-property-project-content {
   cursor: default;
 }
 
-#expanded-todo-property-project-content.disabled > span#project-icon.property-icon {
+#expanded-todo-property-project-content.disabled
+  > span#project-icon.property-icon {
   cursor: not-allowed;
 }
 
-label#expanded-todo-property-project-content.disabled{
+label#expanded-todo-property-project-content.disabled {
   cursor: not-allowed;
 }
 
-#expanded-todo-property-project-content.disabled > img.property-icon{
+#expanded-todo-property-project-content.disabled > img.property-icon {
   cursor: not-allowed;
 }
 
@@ -657,12 +652,12 @@ span#expanded-todo-property-project-info-icon.property-icon.material-symbols-out
   cursor: not-allowed;
 }
 
-.expanded-todo-due-date-input{
+.expanded-todo-due-date-input {
   position: relative;
   cursor: text;
 }
 
-#expanded-todo-duedate-label-container{
+#expanded-todo-duedate-label-container {
   background-color: transparent;
 }
 
@@ -792,7 +787,6 @@ span#expanded-todo-property-project-info-icon.property-icon.material-symbols-out
   font-size: 1rem;
 }
 
-
 .overdue {
   color: lightcoral;
 }
@@ -829,7 +823,7 @@ span#expanded-todo-property-project-info-icon.property-icon.material-symbols-out
 }
 
 .checkbox.P1 {
-  background-color: #ef4444
+  background-color: #ef4444;
 }
 
 .checkbox.P2 {
@@ -845,7 +839,7 @@ span#expanded-todo-property-project-info-icon.property-icon.material-symbols-out
   cursor: pointer;
 }
 
-.checkbox.disabled:hover{
+.checkbox.disabled:hover {
   background-image: url(/src/assets/imgs/todo-unchecked.png);
   cursor: not-allowed;
 }
